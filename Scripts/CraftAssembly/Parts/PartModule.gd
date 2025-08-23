@@ -3,6 +3,10 @@
 extends Node
 class_name PartModule
 
+# Either I haven't looked enough or what but I can't seem to get the FUCKING class name from within Part.cs
+# As such, Part.cs will check if a script has this, and then assume it's a part module.
+var identification:String = "PartModule"
+
 var part_script # Assign this upon part initialization
 
 # Update function controlled by Part.cs

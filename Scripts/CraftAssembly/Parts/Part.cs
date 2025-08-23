@@ -1,4 +1,5 @@
 using Godot;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 
@@ -11,7 +12,7 @@ public partial class Part : Node
 {
     [Export] public bool enabled = false;
 
-    public List<PartModule> partModules = [];
+    public List<Node> partModules = [];
 
     public override void _Ready()
     {
@@ -20,15 +21,18 @@ public partial class Part : Node
         GD.Print($"({Name}) Got all part modules! Count: {partModules.Count}");
     }
 
-    // Recursive function to find every part module
-    public List<PartModule> GetPartModules(Node parent)
+    // Recursive function to find every part module GAAHH DAMN CROSS LANGUAGE SCRIPTING SUCKS
+    public List<Node> GetPartModules(Node parent)
     {
-        List<PartModule> modules = [];
+        List<Node> modules = [];
         foreach (Node node in parent.GetChildren())
         {
-            if (node.IsClass("PartModule"))
+            GDScript script = (GDScript)node.GetScript();
+            
+            if (script != null)
             {
-                modules.Add((PartModule)node);
+                string id = (string)node.Get("identification");
+                if (id == "PartModule")modules.Add(node);
             }
             if(node.GetChildCount() > 0) modules.AddRange(GetPartModules(node));
         }
