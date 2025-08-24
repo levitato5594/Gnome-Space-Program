@@ -7,14 +7,15 @@ I intend to remove these textures and replace them with my own before releasing 
 ## NOTES FOR CONTRIBUTORS:
 
 ### 1. Major disclaimer:
-This game is open source. By contributing your code/assets you agree to it being placed under the game's pemissive GPL-3.0 license.
-As I intend to sell the game on Steam (and other platforms) AND due to the nature of this project, I simply cannot compensate all of the contributors monetarily.
-If you wish, you may credit yourself in the Contributors JSON file in ``GameData/Misc/Contributors.json``. Contributors can also recieve a Steam key (when/if this game releases on Steam)
+I believe it is important for anybody willing to work on this game that they do so knowing that this game will be sold commercially on Steam or other various platforms.
+However, as is made very clear, this game is open source. By contributing your code/assets you agree to it being placed under the VERY pemissive GPL-3.0 license (you can read more on it here: https://www.gnu.org/licenses/quick-guide-gplv3.html
+If you wish, you may credit yourself in the Contributors JSON file in ``GameData/Misc/Contributors.json``.
 
-### 2. Conventions and rules for contributing:
+### 2. Conventions and "rules" for contributing:
 * When starting a pull request, you MUST state what you changed down to each file and line.
 * This is more or less just a general "keep your code clean" rule, but please ensure that any major changes you make don't break any other existing system.
 * Avoid modifying work-in-progress systems. This can easily cause a conflict of interest.
+* Keep your commits small. I don't like reading through hundreds of lines of code.
 
 ### 3. Help me review pull requests!
 I (Sushut) am fairly busy a lot of the time. I greatly appreciate it if the community could check pull requests for anything ranging from potential malicious code to simple conflicts. Strength in numbers and all.
