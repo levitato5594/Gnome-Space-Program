@@ -9,7 +9,7 @@ I intend to remove these textures and replace them with my own before releasing 
 ### 1. Major disclaimer:
 This game is open source. By contributing your code/assets you agree to it being placed under the game's pemissive GPL-3.0 license.
 As I intend to sell the game on Steam (and other platforms) AND due to the nature of this project, I simply cannot compensate all of the contributors monetarily.
-If you wish, you may credit yourself in the Contributors.json file in GameData. Contributors can also recieve a Steam key (when/if this game releases on Steam)
+If you wish, you may credit yourself in the Contributors JSON file in ``GameData/Misc/Contributors.json``. Contributors can also recieve a Steam key (when/if this game releases on Steam)
 
 ### 2. Conventions and rules for contributing:
 * When starting a pull request, you MUST state what you changed down to each file and line.
