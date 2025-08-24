@@ -1,14 +1,14 @@
 {
     "configType": "credits",
     "category": "Contributors",
-    "pqsMods": [
+    "list": [
         {
             "name": "Sushut",
-            "roles": "Lead developer"
+            "roles": "Head Developer"
         },
         {
             "name": "Chitak",
-            "roles": "Developer"
+            "roles": "Various Fixes"
         }
     ]
 }

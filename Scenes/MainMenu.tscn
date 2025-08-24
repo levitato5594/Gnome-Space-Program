@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://buejer35m8rkv"]
+[gd_scene load_steps=10 format=3 uid="uid://buejer35m8rkv"]
 
 [ext_resource type="Theme" uid="uid://b4ia03110swah" path="res://Assets/Materials/GeneralUI/Theme.tres" id="1_tt5f1"]
 [ext_resource type="Script" uid="uid://bgouhll36gh8m" path="res://Scripts/Utility/SaveSettingsManager.cs" id="2_853f1"]
 [ext_resource type="Script" uid="uid://ccw5occpyunc0" path="res://Scripts/UserInterface/UISwitcher.cs" id="2_xim88"]
+[ext_resource type="Script" uid="uid://ldmnrie34bfi" path="res://Scripts/UserInterface/CreditsGenerator.cs" id="3_cmrfp"]
 [ext_resource type="Script" uid="uid://dhtv4ln78jt1n" path="res://Scripts/UserInterface/SettingSelectorDependency.cs" id="3_df05h"]
 [ext_resource type="PackedScene" uid="uid://djna1rgluoxk2" path="res://Assets/Prefabs/UI/mainmenu_category.tscn" id="4_df05h"]
+[ext_resource type="PackedScene" uid="uid://g3i8taks2rrn" path="res://Assets/Prefabs/UI/person_role.tscn" id="4_loo7a"]
 [ext_resource type="PackedScene" uid="uid://drw7ifeyyx6ym" path="res://Assets/Prefabs/UI/mainmenu_option.tscn" id="5_8um5k"]
 [ext_resource type="PackedScene" uid="uid://clregntcqf7ix" path="res://Assets/Prefabs/UI/mainmenu_lineedit.tscn" id="8_koqhg"]
 
@@ -26,7 +28,7 @@ anchor_bottom = 1.0
 offset_left = 384.0
 offset_top = 258.0
 offset_right = -384.0
-offset_bottom = -266.0
+offset_bottom = -269.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -42,12 +44,26 @@ offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" type="Button" parent="MainPanel/VBoxContainer" node_paths=PackedStringArray("toClose", "toOpen")]
+[node name="Start" type="Button" parent="MainPanel/VBoxContainer" node_paths=PackedStringArray("toClose", "toOpen")]
 layout_mode = 2
 text = "Start"
 script = ExtResource("2_xim88")
 toClose = NodePath("../..")
 toOpen = NodePath("../../../SaveManager/SavePanel")
+
+[node name="Settings" type="Button" parent="MainPanel/VBoxContainer" node_paths=PackedStringArray("toClose", "toOpen")]
+layout_mode = 2
+text = "Settings (MAKE THIS DO SMTH)"
+script = ExtResource("2_xim88")
+toClose = NodePath("../..")
+toOpen = NodePath("../../../SaveManager/SavePanel")
+
+[node name="Credits" type="Button" parent="MainPanel/VBoxContainer" node_paths=PackedStringArray("toClose", "toOpen")]
+layout_mode = 2
+text = "Credits"
+script = ExtResource("2_xim88")
+toClose = NodePath("../..")
+toOpen = NodePath("../../../CreditsPanel")
 
 [node name="Label" type="Label" parent="MainPanel"]
 layout_mode = 1
@@ -58,6 +74,62 @@ offset_bottom = -9.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 34
 text = "Gnome Space Program"
+
+[node name="CreditsPanel" type="Panel" parent="." node_paths=PackedStringArray("creditContainer")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 330.0
+offset_top = 35.0
+offset_right = -330.0
+offset_bottom = -46.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_cmrfp")
+creditContainer = NodePath("ScrollContainer/VBoxContainer/VBoxContainer")
+personRole = ExtResource("4_loo7a")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CreditsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -45.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CreditsPanel/ScrollContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="CreditsPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "GNOME AEROSPACE"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CreditsPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="CreditsPanel" node_paths=PackedStringArray("toClose", "toOpen")]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.002
+anchor_bottom = 1.002
+offset_left = 10.0
+offset_top = -42.134
+offset_right = 202.0
+offset_bottom = -10.134
+text = "Back"
+script = ExtResource("2_xim88")
+toClose = NodePath("..")
+toOpen = NodePath("../../MainPanel")
 
 [node name="SaveManager" type="Control" parent="."]
 anchors_preset = 0
