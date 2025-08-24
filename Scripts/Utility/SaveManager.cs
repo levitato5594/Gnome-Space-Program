@@ -10,7 +10,7 @@ public partial class SaveManager : Node
 	public static readonly string CPackMetaName = "cPackMeta";
 	public static readonly string SaveParamName = "saveParameters";
 
-	public static SaveManager Instance;
+	public static SaveManager Instance { get; private set; }
 
 	public ActiveSave currentSave;
 

@@ -7,11 +7,15 @@ using System.Collections.Generic;
 public partial class ActiveSave : Node3D
 {
 	public static readonly string classTag = "([color=orange]ActiveSave[color=white])";
-	public static ActiveSave Instance;
+	public static ActiveSave Instance { get; private set; }
 	[Export] public PlanetSystem planetSystem;
+    [Export] public Camera3D localCamera;
 
-	// The great dictionary.planetSystem
-	public Dictionary<string, Variant> saveParams;
+    // Disable this when in map view
+    public bool hideLocal = false;
+
+    // The great dictionary
+    public Dictionary<string, Variant> saveParams;
 
 	// This should always be 1.0 upon loading!
 	[Export] public double timeSpeed = 1;
@@ -35,7 +39,8 @@ public partial class ActiveSave : Node3D
 		// We first initialize the planets
 		GD.PrintRich($"{classTag} Starting PlanetSystem");
 		PlanetSystem.Instance = planetSystem; // Set instance, very yucky but oh well.
-		Dictionary<string, PlanetPack> planetPacks = SaveManager.GetPlanetPacks();
+        planetSystem.localCamera = localCamera;
+        Dictionary<string, PlanetPack> planetPacks = SaveManager.GetPlanetPacks();
 		string chosenRootSystem = (string)saveParams["Celestial Bodies/Root System"];
 		// !!! ADD EXTRA SYSTEMS IMPLEMENTATION WHEN RELEVANT !!!
 		List<string> planetPackPaths = [];

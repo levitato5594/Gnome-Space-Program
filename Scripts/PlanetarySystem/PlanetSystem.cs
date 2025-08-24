@@ -6,8 +6,12 @@ using System.Collections.Generic;
 public partial class PlanetSystem : Node3D
 {
 	[Export] public PackedScene orbitRendererPrefab;
+    [Export] public PackedScene planetIconPrefab;
+    [Export] public Control planetIcons;
 
-	public static PlanetSystem Instance;
+    public Camera3D localCamera;
+
+    public static PlanetSystem Instance;
 	// Default config path
 	public static readonly string ConfigPath = "res://GameData";
 
@@ -128,8 +132,17 @@ public partial class PlanetSystem : Node3D
 				cBody.cartesianData.parent = parent;
 				parent.childPlanets.Add(cBody);
 			}
-			localSpacePlanets.AddChild(cBody);
+
+            localSpacePlanets.AddChild(cBody);
 			cBody.Name = cBody.name;
+
+            if (planetIconPrefab != null && planetIcons != null)
+			{
+                PlanetIcon icon = (PlanetIcon)planetIconPrefab.Instantiate();
+                icon.planet = cBody;
+                icon.camera = localCamera;
+                planetIcons.AddChild(icon);
+            }
 		}
 	}
 

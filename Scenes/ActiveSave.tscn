@@ -1,21 +1,25 @@
-[gd_scene load_steps=8 format=3 uid="uid://b08reqxmoktvk"]
+[gd_scene load_steps=9 format=3 uid="uid://b08reqxmoktvk"]
 
 [ext_resource type="Script" uid="uid://c3i0ynvo54sk1" path="res://Scripts/Utility/ActiveSave.cs" id="1_2c3j4"]
 [ext_resource type="Script" uid="uid://2vlhdf4w605i" path="res://Scripts/PlanetarySystem/PlanetSystem.cs" id="1_pocjb"]
 [ext_resource type="PackedScene" uid="uid://oo6ip25lyjt3" path="res://Assets/Prefabs/Planets/OrbitRenderer.tscn" id="3_212tm"]
+[ext_resource type="PackedScene" uid="uid://dt3jn2nr8pm3l" path="res://Assets/Prefabs/UI/planet_icon.tscn" id="4_yxkbd"]
 [ext_resource type="Script" uid="uid://ve83kys7a48x" path="res://Scripts/CameraControl/FlightCamera.cs" id="6_0mdm0"]
 [ext_resource type="Script" uid="uid://dn8105q754rdm" path="res://Scripts/CraftAssembly/CraftManager.cs" id="6_ijjgm"]
-[ext_resource type="PackedScene" uid="uid://hlhaljtudxey" path="res://Assets/Prefabs/world_environment.tscn" id="9_2c3j4"]
+[ext_resource type="Theme" uid="uid://b4ia03110swah" path="res://Assets/Materials/GeneralUI/Theme.tres" id="7_yxkbd"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_0mdm0"]
 
-[node name="ActiveSave" type="Node3D" node_paths=PackedStringArray("planetSystem")]
+[node name="ActiveSave" type="Node3D" node_paths=PackedStringArray("planetSystem", "localCamera")]
 script = ExtResource("1_2c3j4")
 planetSystem = NodePath("PlanetSystem")
+localCamera = NodePath("PlanetSystem/RenderLayers/LocalContainer/LocalView/Camera3D")
 
-[node name="PlanetSystem" type="Node3D" parent="."]
+[node name="PlanetSystem" type="Node3D" parent="." node_paths=PackedStringArray("planetIcons")]
 script = ExtResource("1_pocjb")
 orbitRendererPrefab = ExtResource("3_212tm")
+planetIconPrefab = ExtResource("4_yxkbd")
+planetIcons = NodePath("../MapUI/PlanetIcons")
 
 [node name="RenderLayers" type="Control" parent="PlanetSystem" groups=["UniverseManager"]]
 z_index = -5
@@ -72,6 +76,7 @@ render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="PlanetSystem/RenderLayers/ScaledContainer/ScaledView"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.66701)
+cull_mask = 1048574
 near = 10.0
 far = 2e+08
 
@@ -82,8 +87,6 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-
-[node name="WorldEnvironment" parent="." instance=ExtResource("9_2c3j4")]
 
 [node name="CraftManager" type="Node" parent="."]
 script = ExtResource("6_ijjgm")
@@ -96,8 +99,8 @@ rotationAmnt = 0.5
 rotNode_Y = NodePath("Cam_Rot_Y")
 rotNode_X = NodePath("Cam_Rot_Y/Cam_Rot_X")
 camNode = NodePath("Cam_Rot_Y/Cam_Rot_X/RemoteCams")
-outMove = Vector3(0.01, 0.01, 1.1)
-outTarget = Vector3(0, 0, 2)
+zoomAmnt = 1.1
+zoom = 2.0
 
 [node name="Cam_Rot_Y" type="Node3D" parent="Cam_Pos"]
 
@@ -114,3 +117,19 @@ remote_path = NodePath("../../../../../PlanetSystem/RenderLayers/ScaledContainer
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_0mdm0")
+
+[node name="MapUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("7_yxkbd")
+
+[node name="PlanetIcons" type="Control" parent="MapUI"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
