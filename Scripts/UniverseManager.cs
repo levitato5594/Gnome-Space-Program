@@ -101,6 +101,7 @@ public partial class UniverseManager : Node
 
 	public void UpdateScaled()
 	{
+		/*
 		Vector3 plrAdjustedPosition = currentCamera.GlobalPosition - offsetPosition;
 		foreach (ScaledObject obj in objectList)
 		{
@@ -113,5 +114,6 @@ public partial class UniverseManager : Node
 			obj.associatedNode.Position = obj.truePosition+direction*(magnitude/(1+(moveForward/1000f))); // why the fuck is it 1.0101?
 			obj.associatedNode.Scale = new Vector3(targetScale,targetScale,targetScale);
 		}
+		*/
 	}
 }

@@ -2,12 +2,13 @@
   "configType": "cBody",
   "properties": {
 	"name": "Gnobe",
+	"focusOnload": true,
 	"geeASL": 1,
 	"radius": 600000
   },
   "orbit": {
 	"parent": "Sun",
-	"semiMajorAxis": 149598003,
+	"semiMajorAxis": 149598003000,
 	"inclination": 0,
 	"eccentricity": 0.0167086,
 	"argumentOfPeriapsis": 0,

@@ -9,6 +9,7 @@ public partial class ActiveSave : Node3D
 	public static readonly string classTag = "([color=orange]ActiveSave[color=white])";
 	public static ActiveSave Instance { get; private set; }
 	[Export] public PlanetSystem planetSystem;
+    [Export] public FlightCamera flightCam;
     [Export] public Camera3D localCamera;
 
     // Disable this when in map view
@@ -46,6 +47,21 @@ public partial class ActiveSave : Node3D
 		List<string> planetPackPaths = [];
 		planetPackPaths.Add(planetPacks[chosenRootSystem].path);
 		planetSystem.InitSystem(planetPackPaths);
+        InitCamera();
+    }
+
+	public void InitCamera()
+	{
+		// Fall back to root body if no focus on load body has been set
+        CelestialBody focusBody;
+		if (planetSystem.focusOnLoadBody != null)
+		{
+            focusBody = planetSystem.focusOnLoadBody;
+        }else{
+            focusBody = planetSystem.rootBody;
+        }
+
+        flightCam.TargetPlanet(focusBody);
 	}
 
 	public override void _Process(double delta)

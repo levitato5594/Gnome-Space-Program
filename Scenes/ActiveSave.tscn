@@ -1,25 +1,28 @@
-[gd_scene load_steps=9 format=3 uid="uid://b08reqxmoktvk"]
+[gd_scene load_steps=10 format=3 uid="uid://b08reqxmoktvk"]
 
 [ext_resource type="Script" uid="uid://c3i0ynvo54sk1" path="res://Scripts/Utility/ActiveSave.cs" id="1_2c3j4"]
 [ext_resource type="Script" uid="uid://2vlhdf4w605i" path="res://Scripts/PlanetarySystem/PlanetSystem.cs" id="1_pocjb"]
 [ext_resource type="PackedScene" uid="uid://oo6ip25lyjt3" path="res://Assets/Prefabs/Planets/OrbitRenderer.tscn" id="3_212tm"]
 [ext_resource type="PackedScene" uid="uid://dt3jn2nr8pm3l" path="res://Assets/Prefabs/UI/planet_icon.tscn" id="4_yxkbd"]
+[ext_resource type="Script" uid="uid://qcplqipy8mmr" path="res://Scripts/PlanetarySystem/ScaledSpace.cs" id="5_yxkbd"]
 [ext_resource type="Script" uid="uid://ve83kys7a48x" path="res://Scripts/CameraControl/FlightCamera.cs" id="6_0mdm0"]
 [ext_resource type="Script" uid="uid://dn8105q754rdm" path="res://Scripts/CraftAssembly/CraftManager.cs" id="6_ijjgm"]
 [ext_resource type="Theme" uid="uid://b4ia03110swah" path="res://Assets/Materials/GeneralUI/Theme.tres" id="7_yxkbd"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_0mdm0"]
 
-[node name="ActiveSave" type="Node3D" node_paths=PackedStringArray("planetSystem", "localCamera")]
+[node name="ActiveSave" type="Node3D" node_paths=PackedStringArray("planetSystem", "flightCam", "localCamera")]
 script = ExtResource("1_2c3j4")
 planetSystem = NodePath("PlanetSystem")
+flightCam = NodePath("Cam_Pos")
 localCamera = NodePath("PlanetSystem/RenderLayers/LocalContainer/LocalView/Camera3D")
 
-[node name="PlanetSystem" type="Node3D" parent="." node_paths=PackedStringArray("planetIcons")]
+[node name="PlanetSystem" type="Node3D" parent="." node_paths=PackedStringArray("planetIcons", "scaledSpace")]
 script = ExtResource("1_pocjb")
 orbitRendererPrefab = ExtResource("3_212tm")
 planetIconPrefab = ExtResource("4_yxkbd")
 planetIcons = NodePath("../MapUI/PlanetIcons")
+scaledSpace = NodePath("RenderLayers/ScaledContainer/ScaledView/ScaledSpace")
 
 [node name="RenderLayers" type="Control" parent="PlanetSystem" groups=["UniverseManager"]]
 z_index = -5
@@ -59,6 +62,7 @@ far = 1e+06
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="PlanetSystem/RenderLayers/LocalContainer/LocalView/LocalSpace"]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
+layers = 3
 
 [node name="ScaledContainer" type="SubViewportContainer" parent="PlanetSystem/RenderLayers"]
 layout_mode = 1
@@ -81,6 +85,7 @@ near = 10.0
 far = 2e+08
 
 [node name="ScaledSpace" type="Node3D" parent="PlanetSystem/RenderLayers/ScaledContainer/ScaledView" groups=["ScaledSpace"]]
+script = ExtResource("5_yxkbd")
 
 [node name="OrbitRenderers" type="Control" parent="PlanetSystem/RenderLayers" groups=["OrbitRenderers"]]
 layout_mode = 3

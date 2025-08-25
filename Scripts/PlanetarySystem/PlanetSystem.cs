@@ -19,13 +19,15 @@ public partial class PlanetSystem : Node3D
 
 	public Node3D localSpace;
 	public Node3D localSpacePlanets;
-	public Node3D scaledSpace;
+	[Export] public ScaledSpace scaledSpace;
 	public Control orbitRenderers;
 
 	// Since patched conics require an SOI, then have a "root SOI" in the form of a "root body"
 	public CelestialBody rootBody;
+    // Also track the "focus on load" body to know which one to focus on when the save starts
+    public CelestialBody focusOnLoadBody;
 
-	public List<CelestialBody> celestialBodies = [];
+    public List<CelestialBody> celestialBodies = [];
 
 	// Called when the node enters the scene tree for the first time.
 	/*public override void _Ready()
@@ -136,6 +138,14 @@ public partial class PlanetSystem : Node3D
             localSpacePlanets.AddChild(cBody);
 			cBody.Name = cBody.name;
 
+            ScaledObject scaledBody = new();
+			scaledSpace.AddChild(scaledBody);
+            //scaledBody.Scale = new Vector3(
+			//	(float)(1.0 / scaledSpace.scaleFactor),
+            //    (float)(1.0 / scaledSpace.scaleFactor),
+            //    (float)(1.0 / scaledSpace.scaleFactor));
+            cBody.scaledSphere = scaledBody;
+
             if (planetIconPrefab != null && planetIcons != null)
 			{
                 PlanetIcon icon = (PlanetIcon)planetIconPrefab.Instantiate();
@@ -143,7 +153,9 @@ public partial class PlanetSystem : Node3D
                 icon.camera = localCamera;
                 planetIcons.AddChild(icon);
             }
-		}
+
+			if (cBody.focusOnload) focusOnLoadBody = cBody;
+        }
 	}
 
 	public void CreateCBody(string configPath)
@@ -179,6 +191,7 @@ public partial class PlanetSystem : Node3D
 		{
 			cBody.name = properties.TryGetValue("name", out var name) ? (string)name : MissingString(path, "name"); //GetValue("Properties", "name");
 			GD.PrintRich($"{classTag} Parsing config for: {name}");
+			cBody.focusOnload = properties.TryGetValue("focusOnload", out var fuck) && (bool)fuck;
 			// only mass or geeASL is required, the unassigned one will be calculated based off one of the values.
 			cBody.mass = properties.TryGetValue("mass", out var mass) ? (double)mass : -1;
 			cBody.geeASL = properties.TryGetValue("geeASL", out var geeASL) ? (double)geeASL : -1;

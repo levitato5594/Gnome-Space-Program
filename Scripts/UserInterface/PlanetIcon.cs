@@ -20,10 +20,6 @@ public partial class PlanetIcon : TextureButton
     public override void _Pressed()
     {
         FlightCamera flightCam = FlightCamera.Instance;
-        flightCam.target = planet;
-        flightCam.Position = Vector3.Zero;
-
-        flightCam.minZoom = (float)(planet.radius * 1.25f);
-        flightCam.zoom = (float)(planet.radius * 2f);
+        flightCam.TargetPlanet(planet);
     }
 }

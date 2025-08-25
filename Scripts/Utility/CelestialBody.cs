@@ -6,6 +6,7 @@ public partial class CelestialBody : Node3D
 {
     // General info
     public string name;
+    public bool focusOnload;
     public double mass;
     public double geeASL;
     public double radius;
@@ -19,6 +20,7 @@ public partial class CelestialBody : Node3D
 
     // Procedural info
     public TerrainGen pqsSphere;
+    public ScaledObject scaledSphere;
     public List<Node> pqsMods;
 
     // Miscellaneous info
@@ -40,6 +42,8 @@ public partial class CelestialBody : Node3D
         // Propagate the cBody's orbit
 
         ProcessOrbitalPosition();
+
+        scaledSphere.truePosition = cartesianData.position.GetPosYUp();
     }
 
     // Process the cBody orbital positioning calculations. Used by floating origin to "force" repositioning to avoid jitter.

@@ -20,7 +20,6 @@ public partial class TerrainGen : Node3D
     [Export] public int minColliderLevel = 10;
     [Export] public Node3D player;
     //[Export] public Material material;
-    [Export] public Node3D scaledSpace;
     //[Export] public UniverseManager universeManager;
 
     // extras
@@ -36,31 +35,8 @@ public partial class TerrainGen : Node3D
 
     private readonly List<Quad> quadsQueuedForDeletion = [];
 
-    private Node3D scaledContainer;
-
-    private ScaledObject scaledObject;
-
     public override void _Ready()
     {
-        scaledSpace = (Node3D)GetTree().GetFirstNodeInGroup("ScaledSpace");
-
-        scaledContainer = new();
-        scaledSpace.AddChild(scaledContainer);
-        if(scaledBillboard != null)
-        {
-            MeshInstance3D billboard = new(){
-                Mesh = scaledBillboard
-            };
-            scaledContainer.AddChild(billboard);
-        }
-
-        scaledObject = new()
-        {
-            truePosition = GlobalPosition,
-            associatedNode = scaledContainer,
-            objectRadius = radius
-        };
-
         for (int i = 1; i < maxLevel+1; i++)
         {
             float distToQuad = Mathf.RoundToInt(radius/Mathf.Pow(2,i-minLevel));
@@ -350,30 +326,37 @@ public partial class TerrainGen : Node3D
 
     private void RenderQuad(Quad quad, Mesh mesh)
     {
-        StaticBody3D meshBody = new();
-        MeshInstance3D meshObject = new();
-        if (IsInstanceValid(mesh) && IsInstanceValid(meshObject))
+        StaticBody3D localMeshBody = new();
+        MeshInstance3D localMeshObject = new();
+
+        StaticBody3D scaledMeshBody = new();
+        MeshInstance3D scaledMeshObject = new();
+        if (IsInstanceValid(mesh))
         {
-            meshObject.Mesh = mesh;
-            meshObject.Position = quad.position;
-            meshObject.Scale = quad.scale;
+            localMeshObject.Mesh = mesh;
+            localMeshObject.Position = quad.position;
+            localMeshObject.Scale = quad.scale;
 
-            quad.renderedMesh = meshBody;
+            scaledMeshObject.Mesh = mesh;
+            scaledMeshObject.Position = quad.position;
+            scaledMeshObject.Scale = quad.scale;
 
-            meshBody.AddChild(meshObject); 
-            if (quad.detailLevel >= minRenderLevel)
-            {
-                AddChild(meshBody);
-            }else{
-                scaledContainer.AddChild(meshBody); // set to scaled space if its below a certain detail level
-                meshObject.SetLayerMaskValue(1,false);
-                meshObject.SetLayerMaskValue(2,true);
-            }
+            quad.localRenderedMesh = localMeshBody;
+            quad.scaledRenderedMesh = scaledMeshBody;
+
+            localMeshBody.AddChild(localMeshObject); 
+            scaledMeshBody.AddChild(scaledMeshObject);
+
+            AddChild(localMeshBody);
+            cBody.scaledSphere.AddChild(scaledMeshBody);
+
+            scaledMeshObject.SetLayerMaskValue(1, false);
+            scaledMeshObject.SetLayerMaskValue(2, true);
 
             // add colliders if such act is permitted
             if (quad.detailLevel >= minColliderLevel)
             {
-                meshObject.CreateTrimeshCollision();
+                localMeshObject.CreateTrimeshCollision();
             }
         }
     }
@@ -382,10 +365,12 @@ public partial class TerrainGen : Node3D
     private async static void UnRenderQuad(Quad quad)
     {
         await Task.Delay(100);
-        if (quad.renderedMesh!=null && IsInstanceValid(quad.renderedMesh))
+        if (IsInstanceValid(quad.localRenderedMesh) && IsInstanceValid(quad.scaledRenderedMesh))
         {
-            quad.renderedMesh.QueueFree(); 
-            quad.renderedMesh = null;
+            quad.localRenderedMesh.QueueFree(); 
+            quad.localRenderedMesh = null;
+            quad.scaledRenderedMesh.QueueFree(); 
+            quad.scaledRenderedMesh = null;
             quad.rendered = false;
         }
     }

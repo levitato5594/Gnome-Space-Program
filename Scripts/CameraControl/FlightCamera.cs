@@ -51,6 +51,15 @@ public partial class FlightCamera : Node3D
         if (target != null) Position = target.GlobalPosition;
     }
 
+	public void TargetPlanet(CelestialBody planet)
+	{
+		target = planet;
+        Position = Vector3.Zero;
+
+        minZoom = (float)(planet.radius * 1.25f);
+        zoom = (float)(planet.radius * 2f);
+	}
+
     public override void _UnhandledInput(InputEvent @event)
     {
         if (@event is InputEventMouseButton buttonEvent)
