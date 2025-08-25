@@ -81,11 +81,12 @@ render_target_update_mode = 4
 [node name="Camera3D" type="Camera3D" parent="PlanetSystem/RenderLayers/ScaledContainer/ScaledView"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.66701)
 cull_mask = 1048574
-near = 10.0
-far = 2e+08
+near = 5.0
+far = 1e+08
 
-[node name="ScaledSpace" type="Node3D" parent="PlanetSystem/RenderLayers/ScaledContainer/ScaledView" groups=["ScaledSpace"]]
+[node name="ScaledSpace" type="Node3D" parent="PlanetSystem/RenderLayers/ScaledContainer/ScaledView" node_paths=PackedStringArray("flightCamera") groups=["ScaledSpace"]]
 script = ExtResource("5_yxkbd")
+flightCamera = NodePath("../../../../../Cam_Pos")
 
 [node name="OrbitRenderers" type="Control" parent="PlanetSystem/RenderLayers" groups=["OrbitRenderers"]]
 layout_mode = 3

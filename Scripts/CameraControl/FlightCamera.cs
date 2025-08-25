@@ -7,6 +7,7 @@ public partial class FlightCamera : Node3D
 	// The same camera (THIS ONE) is used in both map view, colony view, and flight
 	public static FlightCamera Instance { get; private set; }
 
+    [Export] public bool inMap = true;
     [Export] public Node3D target;
 
     [Export] public bool multiplyScroll;
@@ -53,11 +54,11 @@ public partial class FlightCamera : Node3D
 
 	public void TargetPlanet(CelestialBody planet)
 	{
-		target = planet;
+		target = planet.scaledSphere;
         Position = Vector3.Zero;
 
-        minZoom = (float)(planet.radius * 1.25f);
-        zoom = (float)(planet.radius * 2f);
+        minZoom = (float)(planet.radius * 1.25f / ScaledSpace.Instance.scaleFactor);
+        zoom = (float)(planet.radius * 2f / ScaledSpace.Instance.scaleFactor);
 	}
 
     public override void _UnhandledInput(InputEvent @event)

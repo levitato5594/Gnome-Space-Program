@@ -10,7 +10,7 @@ public partial class PlanetIcon : TextureButton
     {
         if (planet != null && camera != null) 
         {
-            Vector3 planetPos = planet.GlobalPosition;
+            Vector3 planetPos = planet.scaledSphere.GlobalPosition;
             Vector2 screenPos = camera.UnprojectPosition(planetPos);
 
             Position = screenPos;

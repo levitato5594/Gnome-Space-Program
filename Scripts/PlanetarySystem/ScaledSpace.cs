@@ -30,7 +30,22 @@ public partial class ScaledSpace : Node3D
         {
             if (node is ScaledObject scaledObject)
             {
-                scaledObject.Position = scaledObject.truePosition.ToFloat3();
+                // Handle ScaledSpace differently if in map view
+                if (!flightCamera.inMap)
+                {
+                    scaledObject.Position = scaledObject.truePosition.ToFloat3();
+                }else{
+                    Node3D camObject = flightCamera.target;
+                    Vector3 focusObjectPos = Vector3.Zero;
+                    // Check if the camera is focusing on either a ScaledObject or another thing that isn't implemented yet
+                    if (camObject is ScaledObject scaledCamObj)
+                    {
+                        focusObjectPos = scaledCamObj.truePosition.ToFloat3();
+                    }
+                
+                    scaledObject.Position = scaledObject.truePosition.ToFloat3() / scaleFactor - (focusObjectPos / scaleFactor);
+                    scaledObject.Scale = scaledObject.originalScale.ToFloat3() / scaleFactor;
+                }
             }
         }
     }
