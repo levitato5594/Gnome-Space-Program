@@ -8,7 +8,7 @@ I intend to remove these textures and replace them with my own before releasing 
 
 ### 1. Major disclaimer:
 I believe it is important for anybody willing to work on this game that they do so knowing that this game will be sold commercially on Steam or other various platforms.
-However, as is made very clear, this game is open source. By contributing your code/assets you agree to it being placed under the VERY pemissive GPL-3.0 license (you can read more on it here: https://www.gnu.org/licenses/quick-guide-gplv3.html
+However, as is made very clear, this game is open source. By contributing your code/assets you agree to it being placed under the copyleft GPL-3.0 license (you can read more on it here: https://www.gnu.org/licenses/quick-guide-gplv3.html
 If you wish, you may credit yourself in the Contributors JSON file in ``GameData/Misc/Contributors.json``.
 
 ### 2. Conventions and "rules" for contributing:
