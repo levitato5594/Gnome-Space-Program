@@ -14,7 +14,8 @@ If you wish, you may credit yourself in the Contributors JSON file in ``GameData
 ### 2. Conventions and "rules" for contributing:
 * When starting a pull request, you MUST state what you changed down to each file and line.
 * This is more or less just a general "keep your code clean" rule, but please ensure that any major changes you make don't break any other existing system.
-* Avoid modifying work-in-progress systems. This can easily cause a conflict of interest.
+* Following up with the previous rule, make sure anything you add is thoroughly tested.
+* Avoid modifying work-in-progress systems. This can easily cause a conflict if said original developer of the system intended it to function one specific way.
 * Keep your commits small. I don't like reading through hundreds of lines of code.
 
 ### 3. Help me review pull requests!
