@@ -12,7 +12,7 @@ However, as is made very clear, this game is open source. By contributing your c
 If you wish, you may credit yourself in the Contributors JSON file in ``GameData/Misc/Contributors.json``.
 
 ### 2. Conventions and "rules" for contributing:
-* When starting a pull request, you MUST state what you changed down to each file and line.
+* When starting a pull request, you MUST state what you changed/added down to each file.
 * This is more or less just a general "keep your code clean" rule, but please ensure that any major changes you make don't break any other existing system.
 * Following up with the previous rule, make sure anything you add is thoroughly tested.
 * Avoid modifying work-in-progress systems. This can easily cause a conflict if said original developer of the system intended it to function one specific way.
