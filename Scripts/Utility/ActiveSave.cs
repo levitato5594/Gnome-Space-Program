@@ -9,14 +9,14 @@ public partial class ActiveSave : Node3D
 	public static readonly string classTag = "([color=orange]ActiveSave[color=white])";
 	public static ActiveSave Instance { get; private set; }
 	[Export] public PlanetSystem planetSystem;
-    [Export] public FlightCamera flightCam;
-    [Export] public Camera3D localCamera;
+	[Export] public FlightCamera flightCam;
+	[Export] public Camera3D localCamera;
 
-    // Disable this when in map view
-    public bool hideLocal = false;
+	// Disable this when in map view
+	public bool hideLocal = false;
 
-    // The great dictionary
-    public Dictionary<string, Variant> saveParams;
+	// The great dictionary
+	public Dictionary<string, Variant> saveParams;
 
 	// This should always be 1.0 upon loading!
 	[Export] public double timeSpeed = 1;
@@ -40,28 +40,28 @@ public partial class ActiveSave : Node3D
 		// We first initialize the planets
 		GD.PrintRich($"{classTag} Starting PlanetSystem");
 		PlanetSystem.Instance = planetSystem; // Set instance, very yucky but oh well.
-        planetSystem.localCamera = localCamera;
-        Dictionary<string, PlanetPack> planetPacks = SaveManager.GetPlanetPacks();
+		planetSystem.localCamera = localCamera;
+		Dictionary<string, PlanetPack> planetPacks = SaveManager.GetPlanetPacks();
 		string chosenRootSystem = (string)saveParams["Celestial Bodies/Root System"];
 		// !!! ADD EXTRA SYSTEMS IMPLEMENTATION WHEN RELEVANT !!!
 		List<string> planetPackPaths = [];
 		planetPackPaths.Add(planetPacks[chosenRootSystem].path);
 		planetSystem.InitSystem(planetPackPaths);
-        InitCamera();
-    }
+		InitCamera();
+	}
 
 	public void InitCamera()
 	{
 		// Fall back to root body if no focus on load body has been set
-        CelestialBody focusBody;
+		CelestialBody focusBody;
 		if (planetSystem.focusOnLoadBody != null)
 		{
-            focusBody = planetSystem.focusOnLoadBody;
-        }else{
-            focusBody = planetSystem.rootBody;
-        }
+			focusBody = planetSystem.focusOnLoadBody;
+		}else{
+			focusBody = planetSystem.rootBody;
+		}
 
-        flightCam.TargetPlanet(focusBody);
+		flightCam.TargetObject(focusBody);
 	}
 
 	public override void _Process(double delta)

@@ -52,13 +52,19 @@ public partial class FlightCamera : Node3D
         if (target != null) Position = target.GlobalPosition;
     }
 
-	public void TargetPlanet(CelestialBody planet)
+	public void TargetObject(Node3D node)
 	{
-		target = planet.scaledSphere;
+		target = node;
+        Position = Vector3.Zero;
+	}
+
+	public void TargetObject(CelestialBody cBody)
+	{
+		target = cBody.scaledSphere;
         Position = Vector3.Zero;
 
-        minZoom = (float)(planet.radius * 1.25f / ScaledSpace.Instance.scaleFactor);
-        zoom = (float)(planet.radius * 2f / ScaledSpace.Instance.scaleFactor);
+        minZoom = (float)(cBody.radius * 1.25f / ScaledSpace.Instance.scaleFactor);
+        zoom = (float)(cBody.radius * 2f / ScaledSpace.Instance.scaleFactor);
 	}
 
     public override void _UnhandledInput(InputEvent @event)
