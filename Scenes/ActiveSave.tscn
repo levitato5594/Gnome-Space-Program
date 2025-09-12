@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b08reqxmoktvk"]
+[gd_scene load_steps=11 format=3 uid="uid://b08reqxmoktvk"]
 
 [ext_resource type="Script" uid="uid://c3i0ynvo54sk1" path="res://Scripts/Utility/ActiveSave.cs" id="1_2c3j4"]
 [ext_resource type="Script" uid="uid://2vlhdf4w605i" path="res://Scripts/PlanetarySystem/PlanetSystem.cs" id="1_pocjb"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dt3jn2nr8pm3l" path="res://Assets/Prefabs/UI/planet_icon.tscn" id="4_yxkbd"]
 [ext_resource type="Script" uid="uid://qcplqipy8mmr" path="res://Scripts/PlanetarySystem/ScaledSpace.cs" id="5_yxkbd"]
 [ext_resource type="Script" uid="uid://ve83kys7a48x" path="res://Scripts/CameraControl/FlightCamera.cs" id="6_0mdm0"]
+[ext_resource type="Script" uid="uid://chvjvd0id2y27" path="res://Scripts/CraftAssembly/Parts/PartManager.cs" id="6_2c3j4"]
 [ext_resource type="Script" uid="uid://dn8105q754rdm" path="res://Scripts/CraftAssembly/CraftManager.cs" id="6_ijjgm"]
 [ext_resource type="Theme" uid="uid://b4ia03110swah" path="res://Assets/Materials/GeneralUI/Theme.tres" id="7_yxkbd"]
 
@@ -93,6 +94,9 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="PartManager" type="Node" parent="."]
+script = ExtResource("6_2c3j4")
 
 [node name="CraftManager" type="Node" parent="."]
 script = ExtResource("6_ijjgm")

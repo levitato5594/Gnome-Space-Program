@@ -1,0 +1,18 @@
+{
+    "configType": "Base",
+    "blueprint": true,
+    "name": "Gnome Space Center",
+
+    "position": [0,0,600176.0],
+    "rotation": [90,0,0],
+
+    "buildings": {
+        "GSC_VAB": {
+            "position": [0,0,0],
+            "rotation": [0,0,0],
+            "scale": [1,1,1],
+            "destroyed": false
+        }
+    }
+}
+

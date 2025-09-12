@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://b2pba25ejflam"]
-
-[ext_resource type="PackedScene" uid="uid://dwjiyalivgo4r" path="res://Parts/Assets/GSC_VAB/mesh.glb" id="1_e7qky"]
-
-[node name="GscVab" type="Node3D"]
-
-[node name="mesh" parent="." instance=ExtResource("1_e7qky")]

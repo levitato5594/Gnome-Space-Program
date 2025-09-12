@@ -11,7 +11,7 @@ public partial class PlanetSystem : Node3D
 
     public Camera3D localCamera;
 
-    public static PlanetSystem Instance;
+    public static PlanetSystem Instance { get; set; }
 	// Default config path
 	public static readonly string ConfigPath = "res://GameData";
 
@@ -123,7 +123,7 @@ public partial class PlanetSystem : Node3D
 	// Function to set the parent and child planets after all planets are created (because some might be in the wrong order)
 	public void PostProcessPlanets()
 	{
-		foreach (CelestialBody cBody in celestialBodies)
+        foreach (CelestialBody cBody in celestialBodies)
 		{
 			CelestialBody parent = FindCBodyByName(cBody.parentName);
 			if (parent != null)

@@ -16,11 +16,17 @@ public partial class SaveManager : Node
 
 	public PackedScene activeSavePrefab = (PackedScene)ResourceLoader.Load("res://Scenes/ActiveSave.tscn");
 
+	// Events 
+    public delegate Variant OverrideParameter(string parameterName, Variant currentValue);
+    public static event OverrideParameter OnParameterGenerate;
+
 	public override void _Ready()
 	{
 		Instance = this;
 		GD.PrintRich($"{classTag} SaveManager ready!");
-	}
+
+		OnParameterGenerate += OverridePlanetSelector;
+    }
 
 	public void LoadSave(
 		System.Collections.Generic.Dictionary<string, Variant> creationParams,
@@ -116,28 +122,17 @@ public partial class SaveManager : Node
 						data = scheme["data"]
 					};
 
-					// Sadly this has to be hardcoded for now, 
-					// May add some way for mods to "hook" into this part in the future.
-					switch ((string)scheme["name"])
+                    foreach (OverrideParameter handler in OnParameterGenerate.GetInvocationList().Cast<OverrideParameter>())
 					{
-						case "Root System":
-							System.Collections.Generic.Dictionary<string, PlanetPack> rootSystems = 
-								GetPlanetPacks("rootSystem");
-
-							Array<string> systemList = new Array<string>();
-							foreach (KeyValuePair<string, PlanetPack> pack in rootSystems)
-							{
-								systemList.Add(pack.Key);
-							}
-							saveParam.data = systemList;
-							break;
-						default:
-							break;
+						Variant newValue = handler.Invoke(saveParam.name, saveParam.data);
+						if (newValue.VariantType != Variant.Type.Nil)
+						{
+							saveParam.data = newValue;
+						}
 					}
 
-
-					// We check if it has input information, if not, then inputData remains null.
-					if (ConfigUtility.TryGetDictionary("selector", scheme, out Dictionary inpDict))
+                    // We check if it has input information, if not, then inputData remains null.
+                    if (ConfigUtility.TryGetDictionary("selector", scheme, out Dictionary inpDict))
 					{
 						saveParam.inputData = new()
 						{
@@ -163,6 +158,25 @@ public partial class SaveManager : Node
 
 		return schemas;
 	}
+
+	// Some of my own poopy hooks
+	public static Variant OverridePlanetSelector(string name, Variant data)
+	{
+        if (name == "Root System")
+        {
+            System.Collections.Generic.Dictionary<string, PlanetPack> rootSystems =
+                GetPlanetPacks("rootSystem");
+
+            Array<string> systemList = new Array<string>();
+            foreach (KeyValuePair<string, PlanetPack> pack in rootSystems)
+            {
+                systemList.Add(pack.Key);
+            }
+            return systemList;
+        }
+
+        return new Variant(); // Nil type
+    }
 }
 
 public struct PlanetPack

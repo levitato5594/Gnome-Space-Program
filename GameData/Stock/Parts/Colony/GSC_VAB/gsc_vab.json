@@ -1,7 +1,8 @@
 {
-  "configType": "Part",
-  "name": "gsc_vab",
-  "category": "Colony Parts",
-  "assets": "Stock/Parts/Colony/GSC_VAB/THEASSETS.pck",
-  "partScene": "PARTMAIN",
+    "configType": "Part",
+    "name": "GSC_VAB",
+    "displayName": "Vehicle Assembly Building",
+    "category": "Colony Parts",
+    "assets": "Stock/Parts/Colony/GSC_VAB/GSCVAB.pck",
+    "partScene": "PARTMAIN",
 }

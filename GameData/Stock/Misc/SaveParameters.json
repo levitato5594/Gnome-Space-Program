@@ -24,6 +24,19 @@
         "selector": {
           "arraySelectorType": "optionSingle"
         }
+    },
+    {
+        "name": "Chosen Packs",
+        "resetOnLoad": false,
+
+        "category": "Parts",
+        "data": [
+          "TEST0", "TEST1",
+        ],
+
+        "selector": {
+          "arraySelectorType": "optionMultiple"
+        }
     }
   ]
 }

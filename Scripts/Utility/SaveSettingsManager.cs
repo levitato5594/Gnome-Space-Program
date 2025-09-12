@@ -29,6 +29,8 @@ public partial class SaveSettingsManager : Panel
 	[Export] public CSharpScript settingSelectorDependency;
 	[Export] public PackedScene categoryPrefab;
 	[Export] public PackedScene optionPrefab;
+	[Export] public PackedScene multiOptionPrefab;
+	[Export] public PackedScene checkButtonPrefab;
 	[Export] public PackedScene lineEditPrefab;
 
 	[Export] public Control rootNode;
@@ -40,7 +42,7 @@ public partial class SaveSettingsManager : Panel
 		GD.Print($"Got Root Systems! Total: {rootSystems.Count}");
 
 		saveSchemas = SaveManager.GetSaveSchemas();
-		CreateOptionTree(saveSchemas);
+        CreateOptionTree(saveSchemas);
 	}
 
 	public void OnCreateButton()
@@ -110,15 +112,26 @@ public partial class SaveSettingsManager : Panel
 			switch (param.inputData.selectorType)
 			{
 				case "optionSingle": // Only a single option can be chosen
-					MainMenuOption item = (MainMenuOption)optionPrefab.Instantiate();
-					item.param = param;
-					//item.AddItem(param.name);
-					//item.AddSeparator();
+					MainMenuOption singleUI = (MainMenuOption)optionPrefab.Instantiate();
+					singleUI.param = param;
 					foreach (Variant point in (Godot.Collections.Array)data)
 					{
-						item.AddItem(point.ToString());
+						singleUI.AddItem(point.ToString());
 					}
-					itemCont.AddChild(item);
+					itemCont.AddChild(singleUI);
+					break;
+				case "optionMultiple": // Only a single option can be chosen
+					MainMenuMultiOption multUI = (MainMenuMultiOption)multiOptionPrefab.Instantiate();
+					multUI.param = param;
+                    multUI.title.Text = param.name;
+                    foreach (Variant point in (Godot.Collections.Array)data)
+					{
+                        //multUI.GetPopup().AddItem(point.ToString());
+                        CheckButton check = (CheckButton)checkButtonPrefab.Instantiate();
+                        multUI.itemCont.AddChild(check);
+                        check.Text = point.ToString();
+                    }
+					itemCont.AddChild(multUI);
 					break;
 				default:
 					break;

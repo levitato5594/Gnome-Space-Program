@@ -12,8 +12,11 @@ public partial class ActiveSave : Node3D
 	[Export] public FlightCamera flightCam;
 	[Export] public Camera3D localCamera;
 
-	// Disable this when in map view
-	public bool hideLocal = false;
+    // Every surface base/colony
+    public List<Colony> colonies;
+
+    // Disable this when in map view
+    public bool hideLocal = false;
 
 	// The great dictionary
 	public Dictionary<string, Variant> saveParams;
@@ -48,7 +51,9 @@ public partial class ActiveSave : Node3D
 		planetPackPaths.Add(planetPacks[chosenRootSystem].path);
 		planetSystem.InitSystem(planetPackPaths);
 		InitCamera();
-	}
+
+        GD.Print(saveParams["Parts/Chosen Packs"]);
+    }
 
 	public void InitCamera()
 	{
