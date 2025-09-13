@@ -24,8 +24,16 @@ public partial class MainMenuMultiOption : Control
             CheckButton check = (CheckButton)item;
             if (check.ButtonPressed)
             {
-                options.Add(check.Name); // ughghhh this is SO ASS but it'll be the name for now because fuck you
+                options.Add(check.Text); // ughghhh this is SO ASS but it'll be the name for now because fuck you
             }
         }
+
+        Godot.Collections.Array<Variant> fuckingArray = [];
+        foreach (Variant item in options)
+        {
+            fuckingArray.Add(item);
+        }
+
+        param.inputData.currentSelection = fuckingArray;
     }
 }

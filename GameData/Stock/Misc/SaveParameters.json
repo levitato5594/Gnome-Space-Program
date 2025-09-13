@@ -18,7 +18,7 @@
 
         "category": "Celestial Bodies",
         "data": [
-          "TEST0", "TEST1",
+          "oops!", "something broke!",
         ],
 
         "selector": {
@@ -26,17 +26,17 @@
         }
     },
     {
-        "name": "Chosen Packs",
+        "name": "Selected Part Packs",
         "resetOnLoad": false,
 
         "category": "Parts",
         "data": [
-          "TEST0", "TEST1",
+          "oops!", "something broke!",
         ],
 
         "selector": {
           "arraySelectorType": "optionMultiple"
-        }
+        },
     }
   ]
 }

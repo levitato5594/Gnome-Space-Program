@@ -8,6 +8,7 @@ public partial class SaveManager : Node
 {
 	public static readonly string classTag = "([color=red]SaveManager[color=white])";
 	public static readonly string CPackMetaName = "cPackMeta";
+	public static readonly string PPackMetaName = "pPackMeta";
 	public static readonly string SaveParamName = "saveParameters";
 
 	public static SaveManager Instance { get; private set; }
@@ -26,6 +27,7 @@ public partial class SaveManager : Node
 		GD.PrintRich($"{classTag} SaveManager ready!");
 
 		OnParameterGenerate += OverridePlanetSelector;
+		OnParameterGenerate += OverridePartSelector;
     }
 
 	public void LoadSave(
@@ -50,45 +52,6 @@ public partial class SaveManager : Node
 			// NOT TOO IMPORTANT YET!
 			GD.Print($"{classTag} Loading save from file {saveFile}");
 		}
-	}
-
-	public static System.Collections.Generic.Dictionary<string, PlanetPack> GetPlanetPacks(string type = null)
-	{
-		System.Collections.Generic.Dictionary<string, PlanetPack> planetPacks = [];
-
-		List<string> metaConfigs = ConfigUtility.GetConfigs(ConfigUtility.GameData, CPackMetaName);
-
-		foreach (string cfgPath in metaConfigs)
-		{
-			Dictionary data = ConfigUtility.ParseConfig(cfgPath);
-
-			string packType = (string)data["packType"];
-			string packName = (string)data["name"];
-
-			// ugh
-			PlanetPack pack = new PlanetPack
-			{
-				type = packType,
-				name = packName,
-				path = (string)data["path"],
-			};
-
-			if (ConfigUtility.TryGetDictionary("displayData", data, out Dictionary displayData))
-			{
-				pack.displayName = (string)displayData["displayName"];
-			}
-
-			// Only add those of specific type or all if type isn't specified
-			// Use display name for now, it shouldn't matter much though
-			if (type != null)
-			{
-				if (packType == type) planetPacks.Add(pack.displayName, pack);
-			}else{
-				planetPacks.Add(pack.displayName, pack);
-			}
-		}
-
-		return planetPacks;
 	}
 
 	/* 
@@ -167,7 +130,7 @@ public partial class SaveManager : Node
             System.Collections.Generic.Dictionary<string, PlanetPack> rootSystems =
                 GetPlanetPacks("rootSystem");
 
-            Array<string> systemList = new Array<string>();
+            Array<string> systemList = [];
             foreach (KeyValuePair<string, PlanetPack> pack in rootSystems)
             {
                 systemList.Add(pack.Key);
@@ -177,11 +140,106 @@ public partial class SaveManager : Node
 
         return new Variant(); // Nil type
     }
+	public static Variant OverridePartSelector(string name, Variant data)
+	{
+        if (name == "Selected Part Packs")
+        {
+            System.Collections.Generic.Dictionary<string, PartPack> partPacks =
+                GetPartPacks();
+
+            Array<string> systemList = [];
+            foreach (KeyValuePair<string, PartPack> pack in partPacks)
+            {
+                systemList.Add(pack.Key);
+            }
+            return systemList;
+        }
+
+        return new Variant(); // Nil type
+    }
+
+	// Helper functions AHHH
+	public static System.Collections.Generic.Dictionary<string, PlanetPack> GetPlanetPacks(string type = null)
+	{
+		System.Collections.Generic.Dictionary<string, PlanetPack> planetPacks = [];
+
+		List<string> metaConfigs = ConfigUtility.GetConfigs(ConfigUtility.GameData, CPackMetaName);
+
+		foreach (string cfgPath in metaConfigs)
+		{
+			Dictionary data = ConfigUtility.ParseConfig(cfgPath);
+
+			string packType = (string)data["packType"];
+			string packName = (string)data["name"];
+
+			// ugh
+			PlanetPack pack = new PlanetPack
+			{
+				type = packType,
+				name = packName,
+				path = (string)data["path"],
+			};
+
+			if (ConfigUtility.TryGetDictionary("displayData", data, out Dictionary displayData))
+			{
+				pack.displayName = (string)displayData["displayName"];
+			}
+
+			// Only add those of specific type or all if type isn't specified
+			// Use display name for now, it shouldn't matter much though
+			if (type != null)
+			{
+				if (packType == type) planetPacks.Add(pack.displayName, pack);
+			}else{
+				planetPacks.Add(pack.displayName, pack);
+			}
+		}
+
+		return planetPacks;
+	}
+
+	public static System.Collections.Generic.Dictionary<string, PartPack> GetPartPacks()
+	{
+		System.Collections.Generic.Dictionary<string, PartPack> partPacks = [];
+
+		List<string> metaConfigs = ConfigUtility.GetConfigs(ConfigUtility.GameData, PPackMetaName);
+
+		foreach (string cfgPath in metaConfigs)
+		{
+			Dictionary data = ConfigUtility.ParseConfig(cfgPath);
+
+			string packName = (string)data["name"];
+
+			// ugh
+			PartPack pack = new PartPack
+			{
+				name = packName,
+				path = (string)data["path"],
+			};
+
+			if (ConfigUtility.TryGetDictionary("displayData", data, out Dictionary displayData))
+			{
+				pack.displayName = (string)displayData["displayName"];
+			}
+
+
+			partPacks.Add(pack.displayName, pack);
+		}
+
+		return partPacks;
+	}
 }
 
 public struct PlanetPack
 {
 	public string type;
+	public string name;
+	public string displayName;
+	public string path;
+}
+
+public struct PartPack
+{
 	public string name;
 	public string displayName;
 	public string path;

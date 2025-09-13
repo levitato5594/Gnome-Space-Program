@@ -1,12 +1,12 @@
 using Godot;
 using System;
 
-public partial class DropdownButton : TextureButton
+public partial class DropdownButton : BaseButton
 {
-    [Export] public VBoxContainer container;
+    [Export] public Container container;
 
     public override void _Toggled(bool toggledOn)
     {
-        container.Visible = !toggledOn;
+        if (container != null) container.Visible = !toggledOn;
     }
 }

@@ -52,7 +52,7 @@ public partial class ActiveSave : Node3D
 		planetSystem.InitSystem(planetPackPaths);
 		InitCamera();
 
-        GD.Print(saveParams["Parts/Chosen Packs"]);
+        GD.Print(saveParams["Parts/Selected Part Packs"]);
     }
 
 	public void InitCamera()
