@@ -9,6 +9,7 @@ public partial class ActiveSave : Node3D
 	public static readonly string classTag = "([color=orange]ActiveSave[color=white])";
 	public static ActiveSave Instance { get; private set; }
 	[Export] public PlanetSystem planetSystem;
+	[Export] public PartManager partManager;
 	[Export] public FlightCamera flightCam;
 	[Export] public Camera3D localCamera;
 
@@ -42,8 +43,6 @@ public partial class ActiveSave : Node3D
 	{
 		// We first initialize the planets
 		GD.PrintRich($"{classTag} Starting PlanetSystem");
-		PlanetSystem.Instance = planetSystem; // Set instance, very yucky but oh well.
-		planetSystem.localCamera = localCamera;
 		Dictionary<string, PlanetPack> planetPacks = SaveManager.GetPlanetPacks();
 		string chosenRootSystem = (string)saveParams["Celestial Bodies/Root System"];
 		// !!! ADD EXTRA SYSTEMS IMPLEMENTATION WHEN RELEVANT !!!
@@ -52,7 +51,23 @@ public partial class ActiveSave : Node3D
 		planetSystem.InitSystem(planetPackPaths);
 		InitCamera();
 
-        GD.Print(saveParams["Parts/Selected Part Packs"]);
+		// Handle part packs
+		Dictionary<string, PartPack> partPacks = SaveManager.GetPartPacks();
+        List<PartPack> pPacksToLoad = [];
+        // Yes hello welcome to hell.
+        foreach (KeyValuePair<string, PartPack> partPack in partPacks)
+		{
+			// Ideally we don't want to use display names for this
+			if (((Godot.Collections.Array<string>)saveParams["Parts/Selected Part Packs"]).Contains(partPack.Value.displayName))
+			{
+                //GD.PrintRich($"{classTag} Loading part pack '{partPack.Value.displayName}'...");
+                pPacksToLoad.Add(partPack.Value);
+            }
+		}
+
+		GD.PrintRich($"{classTag} Starting PartManager");
+		// Start it
+        partManager.LoadPartPacks(pPacksToLoad);
     }
 
 	public void InitCamera()

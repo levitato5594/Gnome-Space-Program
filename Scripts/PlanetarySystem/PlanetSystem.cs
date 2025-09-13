@@ -9,7 +9,7 @@ public partial class PlanetSystem : Node3D
     [Export] public PackedScene planetIconPrefab;
     [Export] public Control planetIcons;
 
-    public Camera3D localCamera;
+    [Export] public Camera3D localCamera;
 
     public static PlanetSystem Instance { get; set; }
 	// Default config path
@@ -42,8 +42,9 @@ public partial class PlanetSystem : Node3D
 	// Start the Planet System for this particular save
 	public void InitSystem(List<string> chosenPacks)
 	{
-		// Get all relevant celestial body configs loaded in this save
-		List<string> planetConfigs = [];
+        Instance = this;
+        // Get all relevant celestial body configs loaded in this save
+        List<string> planetConfigs = [];
 		foreach (string pack in chosenPacks)
 		{
 			string fullPath = $"{ConfigUtility.GameData}/{pack}";
@@ -79,6 +80,7 @@ public partial class PlanetSystem : Node3D
 	}
 
 	// Recursive function to get all planet configs in a path
+	// Outdated. Use ConfigUtility.GetConfigs() instead.
 	public static List<string> GetPlanetConfigs(string path)
 	{
 		List<string> files = [];

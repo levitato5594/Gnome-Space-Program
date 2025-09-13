@@ -12,17 +12,19 @@
 
 [sub_resource type="BoxMesh" id="BoxMesh_0mdm0"]
 
-[node name="ActiveSave" type="Node3D" node_paths=PackedStringArray("planetSystem", "flightCam", "localCamera")]
+[node name="ActiveSave" type="Node3D" node_paths=PackedStringArray("planetSystem", "partManager", "flightCam", "localCamera")]
 script = ExtResource("1_2c3j4")
 planetSystem = NodePath("PlanetSystem")
+partManager = NodePath("PartManager")
 flightCam = NodePath("Cam_Pos")
 localCamera = NodePath("PlanetSystem/RenderLayers/LocalContainer/LocalView/Camera3D")
 
-[node name="PlanetSystem" type="Node3D" parent="." node_paths=PackedStringArray("planetIcons", "scaledSpace")]
+[node name="PlanetSystem" type="Node3D" parent="." node_paths=PackedStringArray("planetIcons", "localCamera", "scaledSpace")]
 script = ExtResource("1_pocjb")
 orbitRendererPrefab = ExtResource("3_212tm")
 planetIconPrefab = ExtResource("4_yxkbd")
 planetIcons = NodePath("../MapUI/PlanetIcons")
+localCamera = NodePath("RenderLayers/LocalContainer/LocalView/Camera3D")
 scaledSpace = NodePath("RenderLayers/ScaledContainer/ScaledView/ScaledSpace")
 
 [node name="RenderLayers" type="Control" parent="PlanetSystem" groups=["UniverseManager"]]

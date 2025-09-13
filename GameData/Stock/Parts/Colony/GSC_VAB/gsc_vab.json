@@ -1,5 +1,5 @@
 {
-    "configType": "Part",
+    "configType": "PartDef",
     "name": "GSC_VAB",
     "displayName": "Vehicle Assembly Building",
     "category": "Colony Parts",
