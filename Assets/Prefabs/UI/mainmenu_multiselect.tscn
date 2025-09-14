@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://cr4hilbfgb761"]
 
 [ext_resource type="Script" uid="uid://c4cavyminoewe" path="res://Scripts/UserInterface/MainMenuMultiOption.cs" id="1_nbeto"]
-[ext_resource type="StyleBox" uid="uid://dltksh340s1go" path="res://Assets/Materials/GeneralUI/Misc/panelButtonMimic.tres" id="2_8x25u"]
-[ext_resource type="PackedScene" uid="uid://dp3an2favb7cc" path="res://Assets/Prefabs/UI/dropdown_button.tscn" id="2_v11dm"]
+[ext_resource type="StyleBox" uid="uid://ym67sb4x7cs0" path="res://Assets/Materials/GeneralUI/Misc/panel.tres" id="3_8x25u"]
+[ext_resource type="Script" uid="uid://bfkt1wvnvdf71" path="res://Scripts/UserInterface/FuckassDropdownButton.cs" id="3_v11dm"]
 
 [node name="MainMenuMultiOption" type="VBoxContainer" node_paths=PackedStringArray("title", "itemCont")]
 anchors_preset = 15
@@ -12,28 +12,28 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 script = ExtResource("1_nbeto")
-title = NodePath("CatCont/VBoxContainer/CatLabel/Label")
-itemCont = NodePath("CatCont/VBoxContainer/Content")
+title = NodePath("VBoxContainer/CatLabel/Button")
+itemCont = NodePath("CatCont/Content")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="CatLabel" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/CatLabel" node_paths=PackedStringArray("container")]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "aaaaahhhhhhhhh"
+alignment = 0
+script = ExtResource("3_v11dm")
+container = NodePath("../../../CatCont")
 
 [node name="CatCont" type="PanelContainer" parent="."]
-layout_mode = 2
-theme_override_styles/panel = ExtResource("2_8x25u")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CatCont"]
-layout_mode = 2
-
-[node name="CatLabel" type="HBoxContainer" parent="CatCont/VBoxContainer"]
-layout_mode = 2
-
-[node name="TextureButton" parent="CatCont/VBoxContainer/CatLabel" node_paths=PackedStringArray("container") instance=ExtResource("2_v11dm")]
-layout_mode = 2
-button_pressed = true
-container = NodePath("../../Content")
-
-[node name="Label" type="Label" parent="CatCont/VBoxContainer/CatLabel" groups=["title"]]
-layout_mode = 2
-text = "AHHHHHHHH"
-
-[node name="Content" type="VBoxContainer" parent="CatCont/VBoxContainer"]
 visible = false
+layout_mode = 2
+theme_override_styles/panel = ExtResource("3_8x25u")
+
+[node name="Content" type="VBoxContainer" parent="CatCont"]
 layout_mode = 2

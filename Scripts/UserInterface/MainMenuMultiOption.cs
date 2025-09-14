@@ -6,7 +6,7 @@ using System.Linq;
 public partial class MainMenuMultiOption : Control
 {
     public SaveParam param;
-    [Export] public Label title;
+    [Export] public Button title;
     [Export] public VBoxContainer itemCont;
     public override void _Ready()
     {

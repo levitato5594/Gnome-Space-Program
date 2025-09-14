@@ -25,7 +25,7 @@ public partial class PartManager : Node
             foreach (CachedPart part in parts)
             {
                 partCache.Add(part.name, part);
-                part.LoadPartFiles();
+                part.LoadAssets();
             }
         }
     }
@@ -54,13 +54,5 @@ public partial class PartManager : Node
         }
 
         return parts;
-    }
-
-    public static Part InstantiatePart(CachedPart cachedPart)
-    {
-        Part part = new();
-
-        
-        return new Part();
     }
 }

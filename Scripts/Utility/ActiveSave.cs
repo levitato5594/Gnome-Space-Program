@@ -10,6 +10,7 @@ public partial class ActiveSave : Node3D
 	public static ActiveSave Instance { get; private set; }
 	[Export] public PlanetSystem planetSystem;
 	[Export] public PartManager partManager;
+	[Export] public ColonyManager colonyManager;
 	[Export] public FlightCamera flightCam;
 	[Export] public Camera3D localCamera;
 
@@ -68,6 +69,13 @@ public partial class ActiveSave : Node3D
 		GD.PrintRich($"{classTag} Starting PartManager");
 		// Start it
         partManager.LoadPartPacks(pPacksToLoad);
+
+		GD.PrintRich($"{classTag} Starting ColonyManager");
+        // Handle Colonies (blueprints)
+		foreach (KeyValuePair<string, PlanetPack> pack in planetPacks)
+		{
+			colonyManager.ParseColonies(pack.Value.path, true);
+		}
     }
 
 	public void InitCamera()

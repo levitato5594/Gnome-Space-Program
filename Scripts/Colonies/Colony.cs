@@ -1,9 +1,7 @@
 using Godot;
-using Godot.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
-public partial class Colony : Node
+public partial class Colony : Node3D
 {
     /*
     Colonies also use "parts" to take advantage of the attachment node system.
@@ -12,22 +10,32 @@ public partial class Colony : Node
     TODO: Instantiate the class within a planet and have it show up in the map
     */
 
+    public ScaledObject scaledObject;
+
     public string name;
     public Double3 position;
     public Double3 rotation;
-    public Dictionary cachedParts;
 
-    public Part rootPart;
+    public Dictionary<string, UnloadedPart> savedRootParts = []; // Only lists the saved root parts
+    public Dictionary<string, UnloadedPart> savedParts = [];
+
+    public List<Part> rootParts;
     public List<Part> allParts;
 
     public void Load()
     {
-        foreach (var pair in cachedParts)
+        // Iterate over parts
+        foreach (KeyValuePair<string, UnloadedPart> pair in savedRootParts)
         {
-            string name = (string)pair.Key;
-            Dictionary data = (Dictionary)pair.Value;
+            string name = pair.Key;
+            UnloadedPart data = pair.Value;
 
             // ... Now we need to make a part manager.....
+            // ... Okay now that we made a part manager.....
+
+            Part part = data.template.Instantiate(this);
+            part.Position = data.position;
+            part.Rotation = data.rotation;
         }
     }
 

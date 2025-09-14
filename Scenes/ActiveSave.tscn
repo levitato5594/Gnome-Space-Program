@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b08reqxmoktvk"]
+[gd_scene load_steps=13 format=3 uid="uid://b08reqxmoktvk"]
 
 [ext_resource type="Script" uid="uid://c3i0ynvo54sk1" path="res://Scripts/Utility/ActiveSave.cs" id="1_2c3j4"]
 [ext_resource type="Script" uid="uid://2vlhdf4w605i" path="res://Scripts/PlanetarySystem/PlanetSystem.cs" id="1_pocjb"]
@@ -9,13 +9,16 @@
 [ext_resource type="Script" uid="uid://chvjvd0id2y27" path="res://Scripts/CraftAssembly/Parts/PartManager.cs" id="6_2c3j4"]
 [ext_resource type="Script" uid="uid://dn8105q754rdm" path="res://Scripts/CraftAssembly/CraftManager.cs" id="6_ijjgm"]
 [ext_resource type="Theme" uid="uid://b4ia03110swah" path="res://Assets/Materials/GeneralUI/Theme.tres" id="7_yxkbd"]
+[ext_resource type="Script" uid="uid://yt1hbw2t4y8b" path="res://Scripts/Colonies/ColonyManager.cs" id="8_gxrxs"]
+[ext_resource type="PackedScene" uid="uid://bw23jl4jvv55y" path="res://Assets/Prefabs/UI/colony_icon.tscn" id="9_gusxr"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_0mdm0"]
 
-[node name="ActiveSave" type="Node3D" node_paths=PackedStringArray("planetSystem", "partManager", "flightCam", "localCamera")]
+[node name="ActiveSave" type="Node3D" node_paths=PackedStringArray("planetSystem", "partManager", "colonyManager", "flightCam", "localCamera")]
 script = ExtResource("1_2c3j4")
 planetSystem = NodePath("PlanetSystem")
 partManager = NodePath("PartManager")
+colonyManager = NodePath("ColonyManager")
 flightCam = NodePath("Cam_Pos")
 localCamera = NodePath("PlanetSystem/RenderLayers/LocalContainer/LocalView/Camera3D")
 
@@ -84,8 +87,8 @@ render_target_update_mode = 4
 [node name="Camera3D" type="Camera3D" parent="PlanetSystem/RenderLayers/ScaledContainer/ScaledView"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.66701)
 cull_mask = 1048574
-near = 5.0
-far = 1e+08
+near = 0.51
+far = 1e+07
 
 [node name="ScaledSpace" type="Node3D" parent="PlanetSystem/RenderLayers/ScaledContainer/ScaledView" node_paths=PackedStringArray("flightCamera") groups=["ScaledSpace"]]
 script = ExtResource("5_yxkbd")
@@ -102,6 +105,11 @@ script = ExtResource("6_2c3j4")
 
 [node name="CraftManager" type="Node" parent="."]
 script = ExtResource("6_ijjgm")
+
+[node name="ColonyManager" type="Node" parent="." node_paths=PackedStringArray("iconParent")]
+script = ExtResource("8_gxrxs")
+iconPrefab = ExtResource("9_gusxr")
+iconParent = NodePath("../MapUI/ColonyIcons")
 
 [node name="Cam_Pos" type="Node3D" parent="." node_paths=PackedStringArray("rotNode_Y", "rotNode_X", "camNode") groups=["CamPivot"]]
 script = ExtResource("6_0mdm0")
@@ -141,6 +149,12 @@ mouse_filter = 2
 theme = ExtResource("7_yxkbd")
 
 [node name="PlanetIcons" type="Control" parent="MapUI"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="ColonyIcons" type="Control" parent="MapUI"]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0

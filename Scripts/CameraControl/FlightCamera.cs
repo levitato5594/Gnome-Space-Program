@@ -5,6 +5,7 @@ public partial class FlightCamera : Node3D
 {
 	// THERE SHOULD ONLY EVER BE ONE FLIGHT CAMERA!!
 	// The same camera (THIS ONE) is used in both map view, colony view, and flight
+	public static readonly string classTag = "([color=teal]FlightCamera[color=white])";
 	public static FlightCamera Instance { get; private set; }
 
     [Export] public bool inMap = true;
@@ -56,12 +57,21 @@ public partial class FlightCamera : Node3D
 	{
 		target = node;
         Position = Vector3.Zero;
+
+        GD.PrintRich($"{classTag} Targeting node: {node.Name}");
+        GD.PrintRich($"{classTag} Node scale: {node.Scale}");
+
+        minZoom = node.Scale.Z * 1.25f / ScaledSpace.Instance.scaleFactor;
+        zoom = node.Scale.Z * 2f / ScaledSpace.Instance.scaleFactor;
 	}
 
 	public void TargetObject(CelestialBody cBody)
 	{
 		target = cBody.scaledSphere;
         Position = Vector3.Zero;
+
+		GD.PrintRich($"{classTag} Targeting cBody: {cBody.Name}");
+        GD.PrintRich($"{classTag} cBody radius: {cBody.radius}");
 
         minZoom = (float)(cBody.radius * 1.25f / ScaledSpace.Instance.scaleFactor);
         zoom = (float)(cBody.radius * 2f / ScaledSpace.Instance.scaleFactor);

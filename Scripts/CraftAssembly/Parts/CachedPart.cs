@@ -13,21 +13,35 @@ public partial class CachedPart
     public PackedScene partScene;
 
     // Run this ONLY ONCE per part!
-    public void LoadPartFiles()
+    public void LoadAssets()
     {
         // Dangerous operation. This will actively "install" resources into the game. 
         // Follow the part modding convention! 
-        bool success = ProjectSettings.LoadResourcePack(pckFile);
+        bool success = ProjectSettings.LoadResourcePack($"{ConfigUtility.GameData}/{pckFile}");
 
         if (!success)
         {
-            GD.Print($"({name}) Failed to load resource pack '{pckFile}'.");
-            GD.Print($"({name}) Attempting to forcefully load scene '{scenePath}'...");
+            GD.Print($"(Cached {name}) Failed to load resource pack '{ConfigUtility.GameData}/{pckFile}'.");
+            GD.Print($"(Cached {name}) Attempting to forcefully load scene '{scenePath}'...");
         }
 
         // Errors out if the scene doesn't exist. The only reason this even tries to load anyways is for testing.
-        PackedScene scene = (PackedScene)ResourceLoader.Load($"{ConfigUtility.GameData}/{scenePath}");
-        partScene = scene;
-        GD.Print($"({name}) Scene loading success!");
+        PackedScene scene = (PackedScene)ResourceLoader.Load(scenePath);
+        if (scene != null)
+        {
+            partScene = scene;
+            GD.Print($"(Cached {name}) Scene loading success!");
+        }else{
+            GD.Print($"(Cached {name}) Could not load part.");
+        }
+    }
+
+    public Part Instantiate(Node parent)
+    {
+        GD.Print($"(Cached {name}) Instantiating...");
+        Part part = (Part)partScene.Instantiate();
+        parent.AddChild(part);
+
+        return part;
     }
 }

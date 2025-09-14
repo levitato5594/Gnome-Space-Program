@@ -4,5 +4,5 @@
     "displayName": "Vehicle Assembly Building",
     "category": "Colony Parts",
     "assets": "Stock/Parts/Colony/GSC_VAB/GSCVAB.pck",
-    "partScene": "PARTMAIN",
+    "partScene": "Parts/Assets/GSC_VAB/PARTMAIN.tscn",
 }

@@ -5,6 +5,8 @@
 [ext_resource type="Script" uid="uid://c31glrp4mvcsg" path="res://Scripts/UserInterface/DropdownButton.cs" id="4_axskb"]
 
 [node name="TextureButton" type="TextureButton"]
+offset_right = 20.0
+offset_bottom = 20.0
 toggle_mode = true
 texture_normal = ExtResource("2_bl4o2")
 texture_pressed = ExtResource("1_xeifc")

@@ -39,7 +39,7 @@ public partial class SaveSettingsManager : Panel
 	public override void _Ready()
 	{
 		rootSystems = SaveManager.GetPlanetPacks("rootSystem");
-		GD.Print($"Got Root Systems! Total: {rootSystems.Count}");
+		//GD.Print($"Got Root Systems! Total: {rootSystems.Count}");
 
 		saveSchemas = SaveManager.GetSaveSchemas();
         CreateOptionTree(saveSchemas);

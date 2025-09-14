@@ -1,5 +1,6 @@
 {
     "configType": "Base",
+    "parent": "Gnobe",
     "blueprint": true,
     "name": "Gnome Space Center",
 
@@ -11,7 +12,11 @@
             "position": [0,0,0],
             "rotation": [0,0,0],
             "scale": [1,1,1],
-            "destroyed": false
+            "destroyed": false,
+
+            "additionalData": {},
+
+            "attachedBuildings": {}
         }
     }
 }

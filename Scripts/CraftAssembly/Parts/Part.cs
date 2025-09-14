@@ -8,7 +8,7 @@ BOOYAH!
 Technically this class encompasses both colony AND ship parts, as I intend for them to be used interchangeably.
 Why? Because I want players to have the freedom to get up to any sort of shenanigans with these systems.
 */
-public partial class Part : Node
+public partial class Part : RigidBody3D
 {
     [Export] public bool enabled = false;
 
@@ -16,9 +16,9 @@ public partial class Part : Node
 
     public override void _Ready()
     {
-        GD.Print($"({Name}) Getting part modules...");
+        GD.Print($"(Instance {Name}) Getting part modules...");
         partModules = GetPartModules(this);
-        GD.Print($"({Name}) Got all part modules! Count: {partModules.Count}");
+        GD.Print($"(Instance {Name}) Got all part modules! Count: {partModules.Count}");
     }
 
     // Recursive function to find every part module GAAHH DAMN CROSS LANGUAGE SCRIPTING SUCKS
