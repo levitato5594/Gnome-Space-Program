@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b08reqxmoktvk"]
+[gd_scene load_steps=19 format=3 uid="uid://b08reqxmoktvk"]
 
 [ext_resource type="Script" uid="uid://c3i0ynvo54sk1" path="res://Scripts/Utility/ActiveSave.cs" id="1_2c3j4"]
 [ext_resource type="Script" uid="uid://2vlhdf4w605i" path="res://Scripts/PlanetarySystem/PlanetSystem.cs" id="1_pocjb"]
@@ -11,6 +11,12 @@
 [ext_resource type="Theme" uid="uid://b4ia03110swah" path="res://Assets/Materials/GeneralUI/Theme.tres" id="7_yxkbd"]
 [ext_resource type="Script" uid="uid://yt1hbw2t4y8b" path="res://Scripts/Colonies/ColonyManager.cs" id="8_gxrxs"]
 [ext_resource type="PackedScene" uid="uid://bw23jl4jvv55y" path="res://Assets/Prefabs/UI/colony_icon.tscn" id="9_gusxr"]
+[ext_resource type="Script" uid="uid://3c67403nyo8f" path="res://Scripts/OrbitalMechanics/OrbitManager.cs" id="10_usiul"]
+[ext_resource type="Material" uid="uid://mavr2da6tcsi" path="res://Assets/Materials/noisetest.tres" id="12_ybcp0"]
+[ext_resource type="Script" uid="uid://byojjoj3wpnpd" path="res://Scripts/UserInterface/MapUI.cs" id="14_23wpb"]
+[ext_resource type="Script" uid="uid://b0otr6yt3ikn2" path="res://Scripts/UserInterface/ContextMenus/ColonyMenu.cs" id="15_p543u"]
+[ext_resource type="Script" uid="uid://bc0vnn6dhlhug" path="res://Scripts/UserInterface/ContextMenus/ContextMenus.cs" id="15_ue2ba"]
+[ext_resource type="Script" uid="uid://nutgi3n1uf8j" path="res://Scripts/UserInterface/ContextMenus/PlanetMenu.cs" id="17_ue2ba"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_0mdm0"]
 
@@ -111,6 +117,9 @@ script = ExtResource("8_gxrxs")
 iconPrefab = ExtResource("9_gusxr")
 iconParent = NodePath("../MapUI/ColonyIcons")
 
+[node name="OrbitManager" type="Node" parent="."]
+script = ExtResource("10_usiul")
+
 [node name="Cam_Pos" type="Node3D" parent="." node_paths=PackedStringArray("rotNode_Y", "rotNode_X", "camNode") groups=["CamPivot"]]
 script = ExtResource("6_0mdm0")
 multiplyScroll = true
@@ -136,9 +145,10 @@ remote_path = NodePath("../../../../../PlanetSystem/RenderLayers/LocalContainer/
 remote_path = NodePath("../../../../../PlanetSystem/RenderLayers/ScaledContainer/ScaledView/Camera3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = ExtResource("12_ybcp0")
 mesh = SubResource("BoxMesh_0mdm0")
 
-[node name="MapUI" type="Control" parent="."]
+[node name="MapUI" type="Control" parent="." node_paths=PackedStringArray("contextMenus")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -147,6 +157,8 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("7_yxkbd")
+script = ExtResource("14_23wpb")
+contextMenus = NodePath("ContextMenus")
 
 [node name="PlanetIcons" type="Control" parent="MapUI"]
 anchors_preset = 0
@@ -159,3 +171,123 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
+
+[node name="ContextMenus" type="Control" parent="MapUI" node_paths=PackedStringArray("menus")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("15_ue2ba")
+menus = [NodePath("ColonyMenu"), NodePath("PlanetMenu")]
+
+[node name="ColonyMenu" type="Panel" parent="MapUI/ContextMenus" node_paths=PackedStringArray("title")]
+visible = false
+layout_mode = 0
+offset_left = 915.0
+offset_top = 383.0
+offset_right = 1135.0
+offset_bottom = 632.0
+script = ExtResource("15_p543u")
+title = NodePath("VBoxContainer/Title")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MapUI/ContextMenus/ColonyMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 7.0
+offset_right = -9.0
+offset_bottom = -45.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="MapUI/ContextMenus/ColonyMenu/VBoxContainer"]
+layout_mode = 2
+text = "COLONY NAME"
+
+[node name="Label2" type="Label" parent="MapUI/ContextMenus/ColonyMenu/VBoxContainer"]
+layout_mode = 2
+text = "OTHER INFO"
+
+[node name="Label3" type="Label" parent="MapUI/ContextMenus/ColonyMenu/VBoxContainer"]
+layout_mode = 2
+text = "OTHER INFO"
+
+[node name="Label4" type="Label" parent="MapUI/ContextMenus/ColonyMenu/VBoxContainer"]
+layout_mode = 2
+text = "OTHER INFO"
+
+[node name="Label5" type="Label" parent="MapUI/ContextMenus/ColonyMenu/VBoxContainer"]
+layout_mode = 2
+text = "OTHER INFO"
+
+[node name="Label6" type="Label" parent="MapUI/ContextMenus/ColonyMenu/VBoxContainer"]
+layout_mode = 2
+text = "OTHER INFO"
+
+[node name="EnterButton" type="Button" parent="MapUI/ContextMenus/ColonyMenu"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = -40.0
+offset_right = 84.0
+offset_bottom = -8.0
+grow_vertical = 0
+text = "Enter"
+
+[node name="PlanetMenu" type="Panel" parent="MapUI/ContextMenus" node_paths=PackedStringArray("title", "radius", "mass", "gravity")]
+visible = false
+layout_mode = 0
+offset_left = 812.0
+offset_top = 448.0
+offset_right = 1135.0
+offset_bottom = 632.0
+script = ExtResource("17_ue2ba")
+title = NodePath("VBoxContainer/Title")
+radius = NodePath("VBoxContainer/Radius")
+mass = NodePath("VBoxContainer/Mass")
+gravity = NodePath("VBoxContainer/Gravity")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MapUI/ContextMenus/PlanetMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 7.0
+offset_right = -9.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="MapUI/ContextMenus/PlanetMenu/VBoxContainer"]
+layout_mode = 2
+text = "PLANET NAME"
+
+[node name="Radius" type="Label" parent="MapUI/ContextMenus/PlanetMenu/VBoxContainer"]
+layout_mode = 2
+text = "RADIUS"
+
+[node name="Mass" type="Label" parent="MapUI/ContextMenus/PlanetMenu/VBoxContainer"]
+layout_mode = 2
+text = "MASS"
+
+[node name="Gravity" type="Label" parent="MapUI/ContextMenus/PlanetMenu/VBoxContainer"]
+layout_mode = 2
+text = "GRAVITY"
+
+[node name="Label5" type="Label" parent="MapUI/ContextMenus/PlanetMenu/VBoxContainer"]
+layout_mode = 2
+text = "OTHER INFO"
+
+[node name="Label6" type="Label" parent="MapUI/ContextMenus/PlanetMenu/VBoxContainer"]
+layout_mode = 2
+text = "OTHER INFO"
+
+[connection signal="pressed" from="MapUI/ContextMenus/ColonyMenu/EnterButton" to="MapUI/ContextMenus/ColonyMenu" method="EnterButtonPressed"]

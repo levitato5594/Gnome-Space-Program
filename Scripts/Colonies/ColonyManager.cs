@@ -74,10 +74,12 @@ public partial class ColonyManager : Node
         scaledObject.originalScale = Double3.One * 100000000; // For max zoom reasons
 
         // HHhhhhmmmmmmmmmm....
-        MapIcon icon = (MapIcon)iconPrefab.Instantiate();
+        ColonyIcon icon = (ColonyIcon)iconPrefab.Instantiate();
         iconParent.AddChild(icon);
         icon.thing = scaledObject;
         icon.camera = ActiveSave.Instance.localCamera;
+
+        icon.colony = colony;
 
         //if (ConfigUtility.TryGetDictionary("buildings", data, out Dictionary buildings))
         //{

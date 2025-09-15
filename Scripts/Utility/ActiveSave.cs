@@ -90,6 +90,13 @@ public partial class ActiveSave : Node3D
 		}
 
 		flightCam.TargetObject(focusBody);
+
+		// Default context menu
+		Godot.Collections.Dictionary info = new()
+        {
+            { "planet", focusBody }
+        };
+        MapUI.Instance.contextMenus.OpenMenu("PlanetMenu", info, true);
 	}
 
 	public override void _Process(double delta)
@@ -98,6 +105,6 @@ public partial class ActiveSave : Node3D
 		saveTime += delta * 1000 * timeSpeed / 1000;
 
 		// Set physics speed to match time speed
-		Engine.TimeScale = timeSpeed;
+		//Engine.TimeScale = timeSpeed;
 	}
 }

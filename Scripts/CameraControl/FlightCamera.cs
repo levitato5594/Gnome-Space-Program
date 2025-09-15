@@ -5,7 +5,7 @@ public partial class FlightCamera : Node3D
 {
 	// THERE SHOULD ONLY EVER BE ONE FLIGHT CAMERA!!
 	// The same camera (THIS ONE) is used in both map view, colony view, and flight
-	public static readonly string classTag = "([color=teal]FlightCamera[color=white])";
+	public static readonly string classTag = "([color=MEDIUM_SPRING_GREEN]FlightCamera[color=white])";
 	public static FlightCamera Instance { get; private set; }
 
     [Export] public bool inMap = true;

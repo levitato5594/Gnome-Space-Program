@@ -22,7 +22,12 @@ public partial class ScaledSpace : Node3D
         Instance = this;
     }
 
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
+    {
+        ForceUpdate();
+    }
+
+    public void ForceUpdate()
     {
         Godot.Collections.Array<Node> childNodes = GetChildren();
 

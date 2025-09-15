@@ -41,9 +41,9 @@ public partial class CelestialBody : Node3D
     {   
         // Propagate the cBody's orbit
 
-        ProcessOrbitalPosition();
+        //ProcessOrbitalPosition();
 
-        scaledSphere.truePosition = cartesianData.position.GetPosYUp();
+        //scaledSphere.truePosition = cartesianData.position.GetPosYUp();
     }
 
     // Process the cBody orbital positioning calculations. Used by floating origin to "force" repositioning to avoid jitter.
@@ -58,11 +58,14 @@ public partial class CelestialBody : Node3D
         {
             orbit.trueAnomaly = PatchedConics.TimeToTrueAnomaly(orbit, ActiveSave.Instance.saveTime, 0) + orbit.trueAnomalyAtEpoch;
             (Double3 position, Double3 velocity) = PatchedConics.KOEtoECI(orbit);
-            cartesianData.position = position;
+            cartesianData.position = position + orbit.parent.cartesianData.position;
             cartesianData.velocity = velocity;
             //GD.Print(SaveManager.Instance.saveTime);
             //GD.Print($"{cartesianData.position.X}, {cartesianData.position.Y}, {cartesianData.position.Z}");
         }
+
+        // Force update scaled space
+        
     }
 
     public override string ToString()

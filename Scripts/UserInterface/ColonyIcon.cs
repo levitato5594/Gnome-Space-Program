@@ -2,17 +2,11 @@ using Godot;
 using System;
 
 // MapIcon for ordinary Node3Ds
-public partial class MapIcon : TextureButton
+public partial class ColonyIcon : MapIcon
 {
-    [Export] public Node3D thing;
-    [Export] public Camera3D camera; // Doesn't matter if it's the scaled or local camera
+    [Export] public Colony colony;
 
-    public override void _Process(double delta)
-    {
-        ForceUpdate();
-    }
-
-    public void ForceUpdate()
+    public override void _PhysicsProcess(double delta)
     {
         if (thing != null && camera != null) 
         {
@@ -27,5 +21,12 @@ public partial class MapIcon : TextureButton
     {
         FlightCamera flightCam = FlightCamera.Instance;
         flightCam.TargetObject(thing);
+
+        Godot.Collections.Dictionary info = new()
+        {
+            { "colony", colony }
+        };
+
+        MapUI.Instance.contextMenus.OpenMenu("ColonyMenu", info, true);
     }
 }

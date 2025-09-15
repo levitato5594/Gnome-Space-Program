@@ -14,5 +14,12 @@ public partial class PlanetIcon : MapIcon
     {
         FlightCamera flightCam = FlightCamera.Instance;
         flightCam.TargetObject(planet);
+
+        Godot.Collections.Dictionary info = new()
+        {
+            { "planet", planet }
+        };
+
+        MapUI.Instance.contextMenus.OpenMenu("PlanetMenu", info, true);
     }
 }

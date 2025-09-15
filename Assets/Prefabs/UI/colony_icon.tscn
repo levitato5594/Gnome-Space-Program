@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://x8kvw8eh51rl" path="res://Assets/Textures/dropdown_button_down.png" id="1_f6esf"]
 [ext_resource type="Texture2D" uid="uid://cvu7pnyn48c8j" path="res://Assets/Textures/dropdown_button_right.png" id="2_snbdi"]
-[ext_resource type="Script" uid="uid://63che271xqk1" path="res://Scripts/UserInterface/MapIcon.cs" id="3_f6esf"]
+[ext_resource type="Script" uid="uid://pc4tlua8kg7u" path="res://Scripts/UserInterface/ColonyIcon.cs" id="3_f6esf"]
 
 [node name="ColonyIcon" type="TextureButton"]
 offset_right = 20.0
