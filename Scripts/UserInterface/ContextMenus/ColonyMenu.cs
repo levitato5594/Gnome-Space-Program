@@ -20,5 +20,6 @@ public partial class ColonyMenu : ContextMenu
     public void EnterButtonPressed()
     {
         GD.Print("aaahhh");
+        FlightCamera.Instance.TargetObject(colonyInQuestion, 10000, 20000);
     }
 }

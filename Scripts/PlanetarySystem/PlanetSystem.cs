@@ -29,6 +29,37 @@ public partial class PlanetSystem : Node3D
 
     public List<CelestialBody> celestialBodies = [];
 
+    // DEBUG SHART
+    [Export] public bool DEBUG_startWithGizmo;
+    [Export] public PackedScene DEBUG_GizmoPrefab;
+	public void ToggleGizmo(bool toggle)
+	{
+		foreach (CelestialBody celestialBody in celestialBodies)
+		{
+            Node3D gizmo;
+            if (celestialBody.FindChild("gizmo") == null)
+			{
+                gizmo = (Node3D)DEBUG_GizmoPrefab.Instantiate();
+                gizmo.Scale = Vector3.One * (float)celestialBody.radius * 0.03f;
+
+				foreach (Node node in gizmo.GetChildren())
+				{
+					if (node is MeshInstance3D mesh)
+					{
+						mesh.SetLayerMaskValue(1, true);
+            			mesh.SetLayerMaskValue(2, true);
+					}
+				}
+
+                celestialBody.scaledSphere.AddChild(gizmo);
+            }else{
+                gizmo = (Node3D)celestialBody.FindChild("gizmo");
+            }
+
+            gizmo.Visible = toggle;
+        }
+	}
+
 	// Called when the node enters the scene tree for the first time.
 	/*public override void _Ready()
 	{
@@ -57,7 +88,11 @@ public partial class PlanetSystem : Node3D
 		orbitRenderers = (Control)GetTree().GetFirstNodeInGroup("OrbitRenderers");
 		CreateSystem(planetConfigs);
 		GD.PrintRich($"{classTag} System created successfully!");
-	}
+
+		// Debug pass
+
+		if (DEBUG_startWithGizmo) ToggleGizmo(true);
+    }
 
 	public void CreateSystem(List<string> configs)
 	{

@@ -53,7 +53,7 @@ public partial class FlightCamera : Node3D
         if (target != null) Position = target.GlobalPosition;
     }
 
-	public void TargetObject(Node3D node)
+	public void TargetObject(Node3D node, float tgtMinZoom, float tgtZoom)
 	{
 		target = node;
         Position = Vector3.Zero;
@@ -61,9 +61,9 @@ public partial class FlightCamera : Node3D
         GD.PrintRich($"{classTag} Targeting node: {node.Name}");
         GD.PrintRich($"{classTag} Node scale: {node.Scale}");
 
-        minZoom = node.Scale.Z * 1.25f / ScaledSpace.Instance.scaleFactor;
-        zoom = node.Scale.Z * 2f / ScaledSpace.Instance.scaleFactor;
-	}
+        minZoom = tgtMinZoom; //node.Scale.Z * 1.25f / ScaledSpace.Instance.scaleFactor;
+        zoom = tgtZoom; //node.Scale.Z * 2f / ScaledSpace.Instance.scaleFactor;
+    }
 
 	public void TargetObject(CelestialBody cBody)
 	{

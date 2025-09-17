@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://b08reqxmoktvk"]
+[gd_scene load_steps=18 format=3 uid="uid://b08reqxmoktvk"]
 
 [ext_resource type="Script" uid="uid://c3i0ynvo54sk1" path="res://Scripts/Utility/ActiveSave.cs" id="1_2c3j4"]
 [ext_resource type="Script" uid="uid://2vlhdf4w605i" path="res://Scripts/PlanetarySystem/PlanetSystem.cs" id="1_pocjb"]
@@ -12,13 +12,11 @@
 [ext_resource type="Script" uid="uid://yt1hbw2t4y8b" path="res://Scripts/Colonies/ColonyManager.cs" id="8_gxrxs"]
 [ext_resource type="PackedScene" uid="uid://bw23jl4jvv55y" path="res://Assets/Prefabs/UI/colony_icon.tscn" id="9_gusxr"]
 [ext_resource type="Script" uid="uid://3c67403nyo8f" path="res://Scripts/OrbitalMechanics/OrbitManager.cs" id="10_usiul"]
-[ext_resource type="Material" uid="uid://mavr2da6tcsi" path="res://Assets/Materials/noisetest.tres" id="12_ybcp0"]
 [ext_resource type="Script" uid="uid://byojjoj3wpnpd" path="res://Scripts/UserInterface/MapUI.cs" id="14_23wpb"]
 [ext_resource type="Script" uid="uid://b0otr6yt3ikn2" path="res://Scripts/UserInterface/ContextMenus/ColonyMenu.cs" id="15_p543u"]
 [ext_resource type="Script" uid="uid://bc0vnn6dhlhug" path="res://Scripts/UserInterface/ContextMenus/ContextMenus.cs" id="15_ue2ba"]
+[ext_resource type="PackedScene" uid="uid://dam6vsicmpefq" path="res://Assets/Meshes/Gizmo/gizmo.glb" id="17_h3s5b"]
 [ext_resource type="Script" uid="uid://nutgi3n1uf8j" path="res://Scripts/UserInterface/ContextMenus/PlanetMenu.cs" id="17_ue2ba"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_0mdm0"]
 
 [node name="ActiveSave" type="Node3D" node_paths=PackedStringArray("planetSystem", "partManager", "colonyManager", "flightCam", "localCamera")]
 script = ExtResource("1_2c3j4")
@@ -35,6 +33,8 @@ planetIconPrefab = ExtResource("4_yxkbd")
 planetIcons = NodePath("../MapUI/PlanetIcons")
 localCamera = NodePath("RenderLayers/LocalContainer/LocalView/Camera3D")
 scaledSpace = NodePath("RenderLayers/ScaledContainer/ScaledView/ScaledSpace")
+DEBUG_startWithGizmo = true
+DEBUG_GizmoPrefab = ExtResource("17_h3s5b")
 
 [node name="RenderLayers" type="Control" parent="PlanetSystem" groups=["UniverseManager"]]
 z_index = -5
@@ -143,10 +143,6 @@ remote_path = NodePath("../../../../../PlanetSystem/RenderLayers/LocalContainer/
 
 [node name="Scaled" type="RemoteTransform3D" parent="Cam_Pos/Cam_Rot_Y/Cam_Rot_X/RemoteCams"]
 remote_path = NodePath("../../../../../PlanetSystem/RenderLayers/ScaledContainer/ScaledView/Camera3D")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-material_override = ExtResource("12_ybcp0")
-mesh = SubResource("BoxMesh_0mdm0")
 
 [node name="MapUI" type="Control" parent="." node_paths=PackedStringArray("contextMenus")]
 layout_mode = 3
@@ -289,5 +285,8 @@ text = "OTHER INFO"
 [node name="Label6" type="Label" parent="MapUI/ContextMenus/PlanetMenu/VBoxContainer"]
 layout_mode = 2
 text = "OTHER INFO"
+
+[node name="gizmo" parent="." instance=ExtResource("17_h3s5b")]
+transform = Transform3D(0.02, 0, 0, 0, 0.02, 0, 0, 0, 0.02, 0, 0, 0)
 
 [connection signal="pressed" from="MapUI/ContextMenus/ColonyMenu/EnterButton" to="MapUI/ContextMenus/ColonyMenu" method="EnterButtonPressed"]
