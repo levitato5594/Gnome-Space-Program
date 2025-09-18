@@ -17,10 +17,10 @@ public partial class PlanetSystem : Node3D
 
 	public static readonly string classTag = "([color=green]PlanetSystem[color=white])";
 
-	public Node3D localSpace;
+	[Export] public Node3D localSpace;
 	public Node3D localSpacePlanets;
 	[Export] public ScaledSpace scaledSpace;
-	public Control orbitRenderers;
+	[Export] public Control orbitRenderers;
 
 	// Since patched conics require an SOI, then have a "root SOI" in the form of a "root body"
 	public CelestialBody rootBody;
@@ -83,9 +83,9 @@ public partial class PlanetSystem : Node3D
 			GD.PrintRich($"{classTag} Successfully indexed celestial pack '{fullPath}'");
 		}
 		// Might aswell do this while we're at it
-		localSpace = (Node3D)GetTree().GetFirstNodeInGroup("LocalSpace");
+		//localSpace = (Node3D)GetTree().GetFirstNodeInGroup("LocalSpace");
 		localSpacePlanets = (Node3D)localSpace.FindChild("Planets");
-		orbitRenderers = (Control)GetTree().GetFirstNodeInGroup("OrbitRenderers");
+		//orbitRenderers = (Control)GetTree().GetFirstNodeInGroup("OrbitRenderers");
 		CreateSystem(planetConfigs);
 		GD.PrintRich($"{classTag} System created successfully!");
 

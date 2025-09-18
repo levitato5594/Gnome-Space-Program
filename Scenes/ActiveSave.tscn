@@ -1,8 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://b08reqxmoktvk"]
+[gd_scene load_steps=20 format=3 uid="uid://b08reqxmoktvk"]
 
 [ext_resource type="Script" uid="uid://c3i0ynvo54sk1" path="res://Scripts/Utility/ActiveSave.cs" id="1_2c3j4"]
 [ext_resource type="Script" uid="uid://2vlhdf4w605i" path="res://Scripts/PlanetarySystem/PlanetSystem.cs" id="1_pocjb"]
 [ext_resource type="PackedScene" uid="uid://oo6ip25lyjt3" path="res://Assets/Prefabs/Planets/OrbitRenderer.tscn" id="3_212tm"]
+[ext_resource type="Material" uid="uid://bgcp3j11mrprb" path="res://Assets/Materials/Background.tres" id="3_sfn14"]
 [ext_resource type="PackedScene" uid="uid://dt3jn2nr8pm3l" path="res://Assets/Prefabs/UI/planet_icon.tscn" id="4_yxkbd"]
 [ext_resource type="Script" uid="uid://qcplqipy8mmr" path="res://Scripts/PlanetarySystem/ScaledSpace.cs" id="5_yxkbd"]
 [ext_resource type="Script" uid="uid://ve83kys7a48x" path="res://Scripts/CameraControl/FlightCamera.cs" id="6_0mdm0"]
@@ -18,25 +19,19 @@
 [ext_resource type="PackedScene" uid="uid://dam6vsicmpefq" path="res://Assets/Meshes/Gizmo/gizmo.glb" id="17_h3s5b"]
 [ext_resource type="Script" uid="uid://nutgi3n1uf8j" path="res://Scripts/UserInterface/ContextMenus/PlanetMenu.cs" id="17_ue2ba"]
 
+[sub_resource type="BoxMesh" id="BoxMesh_h3s5b"]
+material = ExtResource("3_sfn14")
+flip_faces = true
+
 [node name="ActiveSave" type="Node3D" node_paths=PackedStringArray("planetSystem", "partManager", "colonyManager", "flightCam", "localCamera")]
 script = ExtResource("1_2c3j4")
 planetSystem = NodePath("PlanetSystem")
 partManager = NodePath("PartManager")
 colonyManager = NodePath("ColonyManager")
 flightCam = NodePath("Cam_Pos")
-localCamera = NodePath("PlanetSystem/RenderLayers/LocalContainer/LocalView/Camera3D")
-
-[node name="PlanetSystem" type="Node3D" parent="." node_paths=PackedStringArray("planetIcons", "localCamera", "scaledSpace")]
-script = ExtResource("1_pocjb")
-orbitRendererPrefab = ExtResource("3_212tm")
-planetIconPrefab = ExtResource("4_yxkbd")
-planetIcons = NodePath("../MapUI/PlanetIcons")
 localCamera = NodePath("RenderLayers/LocalContainer/LocalView/Camera3D")
-scaledSpace = NodePath("RenderLayers/ScaledContainer/ScaledView/ScaledSpace")
-DEBUG_startWithGizmo = true
-DEBUG_GizmoPrefab = ExtResource("17_h3s5b")
 
-[node name="RenderLayers" type="Control" parent="PlanetSystem" groups=["UniverseManager"]]
+[node name="RenderLayers" type="Control" parent="."]
 z_index = -5
 layout_mode = 3
 anchors_preset = 15
@@ -46,7 +41,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="LocalContainer" type="SubViewportContainer" parent="PlanetSystem/RenderLayers"]
+[node name="LocalContainer" type="SubViewportContainer" parent="RenderLayers"]
 z_index = 1
 layout_mode = 1
 anchors_preset = 15
@@ -56,27 +51,26 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
-[node name="LocalView" type="SubViewport" parent="PlanetSystem/RenderLayers/LocalContainer"]
+[node name="LocalView" type="SubViewport" parent="RenderLayers/LocalContainer"]
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(1152, 648)
+size = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
-[node name="Camera3D" type="Camera3D" parent="PlanetSystem/RenderLayers/LocalContainer/LocalView"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.66701)
+[node name="Camera3D" type="Camera3D" parent="RenderLayers/LocalContainer/LocalView"]
 cull_mask = 1047553
 current = true
 far = 1e+06
 
-[node name="LocalSpace" type="Node3D" parent="PlanetSystem/RenderLayers/LocalContainer/LocalView" groups=["LocalSpace"]]
+[node name="LocalSpace" type="Node3D" parent="RenderLayers/LocalContainer/LocalView"]
 
-[node name="Planets" type="Node3D" parent="PlanetSystem/RenderLayers/LocalContainer/LocalView/LocalSpace"]
+[node name="Planets" type="Node3D" parent="RenderLayers/LocalContainer/LocalView/LocalSpace"]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="PlanetSystem/RenderLayers/LocalContainer/LocalView/LocalSpace"]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="RenderLayers/LocalContainer/LocalView/LocalSpace"]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
 layers = 3
 
-[node name="ScaledContainer" type="SubViewportContainer" parent="PlanetSystem/RenderLayers"]
+[node name="ScaledContainer" type="SubViewportContainer" parent="RenderLayers"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -85,26 +79,64 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
-[node name="ScaledView" type="SubViewport" parent="PlanetSystem/RenderLayers/ScaledContainer"]
+[node name="ScaledView" type="SubViewport" parent="RenderLayers/ScaledContainer"]
+transparent_bg = true
 handle_input_locally = false
-size = Vector2i(1152, 648)
+size = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
-[node name="Camera3D" type="Camera3D" parent="PlanetSystem/RenderLayers/ScaledContainer/ScaledView"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.66701)
-cull_mask = 1048574
+[node name="Camera3D" type="Camera3D" parent="RenderLayers/ScaledContainer/ScaledView"]
+cull_mask = 1047554
 near = 0.51
 far = 1e+07
 
-[node name="ScaledSpace" type="Node3D" parent="PlanetSystem/RenderLayers/ScaledContainer/ScaledView" node_paths=PackedStringArray("flightCamera") groups=["ScaledSpace"]]
+[node name="ScaledSpace" type="Node3D" parent="RenderLayers/ScaledContainer/ScaledView" node_paths=PackedStringArray("flightCamera")]
 script = ExtResource("5_yxkbd")
-flightCamera = NodePath("../../../../../Cam_Pos")
+flightCamera = NodePath("../../../../Cam_Pos")
 
-[node name="OrbitRenderers" type="Control" parent="PlanetSystem/RenderLayers" groups=["OrbitRenderers"]]
+[node name="BackgroundContainer" type="SubViewportContainer" parent="RenderLayers"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="BackgView" type="SubViewport" parent="RenderLayers/BackgroundContainer"]
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="RenderLayers/BackgroundContainer/BackgView"]
+cull_mask = 1047556
+
+[node name="Background" type="Node3D" parent="RenderLayers/BackgroundContainer/BackgView"]
+
+[node name="Skybox" type="MeshInstance3D" parent="RenderLayers/BackgroundContainer/BackgView/Background"]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
+layers = 4
+mesh = SubResource("BoxMesh_h3s5b")
+skeleton = NodePath("../../../../../Miscellaneous/gizmo")
+
+[node name="OrbitRenderers" type="Control" parent="RenderLayers"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="PlanetSystem" type="Node3D" parent="." node_paths=PackedStringArray("planetIcons", "localCamera", "localSpace", "scaledSpace", "orbitRenderers")]
+script = ExtResource("1_pocjb")
+orbitRendererPrefab = ExtResource("3_212tm")
+planetIconPrefab = ExtResource("4_yxkbd")
+planetIcons = NodePath("../MapUI/PlanetIcons")
+localCamera = NodePath("../RenderLayers/LocalContainer/LocalView/Camera3D")
+localSpace = NodePath("../RenderLayers/LocalContainer/LocalView/LocalSpace")
+scaledSpace = NodePath("../RenderLayers/ScaledContainer/ScaledView/ScaledSpace")
+orbitRenderers = NodePath("../RenderLayers/OrbitRenderers")
+DEBUG_startWithGizmo = true
+DEBUG_GizmoPrefab = ExtResource("17_h3s5b")
 
 [node name="PartManager" type="Node" parent="."]
 script = ExtResource("6_2c3j4")
@@ -120,7 +152,7 @@ iconParent = NodePath("../MapUI/ColonyIcons")
 [node name="OrbitManager" type="Node" parent="."]
 script = ExtResource("10_usiul")
 
-[node name="Cam_Pos" type="Node3D" parent="." node_paths=PackedStringArray("rotNode_Y", "rotNode_X", "camNode") groups=["CamPivot"]]
+[node name="Cam_Pos" type="Node3D" parent="." node_paths=PackedStringArray("rotNode_Y", "rotNode_X", "camNode")]
 script = ExtResource("6_0mdm0")
 multiplyScroll = true
 lerpSpeed = 10.0
@@ -136,13 +168,20 @@ zoom = 2.0
 [node name="Cam_Rot_X" type="Node3D" parent="Cam_Pos/Cam_Rot_Y"]
 
 [node name="RemoteCams" type="Node3D" parent="Cam_Pos/Cam_Rot_Y/Cam_Rot_X"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.66701)
 
 [node name="Local" type="RemoteTransform3D" parent="Cam_Pos/Cam_Rot_Y/Cam_Rot_X/RemoteCams"]
-remote_path = NodePath("../../../../../PlanetSystem/RenderLayers/LocalContainer/LocalView/Camera3D")
+remote_path = NodePath("../../../../../RenderLayers/LocalContainer/LocalView/Camera3D")
 
 [node name="Scaled" type="RemoteTransform3D" parent="Cam_Pos/Cam_Rot_Y/Cam_Rot_X/RemoteCams"]
-remote_path = NodePath("../../../../../PlanetSystem/RenderLayers/ScaledContainer/ScaledView/Camera3D")
+remote_path = NodePath("../../../../../RenderLayers/ScaledContainer/ScaledView/Camera3D")
+
+[node name="Background" type="RemoteTransform3D" parent="Cam_Pos/Cam_Rot_Y/Cam_Rot_X/RemoteCams"]
+remote_path = NodePath("../../../../../RenderLayers/BackgroundContainer/BackgView/Camera3D")
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="Cam_Pos/Cam_Rot_Y/Cam_Rot_X/RemoteCams"]
+remote_path = NodePath("../../../../../RenderLayers/BackgroundContainer/BackgView/Background/Skybox")
+update_rotation = false
+update_scale = false
 
 [node name="MapUI" type="Control" parent="." node_paths=PackedStringArray("contextMenus")]
 layout_mode = 3
@@ -182,10 +221,10 @@ menus = [NodePath("ColonyMenu"), NodePath("PlanetMenu")]
 [node name="ColonyMenu" type="Panel" parent="MapUI/ContextMenus" node_paths=PackedStringArray("title")]
 visible = false
 layout_mode = 0
-offset_left = 915.0
-offset_top = 383.0
-offset_right = 1135.0
-offset_bottom = 632.0
+offset_left = 1670.0
+offset_top = 807.0
+offset_right = 1891.0
+offset_bottom = 1057.0
 script = ExtResource("15_p543u")
 title = NodePath("VBoxContainer/Title")
 
@@ -239,11 +278,16 @@ text = "Enter"
 
 [node name="PlanetMenu" type="Panel" parent="MapUI/ContextMenus" node_paths=PackedStringArray("title", "radius", "mass", "gravity")]
 visible = false
-layout_mode = 0
-offset_left = 812.0
-offset_top = 448.0
-offset_right = 1135.0
-offset_bottom = 632.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1568.0
+offset_top = 873.0
+offset_right = -29.0
+offset_bottom = -23.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("17_ue2ba")
 title = NodePath("VBoxContainer/Title")
 radius = NodePath("VBoxContainer/Radius")
@@ -286,7 +330,9 @@ text = "OTHER INFO"
 layout_mode = 2
 text = "OTHER INFO"
 
-[node name="gizmo" parent="." instance=ExtResource("17_h3s5b")]
+[node name="Miscellaneous" type="Node" parent="."]
+
+[node name="gizmo" parent="Miscellaneous" instance=ExtResource("17_h3s5b")]
 transform = Transform3D(0.02, 0, 0, 0, 0.02, 0, 0, 0, 0.02, 0, 0, 0)
 
 [connection signal="pressed" from="MapUI/ContextMenus/ColonyMenu/EnterButton" to="MapUI/ContextMenus/ColonyMenu" method="EnterButtonPressed"]
