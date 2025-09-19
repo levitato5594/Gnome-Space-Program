@@ -4,4 +4,4 @@
 
 [node name="Main" type="Node3D"]
 
-[node name="MainMenu" parent="." groups=["MainMenu"] instance=ExtResource("1_r150o")]
+[node name="MainMenu" parent="." instance=ExtResource("1_r150o")]

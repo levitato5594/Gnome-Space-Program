@@ -12,7 +12,6 @@ public partial class OrbitManager : Node
             ScaledSpace.Instance.ForceUpdate();
 
             cBody.ProcessOrbitalPosition();
-
             cBody.scaledSphere.truePosition = cBody.cartesianData.position.GetPosYUp();
             cBody.scaledSphere.ForceUpdate();
         }

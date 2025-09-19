@@ -77,6 +77,12 @@ public partial class FlightCamera : Node3D
         zoom = (float)(cBody.radius * 2f / ScaledSpace.Instance.scaleFactor);
 	}
 
+	// Map view
+	public void ToggleMapView(bool toggle)
+	{
+		inMap = toggle;
+	}
+
     public override void _UnhandledInput(InputEvent @event)
     {
         if (@event is InputEventMouseButton buttonEvent)

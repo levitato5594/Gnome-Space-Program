@@ -1,6 +1,4 @@
-[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://d23tukoaw8yvl"]
-
-[ext_resource type="Texture2D" uid="uid://bb15ko7beveuq" path="res://Assets/Textures/eroded-smoothed-rockface_albedo.png" id="1_1688f"]
+[gd_resource type="StandardMaterial3D" load_steps=4 format=3 uid="uid://d23tukoaw8yvl"]
 
 [sub_resource type="Gradient" id="Gradient_os6y5"]
 interpolation_mode = 2
@@ -32,7 +30,6 @@ clearcoat_enabled = true
 clearcoat_roughness = 0.67
 subsurf_scatter_strength = 1.0
 refraction_enabled = true
-refraction_texture = ExtResource("1_1688f")
 uv1_scale = Vector3(0.005, 0.005, 0.005)
 uv1_triplanar = true
 uv1_world_triplanar = true
