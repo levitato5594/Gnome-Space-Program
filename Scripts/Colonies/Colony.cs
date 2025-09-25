@@ -6,10 +6,9 @@ public partial class Colony : Node3D
     /*
     Colonies also use "parts" to take advantage of the attachment node system.
     In return, craft get to take advantage of stuff like launchsites and VABs.
-
-    TODO: Instantiate the class within a planet and have it show up in the map
     */
 
+    public CelestialBody parentBody;
     public ScaledObject scaledObject;
 
     public string name;
@@ -25,15 +24,18 @@ public partial class Colony : Node3D
     public void Load()
     {
         // Iterate over parts
+        GD.Print($"({name}) Instantiating...");
         foreach (KeyValuePair<string, UnloadedPart> pair in savedRootParts)
         {
-            string name = pair.Key;
+            string partName = pair.Key;
             UnloadedPart data = pair.Value;
 
             // ... Now we need to make a part manager.....
             // ... Okay now that we made a part manager.....
 
             Part part = data.template.Instantiate(this);
+            part.Freeze = true;
+            part.LockRotation = true;
             part.Position = data.position;
             part.Rotation = data.rotation;
         }

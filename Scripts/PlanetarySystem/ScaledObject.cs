@@ -14,6 +14,7 @@ public partial class ScaledObject : Node3D
     public void ForceUpdate()
     {
         // If the counterpart is null then assume that another object is handling positioning
-        if (counterpart != null) truePosition = Double3.ConvertToDouble3(counterpart.GlobalPosition);
+        if (counterpart != null)
+            truePosition = Double3.ConvertToDouble3(counterpart.GlobalPosition);
     }
 }

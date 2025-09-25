@@ -61,11 +61,20 @@ public partial class ColonyManager : Node
             colony.rotation = new Double3((double)rotArr[0], (double)rotArr[1], (double)rotArr[2]);
         }
 
+        // Add all buildings
+        if (ConfigUtility.TryGetDictionary("buildings", data, out Dictionary buildingDict))
+        {
+            colony.savedRootParts = GetColonyParts(buildingDict, true);
+            colony.savedParts = GetColonyParts(buildingDict);
+        }
+
         // Yeah.....
         colony.Position = colony.position.ToFloat3();
+        colony.RotationDegrees = colony.rotation.ToFloat3();
 
         // Add to the planet and also add a map icon
         CelestialBody parent = PlanetSystem.Instance.FindCBodyByName((string)data["parent"]);
+        colony.parentBody = parent;
         parent.AddChild(colony);
 
         ScaledObject scaledObject = new() {Name = colony.name};
@@ -86,6 +95,49 @@ public partial class ColonyManager : Node
         //    colony.savedParts = buildings;
         //}
 
+        // Load it here for now.. We can change this later.
+        colony.Load();
+
         return null;
+    }
+
+    // Parse parts from config
+    public static System.Collections.Generic.Dictionary<string, UnloadedPart> GetColonyParts(Dictionary dict, bool justRoot = false)
+    {
+        System.Collections.Generic.Dictionary<string, UnloadedPart> shit = [];
+        // This is genuinely the worst shit you had to put me through godot what the fuck
+        foreach (KeyValuePair<Variant, Variant> part in dict)
+        {
+            Dictionary partData = (Dictionary)part.Value;
+            string partName = (string)part.Key;
+
+            UnloadedPart unloadedPart = ParseColonyPart(partName, partData);
+
+            shit.Add(partName, unloadedPart);
+        }
+
+        return shit;
+    }
+
+    public static UnloadedPart ParseColonyPart(string name, Dictionary data)
+    {
+        UnloadedPart unloadedPart = new()
+        {
+            template = PartManager.Instance.partCache[name],
+        };
+
+        if (ConfigUtility.TryGetArray("position", data, out Godot.Collections.Array posArr))
+        {
+            unloadedPart.position = new Vector3((float)posArr[0], (float)posArr[1], (float)posArr[2]);
+        }
+
+        if (ConfigUtility.TryGetArray("rotation", data, out Godot.Collections.Array rotArr))
+        {
+            unloadedPart.rotation = new Vector3((float)rotArr[0], (float)rotArr[1], (float)rotArr[2]);
+        }
+
+        // ADD ADDITIONAL DATA AND RECURSIVE PARSING LATER
+
+        return unloadedPart;
     }
 }

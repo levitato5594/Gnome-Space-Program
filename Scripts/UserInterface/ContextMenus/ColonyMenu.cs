@@ -19,7 +19,11 @@ public partial class ColonyMenu : ContextMenu
 
     public void EnterButtonPressed()
     {
-        FlightCamera.Instance.TargetObject(colonyInQuestion, 10000, 20000);
+        FlightCamera.Instance.TargetObject(colonyInQuestion, 10, 500);
         FlightCamera.Instance.ToggleMapView(false);
+
+        ActiveSave.Instance.activeThing = colonyInQuestion;
+        ActiveSave.Instance.activePlanet = colonyInQuestion.parentBody;
+        FlightCamera.Instance.facingDownObject = colonyInQuestion.parentBody;
     }
 }

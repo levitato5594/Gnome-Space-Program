@@ -24,6 +24,8 @@ public partial class FlightCamera : Node3D
     [Export] public float zoomAmnt;
     [Export] public float zoom;
 
+    [Export] public Node3D facingDownObject;
+
     private Vector3 rotTarget_Y;
 	private Vector3 rotTarget_X;
 
@@ -51,6 +53,12 @@ public partial class FlightCamera : Node3D
         camNode.Position = camNode.Position.Lerp(new Vector3(0,0,zoom), lerpy);
 
         if (target != null) Position = target.GlobalPosition;
+
+        if (facingDownObject != null)
+        {
+            LookAt(facingDownObject.GlobalPosition, Vector3.Up);
+            Rotate(Vector3.Right, 1.570795f);
+        }
     }
 
 	public void TargetObject(Node3D node, float tgtMinZoom, float tgtZoom)

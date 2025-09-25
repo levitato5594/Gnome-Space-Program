@@ -42,7 +42,7 @@ public partial class TerrainGen : Node3D
     {
         for (int i = 1; i < maxLevel+1; i++)
         {
-            float distToQuad = Mathf.RoundToInt(radius/Mathf.Pow(2,i-minLevel));
+            float distToQuad = Mathf.RoundToInt(radius/Mathf.Pow(2,i-minLevel)) + 2000;
             if (i <= minLevel)
             {
                 distToQuad = float.PositiveInfinity;
@@ -65,8 +65,9 @@ public partial class TerrainGen : Node3D
 
     public override void _Process(double delta)
     {
-        //player = FlightManager.Instance.currentCraft;
-        playerPos = Vector3.Zero;//player.GlobalPosition;
+        player = ActiveSave.Instance.activeThing;
+        if (player != null) playerPos = player.GlobalPosition;
+
         planetCenter = GlobalPosition;
     }
 

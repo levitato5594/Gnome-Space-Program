@@ -39,7 +39,7 @@ public partial class ScaledSpace : Node3D
                 if (!flightCamera.inMap)
                 {
                     // TODO: Position scaled space objects to visually align with local space
-                    throw new NotImplementedException();
+                    //throw new NotImplementedException();
                 }else{
                     Node3D camObject = flightCamera.target;
                     Vector3 focusObjectPos = Vector3.Zero;
