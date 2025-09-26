@@ -44,6 +44,7 @@ public partial class RealityTangler : Node
 
         originOffset -= Double3.ConvertToDouble3(focusedObjectPos);
 
+        GD.Print("burh!!!");
         GD.Print(originOffset);
     }
 }

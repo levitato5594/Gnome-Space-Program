@@ -52,7 +52,6 @@ public partial class CelestialBody : Node3D
         // Subtract the current influencing cBody's position from our position
         Double3 originPos = cartesianData.position + RealityTangler.Instance.originOffset.GetPosYUp();
 
-        // This breaks the "RealityTangler" convention, but is acceptible for now.
         // Modify originPos such that the active planet is at at a the world origin
         if (ActiveSave.Instance.activePlanet != null)
             originPos -= ActiveSave.Instance.activePlanet.cartesianData.position;

@@ -15,6 +15,7 @@ public partial class ScaledSpace : Node3D
     public static ScaledSpace Instance { get; private set; }
     // By how much the scale is divided by
     [Export] public float scaleFactor = 10000;
+    [Export] public float moveForward = 0.1f;
     [Export] public FlightCamera flightCamera;
 
     public override void _Ready()
@@ -22,7 +23,7 @@ public partial class ScaledSpace : Node3D
         Instance = this;
     }
 
-    public override void _PhysicsProcess(double delta)
+    public override void _Process(double delta)
     {
         ForceUpdate();
     }
@@ -38,8 +39,14 @@ public partial class ScaledSpace : Node3D
                 // Handle ScaledSpace differently if in map view
                 if (!flightCamera.inMap)
                 {
-                    // TODO: Position scaled space objects to visually align with local space
-                    //throw new NotImplementedException();
+                    // We're using floats here because fuck
+                    
+                    Vector3 objPos = scaledObject.truePosition.ToFloat3();
+                    Vector3 camDir = objPos.DirectionTo(flightCamera.camNode.GlobalPosition);
+
+                    float magnitude = (objPos - flightCamera.camNode.GlobalPosition).Length();
+
+                    scaledObject.GlobalPosition = objPos + camDir * (magnitude/(1+(moveForward/1000f)));// + offsetPosition;
                 }else{
                     Node3D camObject = flightCamera.target;
                     Vector3 focusObjectPos = Vector3.Zero;
