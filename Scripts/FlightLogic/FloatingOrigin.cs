@@ -33,7 +33,7 @@ public partial class FloatingOrigin : Node
                     currentCraft.Position = Vector3.Zero;
                     foreach (CelestialBody cbody in PlanetSystem.Instance.celestialBodies)
                     {
-                        cbody.ProcessOrbitalPosition();
+                        //cbody.ProcessOrbitalPosition();
                     }
                 }
             }

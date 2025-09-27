@@ -1,7 +1,9 @@
+/*
 using Godot;
 using System;
 
 // Singleton that FORCES orbits to propagate and manages celestial positiining gnug uig ruigh uiarhg
+// OBSOLETE: look at RealityTangler.cs
 public partial class OrbitManager : Node
 {
     public override void _PhysicsProcess(double delta)
@@ -17,3 +19,4 @@ public partial class OrbitManager : Node
         }
     }
 }
+*/

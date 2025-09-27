@@ -21,7 +21,7 @@ public partial class RealityTangler : Node
     }
 
     // Lotsa EVIL stuff
-    public override void _PhysicsProcess(double delta)
+    public override void _Process(double delta)
     {
         Node3D activeThing = ActiveSave.Instance.activeThing;
         if (activeThing != null)
@@ -34,6 +34,9 @@ public partial class RealityTangler : Node
                 ResetOrigin(activeThing);
             }
         }
+
+        // Orbits uhh
+        ProcessOrbits();
     }
 
     // Resets origin. Duh.
@@ -46,5 +49,19 @@ public partial class RealityTangler : Node
 
         GD.Print("burh!!!");
         GD.Print(originOffset);
+    }
+
+    // Eaten from OrbitManager.cs because we need all the syncing we can get
+    public static void ProcessOrbits()
+    {
+        foreach (CelestialBody cBody in PlanetSystem.Instance.celestialBodies)
+        {
+            // Force many things to update because I don't know
+            ScaledSpace.Instance.ForceUpdate();
+
+            cBody.ProcessOrbitalPosition();
+            cBody.scaledSphere.truePosition = Double3.ConvertToDouble3(cBody.GlobalPosition); //cBody.cartesianData.position.GetPosYUp();
+            cBody.scaledSphere.ForceUpdate();
+        }
     }
 }

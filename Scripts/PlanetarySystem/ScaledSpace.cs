@@ -23,10 +23,11 @@ public partial class ScaledSpace : Node3D
         Instance = this;
     }
 
-    public override void _Process(double delta)
-    {
-        ForceUpdate();
-    }
+    // Something secret steers scaled objects to lag behind when this isn't done. Therefore, we do this. I'm sorry God.
+    //public override void _Process(double delta)
+    //{
+     //   if (!flightCamera.inMap) ForceUpdate();
+    //}
 
     public void ForceUpdate()
     {
@@ -47,6 +48,7 @@ public partial class ScaledSpace : Node3D
                     float magnitude = (objPos - flightCamera.camNode.GlobalPosition).Length();
 
                     scaledObject.GlobalPosition = objPos + camDir * (magnitude/(1+(moveForward/1000f)));// + offsetPosition;
+                    scaledObject.Scale = scaledObject.originalScale.ToFloat3() / scaleFactor;
                 }else{
                     Node3D camObject = flightCamera.target;
                     Vector3 focusObjectPos = Vector3.Zero;
@@ -56,7 +58,7 @@ public partial class ScaledSpace : Node3D
                         focusObjectPos = scaledCamObj.truePosition.ToFloat3();
                     }
                 
-                    scaledObject.Position = scaledObject.truePosition.ToFloat3() / scaleFactor - (focusObjectPos / scaleFactor);
+                    scaledObject.GlobalPosition = scaledObject.truePosition.ToFloat3() / scaleFactor - (focusObjectPos / scaleFactor);
                     scaledObject.Scale = scaledObject.originalScale.ToFloat3() / scaleFactor;
                 }
             }

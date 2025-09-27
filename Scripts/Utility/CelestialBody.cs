@@ -10,6 +10,7 @@ public partial class CelestialBody : Node3D
     public double mass;
     public double geeASL;
     public double radius;
+    public Double3 originPos;
 
     // Orbital info
     public string parentName;
@@ -49,15 +50,6 @@ public partial class CelestialBody : Node3D
     // Process the cBody orbital positioning calculations. Used by floating origin to "force" repositioning to avoid jitter.
     public void ProcessOrbitalPosition()
     {
-        // Subtract the current influencing cBody's position from our position
-        Double3 originPos = cartesianData.position + RealityTangler.Instance.originOffset.GetPosYUp();
-
-        // Modify originPos such that the active planet is at at a the world origin
-        if (ActiveSave.Instance.activePlanet != null)
-            originPos -= ActiveSave.Instance.activePlanet.cartesianData.position;
-
-        Position = originPos.GetPosYUp().ToFloat3();
-
         if (orbit != null)
         {
             orbit.trueAnomaly = PatchedConics.TimeToTrueAnomaly(orbit, ActiveSave.Instance.saveTime, 0) + orbit.trueAnomalyAtEpoch;
@@ -67,6 +59,15 @@ public partial class CelestialBody : Node3D
             //GD.Print(SaveManager.Instance.saveTime);
             //GD.Print($"{cartesianData.position.X}, {cartesianData.position.Y}, {cartesianData.position.Z}");
         }
+
+        // Subtract the current influencing cBody's position from our position
+        originPos = cartesianData.position + RealityTangler.Instance.originOffset.GetPosYUp();
+
+        // Modify originPos such that the active planet is at at a the world origin
+        if (ActiveSave.Instance.activePlanet != null)
+            originPos -= ActiveSave.Instance.activePlanet.cartesianData.position;
+
+        Position = originPos.GetPosYUp().ToFloat3();
     }
 
     public override string ToString()
