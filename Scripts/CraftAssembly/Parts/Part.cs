@@ -16,9 +16,9 @@ public partial class Part : RigidBody3D
 
     public override void _Ready()
     {
-        GD.Print($"(Instance {Name}) Getting part modules...");
+        Logger.Print($"(Instance {Name}) Getting part modules...");
         partModules = GetPartModules(this);
-        GD.Print($"(Instance {Name}) Got all part modules! Count: {partModules.Count}");
+        Logger.Print($"(Instance {Name}) Got all part modules! Count: {partModules.Count}");
     }
 
     // Recursive function to find every part module GAAHH DAMN CROSS LANGUAGE SCRIPTING SUCKS

@@ -24,7 +24,7 @@ public partial class Colony : Node3D
     public void Load()
     {
         // Iterate over parts
-        GD.Print($"({name}) Instantiating...");
+        Logger.Print($"({name}) Instantiating...");
         foreach (KeyValuePair<string, UnloadedPart> pair in savedRootParts)
         {
             string partName = pair.Key;

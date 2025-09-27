@@ -1,7 +1,94 @@
-[gd_scene load_steps=2 format=3 uid="uid://gh6raekpcthq"]
+[gd_scene load_steps=7 format=3 uid="uid://gh6raekpcthq"]
 
 [ext_resource type="PackedScene" uid="uid://buejer35m8rkv" path="res://Scenes/MainMenu.tscn" id="1_r150o"]
+[ext_resource type="Theme" uid="uid://b4ia03110swah" path="res://Assets/Materials/GeneralUI/Theme.tres" id="2_idj7w"]
+[ext_resource type="Script" uid="uid://drrsx2qsfqgck" path="res://Scripts/UserInterface/DraggablePanel.cs" id="3_kln2b"]
+[ext_resource type="Script" uid="uid://ccw5occpyunc0" path="res://Scripts/UserInterface/UISwitcher.cs" id="4_rgh2o"]
+[ext_resource type="StyleBox" uid="uid://cyqx3jqydk5d0" path="res://Assets/Materials/GeneralUI/Misc/marginPanel.tres" id="4_v1gob"]
+[ext_resource type="Script" uid="uid://b6x2gt6jmlw72" path="res://Scripts/UserInterface/Console.cs" id="5_v1gob"]
 
 [node name="Main" type="Node3D"]
 
 [node name="MainMenu" parent="." instance=ExtResource("1_r150o")]
+z_index = 0
+
+[node name="DebugUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("2_idj7w")
+
+[node name="Menu" type="Panel" parent="DebugUI"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 650.0
+offset_top = 352.0
+offset_right = -650.0
+offset_bottom = -352.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_kln2b")
+
+[node name="Console" type="Panel" parent="DebugUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 675.0
+offset_top = 244.0
+offset_right = -675.0
+offset_bottom = -244.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_kln2b")
+
+[node name="TheText" type="RichTextLabel" parent="DebugUI/Console"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 13.0
+offset_top = 11.0
+offset_right = -13.0
+offset_bottom = -11.0
+focus_mode = 2
+theme_override_constants/paragraph_separation = 5
+theme_override_font_sizes/normal_font_size = 12
+theme_override_styles/normal = ExtResource("4_v1gob")
+bbcode_enabled = true
+text = "[color=red]Logger error.
+[color=white]Test newline
+"
+selection_enabled = true
+script = ExtResource("5_v1gob")
+
+[node name="Buttons" type="HBoxContainer" parent="DebugUI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_left = 28.0
+offset_top = 26.0
+offset_right = -20.0
+offset_bottom = 63.0
+theme_override_constants/separation = 16
+
+[node name="Menu" type="Button" parent="DebugUI/Buttons" node_paths=PackedStringArray("toOpen")]
+layout_mode = 2
+text = "Menu"
+script = ExtResource("4_rgh2o")
+toggler = true
+toOpen = NodePath("../../Menu")
+
+[node name="Menu2" type="Button" parent="DebugUI/Buttons" node_paths=PackedStringArray("toOpen")]
+layout_mode = 2
+text = "Console"
+script = ExtResource("4_rgh2o")
+toggler = true
+toOpen = NodePath("../../Console")

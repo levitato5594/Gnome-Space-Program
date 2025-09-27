@@ -47,7 +47,7 @@ public partial class CelestialBody : Node3D
         //scaledSphere.truePosition = cartesianData.position.GetPosYUp();
     }
 
-    // Process the cBody orbital positioning calculations. Used by floating origin to "force" repositioning to avoid jitter.
+    // Process the cBody orbital positioning calculations. Used by RealityTangler to "force" repositioning to avoid jitter.
     public void ProcessOrbitalPosition()
     {
         if (orbit != null)
@@ -60,7 +60,7 @@ public partial class CelestialBody : Node3D
             //GD.Print($"{cartesianData.position.X}, {cartesianData.position.Y}, {cartesianData.position.Z}");
         }
 
-        // Subtract the current influencing cBody's position from our position
+        // Uh
         originPos = cartesianData.position + RealityTangler.Instance.originOffset.GetPosYUp();
 
         // Modify originPos such that the active planet is at at a the world origin

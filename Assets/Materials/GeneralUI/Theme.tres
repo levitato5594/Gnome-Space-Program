@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=19 format=3 uid="uid://b4ia03110swah"]
+[gd_resource type="Theme" load_steps=20 format=3 uid="uid://b4ia03110swah"]
 
 [ext_resource type="StyleBox" uid="uid://bex3aipdq6gde" path="res://Assets/Materials/GeneralUI/label.tres" id="1_mwhhf"]
 [ext_resource type="FontVariation" uid="uid://ckkhw5pqir4c7" path="res://Assets/Fonts/VCR_OST_HighMargin.tres" id="1_yryix"]
@@ -16,6 +16,7 @@
 [ext_resource type="StyleBox" uid="uid://cyqx3jqydk5d0" path="res://Assets/Materials/GeneralUI/Misc/marginPanel.tres" id="10_hqfxh"]
 [ext_resource type="StyleBox" uid="uid://cvc53i4gpos6m" path="res://Assets/Materials/GeneralUI/Tree/hovered.tres" id="13_mvnfj"]
 [ext_resource type="StyleBox" uid="uid://rx2ylvt10kn" path="res://Assets/Materials/GeneralUI/Tree/selected.tres" id="14_ahioa"]
+[ext_resource type="FontFile" uid="uid://bbmdjxdpjj8g6" path="res://Assets/Fonts/VCR_OSD_MONO_1.001.ttf" id="15_x8qab"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5fwyf"]
 
@@ -56,6 +57,7 @@ PopupMenu/fonts/title_font = ExtResource("1_yryix")
 PopupMenu/styles/panel = ExtResource("10_hqfxh")
 ProgressBar/styles/background = ExtResource("6_xkgf2")
 ProgressBar/styles/fill = ExtResource("6_ifukn")
+RichTextLabel/fonts/normal_font = ExtResource("15_x8qab")
 ScrollContainer/styles/panel = ExtResource("10_hqfxh")
 Tree/fonts/font = ExtResource("1_yryix")
 Tree/styles/button_hover = ExtResource("2_dirlc")

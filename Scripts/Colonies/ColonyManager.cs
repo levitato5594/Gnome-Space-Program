@@ -14,15 +14,15 @@ public partial class ColonyManager : Node
     public override void _Ready()
     {
         Instance = this;
-        GD.PrintRich($"{classTag} ColonyManager Ready!");
+        Logger.Print($"{classTag} ColonyManager Ready!");
     }
 
     public List<Colony> ParseColonies(string path, bool blueprint = false)
     {
-        GD.PrintRich($"{classTag} Parsing path: {path}");
+        Logger.Print($"{classTag} Parsing path: {path}");
         List<Colony> colonies = [];
         List<string> configs = ConfigUtility.GetConfigs($"{ConfigUtility.GameData}/{path}", "Base");
-        GD.PrintRich($"{classTag} {configs.Count}");
+        Logger.Print($"{classTag} {configs.Count}");
         foreach (string cfg in configs)
         {
             Colony colony = ParseColony(cfg, blueprint);
@@ -36,7 +36,7 @@ public partial class ColonyManager : Node
     }
     public Colony ParseColony(string configPath, bool blueprint = false)
     {
-        GD.PrintRich($"{classTag} Parsing colony: {configPath}");
+        Logger.Print($"{classTag} Parsing colony: {configPath}");
         Dictionary data = ConfigUtility.ParseConfig(configPath);
 
         // This isn't what I wanted get it outta here

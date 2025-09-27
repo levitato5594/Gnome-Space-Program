@@ -24,7 +24,7 @@ public partial class SaveManager : Node
 	public override void _Ready()
 	{
 		Instance = this;
-		GD.PrintRich($"{classTag} SaveManager ready!");
+		Logger.Print($"{classTag} SaveManager ready!");
 
 		OnParameterGenerate += OverridePlanetSelector;
 		OnParameterGenerate += OverridePartSelector;
@@ -34,14 +34,14 @@ public partial class SaveManager : Node
 		System.Collections.Generic.Dictionary<string, Variant> creationParams,
 		string saveFile = null)
 	{
-		GD.Print($"{classTag} Clearing currently loaded save..");
+		Logger.Print($"{classTag} Clearing currently loaded save..");
 		foreach (Node child in GetChildren())
 		{
 			child.QueueFree();
 		}
 		if (saveFile == null) 
 		{
-			GD.Print($"{classTag} Creating new save!");
+			Logger.Print($"{classTag} Creating new save!");
 			ActiveSave activeSave = activeSavePrefab.Instantiate<ActiveSave>();
 			currentSave = activeSave;
 			activeSave.saveParams = creationParams;
@@ -50,7 +50,7 @@ public partial class SaveManager : Node
 		}else{
 			// Load save from file, params will be ignored and instead acquired from the saveFile.
 			// NOT TOO IMPORTANT YET!
-			GD.Print($"{classTag} Loading save from file {saveFile}");
+			Logger.Print($"{classTag} Loading save from file {saveFile}");
 		}
 	}
 

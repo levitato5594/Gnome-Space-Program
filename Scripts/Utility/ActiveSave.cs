@@ -35,20 +35,20 @@ public partial class ActiveSave : Node3D
 
 	public override void _Ready()
 	{
-		GD.PrintRich($"{classTag} Active save starting...");
+		Logger.Print($"{classTag} Active save starting...");
 		Instance = this;
 		foreach (KeyValuePair<string, Variant> param in saveParams)
 		{
-			GD.Print(param);
+			Logger.Print(param);
 		}
-		GD.PrintRich($"{classTag} Active save ready for init!");
+		Logger.Print($"{classTag} Active save ready for init!");
 	}
 
 	// Start up all vital systems such as the planet system and whatnot
 	public void InitSave()
 	{
 		// We first initialize the planets
-		GD.PrintRich($"{classTag} Starting PlanetSystem");
+		Logger.Print($"{classTag} Starting PlanetSystem");
 		Dictionary<string, PlanetPack> planetPacks = SaveManager.GetPlanetPacks();
 		string chosenRootSystem = (string)saveParams["Celestial Bodies/Root System"];
 		// !!! ADD EXTRA SYSTEMS IMPLEMENTATION WHEN RELEVANT !!!
@@ -66,16 +66,16 @@ public partial class ActiveSave : Node3D
 			// Ideally we don't want to use display names for this
 			if (((Godot.Collections.Array<string>)saveParams["Parts/Selected Part Packs"]).Contains(partPack.Value.displayName))
 			{
-                //GD.PrintRich($"{classTag} Loading part pack '{partPack.Value.displayName}'...");
+                //Logger.Print($"{classTag} Loading part pack '{partPack.Value.displayName}'...");
                 pPacksToLoad.Add(partPack.Value);
             }
 		}
 
-		GD.PrintRich($"{classTag} Starting PartManager");
+		Logger.Print($"{classTag} Starting PartManager");
 		// Start it
         partManager.LoadPartPacks(pPacksToLoad);
 
-		GD.PrintRich($"{classTag} Starting ColonyManager");
+		Logger.Print($"{classTag} Starting ColonyManager");
         // Handle Colonies (blueprints)
 		foreach (KeyValuePair<string, PlanetPack> pack in planetPacks)
 		{

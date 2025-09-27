@@ -50,7 +50,7 @@ public partial class TerrainGen : Node3D
             quadDetailLevels.Add(new QuadDetailLevel(){detailValue = i, distanceToQuad = distToQuad});
         }
 
-        GD.Print("Planet generator starting..");
+        Logger.Print("Planet generator starting..");
         
         createCube();
 

@@ -13,14 +13,14 @@ public partial class PartManager : Node
     public override void _Ready()
     {
         Instance = this;
-        GD.PrintRich($"{classTag} PartManager ready!");
+        Logger.Print($"{classTag} PartManager ready!");
     }
 
     public void LoadPartPacks(List<PartPack> packs)
     {
         foreach (PartPack pack in packs)
         {
-            GD.PrintRich($"{classTag} Loading part pack '{pack.displayName}'...");
+            Logger.Print($"{classTag} Loading part pack '{pack.displayName}'...");
             List<CachedPart> parts = GetPartsInPack(pack);
             foreach (CachedPart part in parts)
             {

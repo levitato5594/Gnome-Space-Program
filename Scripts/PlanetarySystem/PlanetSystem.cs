@@ -80,14 +80,14 @@ public partial class PlanetSystem : Node3D
 		{
 			string fullPath = $"{ConfigUtility.GameData}/{pack}";
 			planetConfigs.AddRange(GetPlanetConfigs(fullPath));
-			GD.PrintRich($"{classTag} Successfully indexed celestial pack '{fullPath}'");
+			Logger.Print($"{classTag} Successfully indexed celestial pack '{fullPath}'");
 		}
 		// Might aswell do this while we're at it
 		//localSpace = (Node3D)GetTree().GetFirstNodeInGroup("LocalSpace");
 		localSpacePlanets = (Node3D)localSpace.FindChild("Planets");
 		//orbitRenderers = (Control)GetTree().GetFirstNodeInGroup("OrbitRenderers");
 		CreateSystem(planetConfigs);
-		GD.PrintRich($"{classTag} System created successfully!");
+		Logger.Print($"{classTag} System created successfully!");
 
 		// Debug pass
 
@@ -98,7 +98,7 @@ public partial class PlanetSystem : Node3D
 	{
 		foreach (string str in configs)
 		{
-			//GD.Print(str);
+			//Logger.Print(str);
 			CreateCBody(str);
 		}
 		PostProcessPlanets();
@@ -110,7 +110,7 @@ public partial class PlanetSystem : Node3D
 		{
 			if (cBody.name == name) return cBody;
 		}
-		GD.PrintRich($"{classTag} Couldn't find CelestialBody with name '{name}'");
+		Logger.Print($"{classTag} Couldn't find CelestialBody with name '{name}'");
 		return null;
 	}
 
@@ -140,11 +140,11 @@ public partial class PlanetSystem : Node3D
 					
 					if (err == Error.Ok && (string)data["configType"] == "cBody")
 					{
-						GD.PrintRich($"{classTag} JSON found: {filePath}");
+						Logger.Print($"{classTag} JSON found: {filePath}");
 						files.Add(filePath);
 					}else if (err == Error.ParseError)
 					{
-						GD.PrintErr($"Cannot parse JSON file: {filePath}");
+						Logger.Print($"Cannot parse JSON file: {filePath}");
 					}
 				}
 				
@@ -227,7 +227,7 @@ public partial class PlanetSystem : Node3D
 		if (ConfigUtility.TryGetDictionary("properties", data, out Dictionary properties))
 		{
 			cBody.name = properties.TryGetValue("name", out var name) ? (string)name : MissingString(path, "name"); //GetValue("Properties", "name");
-			GD.PrintRich($"{classTag} Parsing config for: {name}");
+			Logger.Print($"{classTag} Parsing config for: {name}");
 			cBody.focusOnload = properties.TryGetValue("focusOnload", out var fuck) && (bool)fuck;
 			// only mass or geeASL is required, the unassigned one will be calculated based off one of the values.
 			cBody.mass = properties.TryGetValue("mass", out var mass) ? (double)mass : -1;
@@ -245,7 +245,7 @@ public partial class PlanetSystem : Node3D
 				cBody.geeASL = cBody.mass * PatchedConics.GravConstant / Mathf.Pow(cBody.radius, 2f) / PatchedConics.EarthGravity;
 			}
 		}else{
-			GD.PrintErr($"Properties dictionary does not exist in planet config {path}");
+			Logger.Print($"Properties dictionary does not exist in planet config {path}");
 			return null;
 		}
 
@@ -266,7 +266,7 @@ public partial class PlanetSystem : Node3D
 				sphereOfInfluence = orbit.TryGetValue("sphereOfInfluence", out var soi) ? (double)soi : -1,
 			};
 		}else{
-			GD.PrintRich($"{classTag} CBody {cBody.name} is missing its orbit! If this is intended, then disregard this message.");
+			Logger.Print($"{classTag} CBody {cBody.name} is missing its orbit! If this is intended, then disregard this message.");
 		}
 		// Same here too
 		cBody.cartesianData = new()
@@ -301,7 +301,7 @@ public partial class PlanetSystem : Node3D
 							cBody.pqsMods.Add(mod);
 							break;
 						default:
-							GD.PrintErr($"Unknown PQS mod type in {path}");
+							Logger.Print($"Unknown PQS mod type in {path}");
 							break;
 					}
 				}
@@ -316,15 +316,15 @@ public partial class PlanetSystem : Node3D
 	// Throw missing key errors when parsing configs
 	public static string MissingString(string path, string key)
 	{
-		GD.PrintErr($"Parsing error in planet config {path}");
-		GD.PrintErr($"Key {key} is missing!");
+		Logger.Print($"Parsing error in planet config {path}");
+		Logger.Print($"Key {key} is missing!");
 
 		return "Epic Fail :sob:";
 	}
 	public static double MissingNum(string path, string key)
 	{
-		GD.PrintErr($"Parsing error in planet config {path}");
-		GD.PrintErr($"Key {key} is missing!");
+		Logger.Print($"Parsing error in planet config {path}");
+		Logger.Print($"Key {key} is missing!");
 
 		return double.NaN;
 	}

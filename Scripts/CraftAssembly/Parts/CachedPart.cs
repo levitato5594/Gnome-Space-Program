@@ -21,8 +21,8 @@ public partial class CachedPart
 
         if (!success)
         {
-            GD.Print($"(Cached {name}) Failed to load resource pack '{ConfigUtility.GameData}/{pckFile}'.");
-            GD.Print($"(Cached {name}) Attempting to forcefully load scene '{scenePath}'...");
+            Logger.Print($"(Cached {name}) Failed to load resource pack '{ConfigUtility.GameData}/{pckFile}'.");
+            Logger.Print($"(Cached {name}) Attempting to forcefully load scene '{scenePath}'...");
         }
 
         // Errors out if the scene doesn't exist. The only reason this even tries to load anyways is for testing.
@@ -30,15 +30,15 @@ public partial class CachedPart
         if (scene != null)
         {
             partScene = scene;
-            GD.Print($"(Cached {name}) Scene loading success!");
+            Logger.Print($"(Cached {name}) Scene loading success!");
         }else{
-            GD.Print($"(Cached {name}) Could not load part.");
+            Logger.Print($"(Cached {name}) Could not load part.");
         }
     }
 
     public Part Instantiate(Node parent)
     {
-        GD.Print($"(Cached {name}) Instantiating...");
+        Logger.Print($"(Cached {name}) Instantiating...");
         Part part = (Part)partScene.Instantiate();
         parent.AddChild(part);
 

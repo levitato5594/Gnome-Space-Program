@@ -18,11 +18,11 @@ public partial class ConfigUtility : Node
 		if (inEditor)
 		{
 			GameData = EditorGameData;
-			GD.PrintRich($"{classTag} Game running in editor! Using {EditorGameData}");
+			Logger.Print($"{classTag} Game running in editor! Using {EditorGameData}");
 		}else{
 			string dataDir = $"{OS.GetExecutablePath().GetBaseDir()}/{GameDataFolder}";
 			GameData = dataDir;
-			GD.PrintRich($"{classTag} Game running in executable! Using {dataDir}");
+			Logger.Print($"{classTag} Game running in executable! Using {dataDir}");
 		}
 	}
 
@@ -39,7 +39,7 @@ public partial class ConfigUtility : Node
 		if (err == Error.Ok)
 			return data;
 
-		GD.Print($"Failed to parse config {path}");
+		Logger.Print($"Failed to parse config {path}");
 		return null;
 	}
 
