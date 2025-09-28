@@ -383,6 +383,7 @@ offset_left = 28.0
 offset_top = 26.0
 offset_right = -20.0
 offset_bottom = 63.0
+mouse_filter = 2
 theme_override_constants/separation = 16
 
 [node name="Menu" type="Button" parent="DebugUI/Buttons" node_paths=PackedStringArray("toOpen")]
