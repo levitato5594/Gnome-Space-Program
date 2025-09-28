@@ -30,13 +30,14 @@ ssao_radius = 12.11
 ssao_intensity = 13.62
 ssao_detail = 3.03
 
-[node name="ActiveSave" type="Node3D" node_paths=PackedStringArray("planetSystem", "partManager", "colonyManager", "flightCam", "localCamera")]
+[node name="ActiveSave" type="Node3D" node_paths=PackedStringArray("planetSystem", "partManager", "colonyManager", "flightCam", "localCamera", "localSpace")]
 script = ExtResource("1_2c3j4")
 planetSystem = NodePath("PlanetSystem")
 partManager = NodePath("PartManager")
 colonyManager = NodePath("ColonyManager")
 flightCam = NodePath("Cam_Pos")
 localCamera = NodePath("RenderLayers/LocalContainer/LocalView/Camera3D")
+localSpace = NodePath("RenderLayers/LocalContainer/LocalView/LocalSpace")
 timeSpeed = 500000.0
 
 [node name="RenderLayers" type="Control" parent="."]
@@ -78,10 +79,6 @@ far = 1000000.0
 [node name="LocalSpace" type="Node3D" parent="RenderLayers/LocalContainer/LocalView"]
 
 [node name="Planets" type="Node3D" parent="RenderLayers/LocalContainer/LocalView/LocalSpace"]
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="RenderLayers/LocalContainer/LocalView/LocalSpace"]
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
-layers = 3
 
 [node name="ScaledContainer" type="SubViewportContainer" parent="RenderLayers"]
 layout_mode = 1
@@ -359,5 +356,11 @@ transform = Transform3D(0.02, 0, 0, 0, 0.02, 0, 0, 0, 0.02, 0, 0, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Miscellaneous"]
 environment = SubResource("Environment_h3s5b")
+
+[node name="Lights" type="Node" parent="."]
+
+[node name="TestLight" type="DirectionalLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, 0, 0, 0)
+layers = 3
 
 [connection signal="pressed" from="MapUI/ContextMenus/ColonyMenu/EnterButton" to="MapUI/ContextMenus/ColonyMenu" method="EnterButtonPressed"]

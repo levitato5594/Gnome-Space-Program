@@ -14,8 +14,11 @@ public partial class ActiveSave : Node3D
 	[Export] public FlightCamera flightCam;
 	[Export] public Camera3D localCamera;
 
+    // Spaces
+    [Export] public Node3D localSpace;
+
     // The current active thing (craft or colony or NOT ANY)
-	// Also planet (copy this to OrbitManager later)
+    // Also planet (copy this to OrbitManager later)
     public Node3D activeThing;
 	public CelestialBody activePlanet;
 

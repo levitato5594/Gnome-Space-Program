@@ -7,14 +7,16 @@ public partial class Console : RichTextLabel
     public override void _EnterTree()
     {
         GuiInput += OnInput;
+        VisibilityChanged += () => {if(IsVisibleInTree())Logger.Print("[color=cyan]Welcome to the console! ctrl+scroll changes the font size.[color=white]"); };
         Logger.OnLogged += AddLog;
         Text = "";
-        Logger.Print("Ingame console ready");
-        Logger.Print(" _______    _______   _______");
-        Logger.Print("/          /         /       \\");
-        Logger.Print("|   ____   \\______   |_______/");
-        Logger.Print("|       \\         \\  |");
-        Logger.Print("\\_______/  _______/  |");
+        Logger.Print("Console ready");
+        Logger.Print("[color=ff8080] _______    _______   _______");
+        Logger.Print("[color=ffa77f]/          /         /       \\");
+        Logger.Print("[color=ffe17f]|   ____   \\______   |_______/");
+        Logger.Print("[color=7fff7f]|       \\         \\  |");
+        Logger.Print("[color=8080ff]\\_______/  _______/  |");
+        Logger.Print("[color=c880ff]Gnome Space Program v0.2");
         Logger.Print("");
     }
 

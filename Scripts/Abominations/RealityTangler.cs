@@ -47,8 +47,8 @@ public partial class RealityTangler : Node
 
         originOffset -= Double3.ConvertToDouble3(focusedObjectPos);
 
-        GD.Print("burh!!!");
-        GD.Print(originOffset);
+        //GD.Print("burh!!!");
+        //GD.Print(originOffset);
     }
 
     // Eaten from OrbitManager.cs because we need all the syncing we can get

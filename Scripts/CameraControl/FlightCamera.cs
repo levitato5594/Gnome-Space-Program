@@ -9,6 +9,7 @@ public partial class FlightCamera : Node3D
 	public static FlightCamera Instance { get; private set; }
 
     [Export] public bool inMap = true;
+    [Export] public Key mapKey = Key.M;
     [Export] public Node3D target;
 
     [Export] public bool multiplyScroll;
@@ -54,10 +55,12 @@ public partial class FlightCamera : Node3D
 
         if (target != null) Position = target.GlobalPosition;
 
-        if (facingDownObject != null)
+        if (facingDownObject != null && !inMap)
         {
             LookAt(facingDownObject.GlobalPosition, Vector3.Up);
             Rotate(Vector3.Right, 1.570795f);
+        }else{
+            GlobalRotation = new Vector3(0, 0, 0);
         }
     }
 
@@ -66,8 +69,8 @@ public partial class FlightCamera : Node3D
 		target = node;
         Position = Vector3.Zero;
 
-        GD.PrintRich($"{classTag} Targeting node: {node.Name}");
-        GD.PrintRich($"{classTag} Node scale: {node.Scale}");
+        Logger.Print($"{classTag} Targeting node: {node.Name}");
+        Logger.Print($"{classTag} Node scale: {node.Scale}");
 
         minZoom = tgtMinZoom; //node.Scale.Z * 1.25f / ScaledSpace.Instance.scaleFactor;
         zoom = tgtZoom; //node.Scale.Z * 2f / ScaledSpace.Instance.scaleFactor;
@@ -78,8 +81,8 @@ public partial class FlightCamera : Node3D
 		target = cBody.scaledSphere;
         Position = Vector3.Zero;
 
-		GD.PrintRich($"{classTag} Targeting cBody: {cBody.Name}");
-        GD.PrintRich($"{classTag} cBody radius: {cBody.radius}");
+		Logger.Print($"{classTag} Targeting cBody: {cBody.Name}");
+        Logger.Print($"{classTag} cBody radius: {cBody.radius}");
 
         minZoom = (float)(cBody.radius * 1.25f / ScaledSpace.Instance.scaleFactor);
         zoom = (float)(cBody.radius * 2f / ScaledSpace.Instance.scaleFactor);
@@ -88,11 +91,40 @@ public partial class FlightCamera : Node3D
 	// Map view
 	public void ToggleMapView(bool toggle)
 	{
-		inMap = toggle;
-	}
+		Node3D thing = ActiveSave.Instance.activeThing;
+
+        Logger.Print($"{classTag} Map view: {toggle}");
+        inMap = toggle;
+        ActiveSave.Instance.localSpace.Visible = !toggle;
+		
+		if (toggle)
+		{
+			// Implement craft too
+            if (thing is Colony colony)
+			{
+                TargetObject(colony.scaledObject, 1, 2);
+            }else
+			{
+				TargetObject(ActiveSave.Instance.activePlanet);
+			}
+        }else if (thing != null){
+			// Might spell trouble but idc anymore
+            TargetObject(thing, 5, 25);
+        }
+    }
 
     public override void _UnhandledInput(InputEvent @event)
     {
+		// Keybinds
+		if (@event is InputEventKey keyEvent)
+		{
+			// Open map and only open if active thing isn't null (otherwise don't allow it)
+			if (keyEvent.Keycode == mapKey && keyEvent.Pressed && ActiveSave.Instance.activeThing != null)
+			{
+                ToggleMapView(!inMap);
+            }
+		}
+
         if (@event is InputEventMouseButton buttonEvent)
 		{
 			switch (buttonEvent.ButtonIndex)

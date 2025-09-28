@@ -47,7 +47,8 @@ public partial class ColonyManager : Node
 
         Colony colony = new()
         {
-            name = (string)data["name"]
+            name = (string)data["name"],
+            Name = (string)data["name"]
         };
 
         // Grrrrr...
@@ -77,10 +78,10 @@ public partial class ColonyManager : Node
         colony.parentBody = parent;
         parent.AddChild(colony);
 
-        ScaledObject scaledObject = new() {Name = colony.name};
+        ScaledObject scaledObject = new() {Name = $"{colony.name} Scaled"};
         PlanetSystem.Instance.scaledSpace.AddChild(scaledObject);
         scaledObject.counterpart = colony;
-        scaledObject.originalScale = Double3.One * 100000000; // For max zoom reasons
+        colony.scaledObject = scaledObject;
 
         // HHhhhhmmmmmmmmmm....
         ColonyIcon icon = (ColonyIcon)iconPrefab.Instantiate();
