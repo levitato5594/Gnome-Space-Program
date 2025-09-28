@@ -10,7 +10,13 @@ public partial class FlightCamera : Node3D
 
     [Export] public bool inMap = true;
     [Export] public Key mapKey = Key.M;
-    [Export] public Node3D target;
+	[Export] public Node3D target;
+	public (float, float, float) zoomLimits;
+	// local / map dichotomy
+    [Export] public Node3D localTarget;
+    public (float, float, float) localZoomLimits;
+    [Export] public Node3D mapTarget;
+	public (float, float, float) mapZoomLimits;
 
     [Export] public bool multiplyScroll;
 	[Export] public float lerpSpeed = 1.0f;
@@ -20,8 +26,6 @@ public partial class FlightCamera : Node3D
     [Export] public Node3D rotNode_X;
     [Export] public Node3D camNode;
 
-	[Export] public float minZoom;
-    [Export] public float maxZoom = float.PositiveInfinity;
     [Export] public float zoomAmnt;
     [Export] public float zoom;
 
@@ -43,13 +47,18 @@ public partial class FlightCamera : Node3D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		// Decide
+        target = inMap ? mapTarget : localTarget;
+        zoomLimits = inMap ? mapZoomLimits : localZoomLimits;
+
         float lerpy = lerpSpeed * (float)delta;
 
 		rotNode_Y.RotationDegrees = rotNode_Y.RotationDegrees.Lerp(rotTarget_Y, lerpy);
         rotNode_X.RotationDegrees = rotNode_X.RotationDegrees.Lerp(rotTarget_X, lerpy);
 
-		if (zoom > maxZoom) zoom = maxZoom;
-		if (zoom < minZoom) zoom = minZoom;
+		// Item1 = min Item2 = max Item3 = tgt
+		if (zoom > zoomLimits.Item2) zoom = zoomLimits.Item2;
+		if (zoom < zoomLimits.Item1) zoom = zoomLimits.Item1;
 
         camNode.Position = camNode.Position.Lerp(new Vector3(0,0,zoom), lerpy);
 
@@ -64,53 +73,15 @@ public partial class FlightCamera : Node3D
         }
     }
 
-	public void TargetObject(Node3D node, float tgtMinZoom, float tgtZoom)
-	{
-		target = node;
-        Position = Vector3.Zero;
-
-        Logger.Print($"{classTag} Targeting node: {node.Name}");
-        Logger.Print($"{classTag} Node scale: {node.Scale}");
-
-        minZoom = tgtMinZoom; //node.Scale.Z * 1.25f / ScaledSpace.Instance.scaleFactor;
-        zoom = tgtZoom; //node.Scale.Z * 2f / ScaledSpace.Instance.scaleFactor;
-    }
-
-	public void TargetObject(CelestialBody cBody)
-	{
-		target = cBody.scaledSphere;
-        Position = Vector3.Zero;
-
-		Logger.Print($"{classTag} Targeting cBody: {cBody.Name}");
-        Logger.Print($"{classTag} cBody radius: {cBody.radius}");
-
-        minZoom = (float)(cBody.radius * 1.25f / ScaledSpace.Instance.scaleFactor);
-        zoom = (float)(cBody.radius * 2f / ScaledSpace.Instance.scaleFactor);
-	}
-
 	// Map view
 	public void ToggleMapView(bool toggle)
 	{
-		Node3D thing = ActiveSave.Instance.activeThing;
-
         Logger.Print($"{classTag} Map view: {toggle}");
         inMap = toggle;
         ActiveSave.Instance.localSpace.Visible = !toggle;
-		
-		if (toggle)
-		{
-			// Implement craft too
-            if (thing is Colony colony)
-			{
-                TargetObject(colony.scaledObject, 1, 2);
-            }else
-			{
-				TargetObject(ActiveSave.Instance.activePlanet);
-			}
-        }else if (thing != null){
-			// Might spell trouble but idc anymore
-            TargetObject(thing, 5, 25);
-        }
+
+        zoom = toggle ? mapZoomLimits.Item3 : localZoomLimits.Item3;
+		Logger.Print($"{classTag} Zoom is: {zoom}");
     }
 
     public override void _UnhandledInput(InputEvent @event)
@@ -119,7 +90,7 @@ public partial class FlightCamera : Node3D
 		if (@event is InputEventKey keyEvent)
 		{
 			// Open map and only open if active thing isn't null (otherwise don't allow it)
-			if (keyEvent.Keycode == mapKey && keyEvent.Pressed && ActiveSave.Instance.activeThing != null)
+			if (keyEvent.Keycode == mapKey && keyEvent.Pressed && localTarget != null)
 			{
                 ToggleMapView(!inMap);
             }
@@ -156,4 +127,56 @@ public partial class FlightCamera : Node3D
 			rotTarget_X += Vector3.Right * -motion.Relative.Y*rotationAmnt;
 		}
     }
+
+	// We don't know whether this one has a scaled object so we pass an optional parameter
+	// Used for map icons
+	public void TargetObject(Node3D node, (float, float, float) limits, bool mapObj)
+	{
+        if (!mapObj)
+        {
+            localTarget = node;
+            localZoomLimits = limits;
+        }else{
+            mapTarget = node;
+            mapZoomLimits = limits;
+        }
+        
+        Position = Vector3.Zero;
+
+        Logger.Print($"{classTag} Targeting node: {node.Name}");
+        Logger.Print($"{classTag} Node scale: {node.Scale}");
+
+        zoom = limits.Item3; //node.Scale.Z * 2f / ScaledSpace.Instance.scaleFactor;
+    }
+
+	// Targeting colonies in LOCAL SPACE
+	public void TargetObject(Colony colony)
+	{
+		localTarget = colony;
+        localZoomLimits = (5,10000000,250);
+        mapTarget = colony.scaledObject;
+		mapZoomLimits = (5,10000000,2);
+        Position = Vector3.Zero;
+
+        Logger.Print($"{classTag} Targeting colony: {colony.Name}");
+
+        zoom = 250; //node.Scale.Z * 2f / ScaledSpace.Instance.scaleFactor;
+    }
+
+	// Planets shouldn't be targeted locally so we don't target the local object
+	public void TargetObject(CelestialBody cBody)
+	{
+		mapTarget = cBody.scaledSphere;
+        Position = Vector3.Zero;
+
+		Logger.Print($"{classTag} Targeting cBody: {cBody.Name}");
+        Logger.Print($"{classTag} cBody radius: {cBody.radius}");
+
+        mapZoomLimits = (
+			(float)(cBody.radius * 1.25f / ScaledSpace.Instance.scaleFactor),
+			float.PositiveInfinity,
+			(float)(cBody.radius * 2f / ScaledSpace.Instance.scaleFactor));
+
+        zoom = (float)(cBody.radius * 2f / ScaledSpace.Instance.scaleFactor);
+	}
 }

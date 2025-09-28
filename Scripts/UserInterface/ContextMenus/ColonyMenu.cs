@@ -19,7 +19,7 @@ public partial class ColonyMenu : ContextMenu
 
     public void EnterButtonPressed()
     {
-        FlightCamera.Instance.TargetObject(colonyInQuestion, 5, 25);
+        FlightCamera.Instance.TargetObject(colonyInQuestion);
         FlightCamera.Instance.ToggleMapView(false);
 
         ActiveSave.Instance.activeThing = colonyInQuestion;

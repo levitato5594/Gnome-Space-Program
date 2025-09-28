@@ -175,8 +175,8 @@ public partial class PlanetSystem : Node3D
             localSpacePlanets.AddChild(cBody);
 			cBody.Name = cBody.name;
 
-            ScaledObject scaledBody = new();
-			scaledSpace.AddChild(scaledBody);
+            ScaledObject scaledBody = new() { Name = $"{cBody.name}_Scaled" };
+            scaledSpace.AddChild(scaledBody);
             //scaledBody.Scale = new Vector3(
 			//	(float)(1.0 / scaledSpace.scaleFactor),
             //    (float)(1.0 / scaledSpace.scaleFactor),

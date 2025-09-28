@@ -189,6 +189,18 @@ script = ExtResource("7_bmxlf")
 target = NodePath("../..")
 direction = Vector2(-1, 1)
 
+[node name="Panel" type="Panel" parent="DebugUI/Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 13.0
+offset_top = 11.0
+offset_right = -13.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="Console" type="Panel" parent="DebugUI"]
 custom_minimum_size = Vector2(200, 100)
 layout_mode = 1

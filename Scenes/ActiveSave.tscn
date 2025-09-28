@@ -38,7 +38,6 @@ colonyManager = NodePath("ColonyManager")
 flightCam = NodePath("Cam_Pos")
 localCamera = NodePath("RenderLayers/LocalContainer/LocalView/Camera3D")
 localSpace = NodePath("RenderLayers/LocalContainer/LocalView/LocalSpace")
-timeSpeed = 500000.0
 
 [node name="RenderLayers" type="Control" parent="."]
 z_index = -5
@@ -153,7 +152,6 @@ localCamera = NodePath("../RenderLayers/LocalContainer/LocalView/Camera3D")
 localSpace = NodePath("../RenderLayers/LocalContainer/LocalView/LocalSpace")
 scaledSpace = NodePath("../RenderLayers/ScaledContainer/ScaledView/ScaledSpace")
 orbitRenderers = NodePath("../RenderLayers/OrbitRenderers")
-DEBUG_startWithGizmo = true
 DEBUG_GizmoPrefab = ExtResource("17_h3s5b")
 
 [node name="PartManager" type="Node" parent="."]

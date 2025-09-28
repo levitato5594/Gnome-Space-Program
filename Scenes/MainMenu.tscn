@@ -45,7 +45,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="SaveManager/SavePanel"]
-layout_mode = 2
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 8.0
@@ -111,7 +111,7 @@ layout_mode = 2
 text = "Test Save"
 
 [node name="CreateButton" type="Button" parent="SaveManager/SavePanel" node_paths=PackedStringArray("toClose", "toOpen")]
-layout_mode = 2
+layout_mode = 0
 anchor_left = 0.979
 anchor_top = 1.0
 anchor_right = 0.979
@@ -126,7 +126,7 @@ toClose = NodePath("..")
 toOpen = NodePath("../../SaveCreation")
 
 [node name="CancelButton" type="Button" parent="SaveManager/SavePanel" node_paths=PackedStringArray("toClose", "toOpen")]
-layout_mode = 2
+layout_mode = 0
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 8.0

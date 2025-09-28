@@ -20,7 +20,7 @@ public partial class ColonyIcon : MapIcon
     public override void _Pressed()
     {
         FlightCamera flightCam = FlightCamera.Instance;
-        flightCam.TargetObject(thing, 1, 2);
+        flightCam.TargetObject(thing, (1, float.PositiveInfinity, 2), true);
 
         Godot.Collections.Dictionary info = new()
         {
