@@ -1,11 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://gh6raekpcthq"]
+[gd_scene load_steps=11 format=3 uid="uid://gh6raekpcthq"]
 
 [ext_resource type="PackedScene" uid="uid://buejer35m8rkv" path="res://Scenes/MainMenu.tscn" id="1_r150o"]
 [ext_resource type="Theme" uid="uid://b4ia03110swah" path="res://Assets/Materials/GeneralUI/Theme.tres" id="2_idj7w"]
 [ext_resource type="Script" uid="uid://drrsx2qsfqgck" path="res://Scripts/UserInterface/DraggablePanel.cs" id="3_kln2b"]
+[ext_resource type="StyleBox" uid="uid://cmyfacsvlil8r" path="res://Assets/Materials/GeneralUI/ResizeHandle/handle_normal.tres" id="4_jw32o"]
 [ext_resource type="Script" uid="uid://ccw5occpyunc0" path="res://Scripts/UserInterface/UISwitcher.cs" id="4_rgh2o"]
 [ext_resource type="StyleBox" uid="uid://cyqx3jqydk5d0" path="res://Assets/Materials/GeneralUI/Misc/marginPanel.tres" id="4_v1gob"]
 [ext_resource type="Script" uid="uid://b6x2gt6jmlw72" path="res://Scripts/UserInterface/Console.cs" id="5_v1gob"]
+[ext_resource type="StyleBox" uid="uid://didwclm676g4f" path="res://Assets/Materials/GeneralUI/ResizeHandle/handle_press.tres" id="5_vy5pj"]
+[ext_resource type="StyleBox" uid="uid://d2x1glka2wnkb" path="res://Assets/Materials/GeneralUI/ResizeHandle/handle_hover.tres" id="6_bmxlf"]
+[ext_resource type="Script" uid="uid://drlfgjufqytvn" path="res://Scripts/UserInterface/ResizeHandle.cs" id="7_bmxlf"]
 
 [node name="Main" type="Node3D"]
 
@@ -34,38 +38,187 @@ offset_right = -650.0
 offset_bottom = -352.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_default_cursor_shape = 6
 script = ExtResource("3_kln2b")
 
 [node name="Console" type="Panel" parent="DebugUI"]
+custom_minimum_size = Vector2(200, 100)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 675.0
-offset_top = 244.0
-offset_right = -675.0
-offset_bottom = -244.0
+offset_left = 1205.0
+offset_top = 306.0
+offset_right = -71.0
+offset_bottom = -318.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_default_cursor_shape = 6
 script = ExtResource("3_kln2b")
+
+[node name="ResizeHandles" type="Control" parent="DebugUI/Console"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="U" type="Button" parent="DebugUI/Console/ResizeHandles" node_paths=PackedStringArray("target")]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -11.0
+offset_bottom = -1.0
+grow_horizontal = 2
+mouse_default_cursor_shape = 9
+theme_override_styles/normal = ExtResource("4_jw32o")
+theme_override_styles/pressed = ExtResource("5_vy5pj")
+theme_override_styles/hover = ExtResource("6_bmxlf")
+script = ExtResource("7_bmxlf")
+target = NodePath("../..")
+direction = Vector2(0, -1)
+
+[node name="D" type="Button" parent="DebugUI/Console/ResizeHandles" node_paths=PackedStringArray("target")]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_default_cursor_shape = 9
+theme_override_styles/normal = ExtResource("4_jw32o")
+theme_override_styles/pressed = ExtResource("5_vy5pj")
+theme_override_styles/hover = ExtResource("6_bmxlf")
+script = ExtResource("7_bmxlf")
+target = NodePath("../..")
+
+[node name="L" type="Button" parent="DebugUI/Console/ResizeHandles" node_paths=PackedStringArray("target")]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -11.0
+offset_right = -1.0
+grow_vertical = 2
+mouse_default_cursor_shape = 10
+theme_override_styles/normal = ExtResource("4_jw32o")
+theme_override_styles/pressed = ExtResource("5_vy5pj")
+theme_override_styles/hover = ExtResource("6_bmxlf")
+script = ExtResource("7_bmxlf")
+target = NodePath("../..")
+direction = Vector2(-1, 0)
+
+[node name="R" type="Button" parent="DebugUI/Console/ResizeHandles" node_paths=PackedStringArray("target")]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 11.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_default_cursor_shape = 10
+theme_override_styles/normal = ExtResource("4_jw32o")
+theme_override_styles/pressed = ExtResource("5_vy5pj")
+theme_override_styles/hover = ExtResource("6_bmxlf")
+script = ExtResource("7_bmxlf")
+target = NodePath("../..")
+direction = Vector2(1, 0)
+
+[node name="DR" type="Button" parent="DebugUI/Console/ResizeHandles" node_paths=PackedStringArray("target")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 11.0
+offset_bottom = 11.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_default_cursor_shape = 12
+theme_override_styles/normal = ExtResource("4_jw32o")
+theme_override_styles/pressed = ExtResource("5_vy5pj")
+theme_override_styles/hover = ExtResource("6_bmxlf")
+script = ExtResource("7_bmxlf")
+target = NodePath("../..")
+direction = Vector2(1, 1)
+
+[node name="UR" type="Button" parent="DebugUI/Console/ResizeHandles" node_paths=PackedStringArray("target")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 1.0
+offset_top = -11.0
+offset_right = 11.0
+offset_bottom = -1.0
+grow_horizontal = 0
+mouse_default_cursor_shape = 11
+theme_override_styles/normal = ExtResource("4_jw32o")
+theme_override_styles/pressed = ExtResource("5_vy5pj")
+theme_override_styles/hover = ExtResource("6_bmxlf")
+script = ExtResource("7_bmxlf")
+target = NodePath("../..")
+direction = Vector2(1, -1)
+
+[node name="UL" type="Button" parent="DebugUI/Console/ResizeHandles" node_paths=PackedStringArray("target")]
+layout_mode = 1
+offset_left = -11.0
+offset_top = -11.0
+offset_right = -1.0
+offset_bottom = -1.0
+mouse_default_cursor_shape = 12
+theme_override_styles/normal = ExtResource("4_jw32o")
+theme_override_styles/pressed = ExtResource("5_vy5pj")
+theme_override_styles/hover = ExtResource("6_bmxlf")
+script = ExtResource("7_bmxlf")
+target = NodePath("../..")
+direction = Vector2(-1, -1)
+
+[node name="DL" type="Button" parent="DebugUI/Console/ResizeHandles" node_paths=PackedStringArray("target")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -11.0
+offset_top = 1.0
+offset_right = -1.0
+offset_bottom = 11.0
+grow_vertical = 0
+mouse_default_cursor_shape = 11
+theme_override_styles/normal = ExtResource("4_jw32o")
+theme_override_styles/pressed = ExtResource("5_vy5pj")
+theme_override_styles/hover = ExtResource("6_bmxlf")
+script = ExtResource("7_bmxlf")
+target = NodePath("../..")
+direction = Vector2(-1, 1)
 
 [node name="TheText" type="RichTextLabel" parent="DebugUI/Console"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 13.0
-offset_top = 11.0
-offset_right = -13.0
-offset_bottom = -11.0
+offset_left = 14.0
+offset_top = 13.0
+offset_right = -14.0
+offset_bottom = -13.0
 focus_mode = 2
 theme_override_constants/paragraph_separation = 5
-theme_override_font_sizes/normal_font_size = 12
+theme_override_font_sizes/normal_font_size = 10
 theme_override_styles/normal = ExtResource("4_v1gob")
 bbcode_enabled = true
 text = "[color=red]Logger error.
 [color=white]Test newline
 "
+scroll_following = true
 selection_enabled = true
 script = ExtResource("5_v1gob")
 
