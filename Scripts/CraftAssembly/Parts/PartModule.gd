@@ -7,13 +7,13 @@ class_name PartModule
 # As such, Part.cs will check if a script has this, and then assume it's a part module.
 var identification:String = "PartModule"
 
-var part_script # Assign this upon part initialization
+var part_node # Assign this upon part initialization
 
 # Update function controlled by Part.cs
 # Key difference to the Process function is that this one does not run if the part is disabled.
 func update():
-    pass
+	pass
 
 # Invoked when the part is initialized
 func part_init():
-    pass
+	pass

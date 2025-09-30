@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public partial class PartManager : Node
 {
+    [Export] public PartMenuHandler partMenus;
     public static readonly string classTag = "([color=pink]PartManager[color=white])";
     public static PartManager Instance { get; private set; }
 

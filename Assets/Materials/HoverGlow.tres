@@ -3,4 +3,6 @@
 [resource]
 transparency = 1
 shading_mode = 0
-albedo_color = Color(1, 1, 1, 0.203922)
+albedo_color = Color(0, 1, 0, 0.2509804)
+refraction_scale = 0.3
+grow_amount = 0.1

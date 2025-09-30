@@ -23,4 +23,19 @@ public partial class ContextMenus : Control
             }
         }
     }
+
+    public ContextMenu GetMenu(string name)
+    {
+        foreach (Control ctrl in menus)
+        {
+            if (ctrl.Name == name)
+            {
+                if (ctrl is ContextMenu menu)
+                {
+                    return menu;
+                }
+            }
+        }
+        return null;
+    }
 }

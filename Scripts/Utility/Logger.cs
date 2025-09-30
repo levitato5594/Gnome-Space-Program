@@ -30,4 +30,10 @@ public partial class Logger : Node
         GD.PrintRich($"[color=676767]{time:HH:mm:ss}[color=white]: {text}");
         OnLogged?.Invoke(time, text);
     }
+
+    // Printing from GDScript
+    public static void GDPrint(Variant content)
+    {
+        Print(content);
+    }
 }

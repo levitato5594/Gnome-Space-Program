@@ -1,0 +1,215 @@
+[gd_scene load_steps=8 format=3 uid="uid://c8odi3kjvqxhl"]
+
+[ext_resource type="Script" uid="uid://cu3f6xtxbkvyi" path="res://Scripts/UserInterface/ContextMenus/PartMenu.cs" id="1_dewu6"]
+[ext_resource type="Theme" uid="uid://b4ia03110swah" path="res://Assets/Materials/GeneralUI/Theme.tres" id="1_pyjmw"]
+[ext_resource type="Script" uid="uid://drrsx2qsfqgck" path="res://Scripts/UserInterface/DraggablePanel.cs" id="2_pyjmw"]
+[ext_resource type="StyleBox" uid="uid://cmyfacsvlil8r" path="res://Assets/Materials/GeneralUI/ResizeHandle/handle_normal.tres" id="3_t0q6y"]
+[ext_resource type="StyleBox" uid="uid://didwclm676g4f" path="res://Assets/Materials/GeneralUI/ResizeHandle/handle_press.tres" id="4_0cy5t"]
+[ext_resource type="StyleBox" uid="uid://d2x1glka2wnkb" path="res://Assets/Materials/GeneralUI/ResizeHandle/handle_hover.tres" id="5_njfyn"]
+[ext_resource type="Script" uid="uid://drlfgjufqytvn" path="res://Scripts/UserInterface/ResizeHandle.cs" id="6_j2os7"]
+
+[node name="PartMenu" type="Control" node_paths=PackedStringArray("title", "dragMenu")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("1_pyjmw")
+script = ExtResource("1_dewu6")
+title = NodePath("DraggableMenu/Title/Label")
+dragMenu = NodePath("DraggableMenu")
+
+[node name="DraggableMenu" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1700.0
+offset_bottom = -730.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 6
+script = ExtResource("2_pyjmw")
+
+[node name="ResizeHandles" type="Control" parent="DraggableMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="U" type="Button" parent="DraggableMenu/ResizeHandles" node_paths=PackedStringArray("target")]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -11.0
+offset_bottom = -1.0
+grow_horizontal = 2
+mouse_default_cursor_shape = 9
+theme_override_styles/normal = ExtResource("3_t0q6y")
+theme_override_styles/pressed = ExtResource("4_0cy5t")
+theme_override_styles/hover = ExtResource("5_njfyn")
+script = ExtResource("6_j2os7")
+target = NodePath("../..")
+direction = Vector2(0, -1)
+
+[node name="D" type="Button" parent="DraggableMenu/ResizeHandles" node_paths=PackedStringArray("target")]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_default_cursor_shape = 9
+theme_override_styles/normal = ExtResource("3_t0q6y")
+theme_override_styles/pressed = ExtResource("4_0cy5t")
+theme_override_styles/hover = ExtResource("5_njfyn")
+script = ExtResource("6_j2os7")
+target = NodePath("../..")
+
+[node name="L" type="Button" parent="DraggableMenu/ResizeHandles" node_paths=PackedStringArray("target")]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -11.0
+offset_right = -1.0
+grow_vertical = 2
+mouse_default_cursor_shape = 10
+theme_override_styles/normal = ExtResource("3_t0q6y")
+theme_override_styles/pressed = ExtResource("4_0cy5t")
+theme_override_styles/hover = ExtResource("5_njfyn")
+script = ExtResource("6_j2os7")
+target = NodePath("../..")
+direction = Vector2(-1, 0)
+
+[node name="R" type="Button" parent="DraggableMenu/ResizeHandles" node_paths=PackedStringArray("target")]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 11.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_default_cursor_shape = 10
+theme_override_styles/normal = ExtResource("3_t0q6y")
+theme_override_styles/pressed = ExtResource("4_0cy5t")
+theme_override_styles/hover = ExtResource("5_njfyn")
+script = ExtResource("6_j2os7")
+target = NodePath("../..")
+direction = Vector2(1, 0)
+
+[node name="DR" type="Button" parent="DraggableMenu/ResizeHandles" node_paths=PackedStringArray("target")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 11.0
+offset_bottom = 11.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_default_cursor_shape = 12
+theme_override_styles/normal = ExtResource("3_t0q6y")
+theme_override_styles/pressed = ExtResource("4_0cy5t")
+theme_override_styles/hover = ExtResource("5_njfyn")
+script = ExtResource("6_j2os7")
+target = NodePath("../..")
+direction = Vector2(1, 1)
+
+[node name="UR" type="Button" parent="DraggableMenu/ResizeHandles" node_paths=PackedStringArray("target")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 1.0
+offset_top = -11.0
+offset_right = 11.0
+offset_bottom = -1.0
+grow_horizontal = 0
+mouse_default_cursor_shape = 11
+theme_override_styles/normal = ExtResource("3_t0q6y")
+theme_override_styles/pressed = ExtResource("4_0cy5t")
+theme_override_styles/hover = ExtResource("5_njfyn")
+script = ExtResource("6_j2os7")
+target = NodePath("../..")
+direction = Vector2(1, -1)
+
+[node name="UL" type="Button" parent="DraggableMenu/ResizeHandles" node_paths=PackedStringArray("target")]
+layout_mode = 1
+offset_left = -11.0
+offset_top = -11.0
+offset_right = -1.0
+offset_bottom = -1.0
+mouse_default_cursor_shape = 12
+theme_override_styles/normal = ExtResource("3_t0q6y")
+theme_override_styles/pressed = ExtResource("4_0cy5t")
+theme_override_styles/hover = ExtResource("5_njfyn")
+script = ExtResource("6_j2os7")
+target = NodePath("../..")
+direction = Vector2(-1, -1)
+
+[node name="DL" type="Button" parent="DraggableMenu/ResizeHandles" node_paths=PackedStringArray("target")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -11.0
+offset_top = 1.0
+offset_right = -1.0
+offset_bottom = 11.0
+grow_vertical = 0
+mouse_default_cursor_shape = 11
+theme_override_styles/normal = ExtResource("3_t0q6y")
+theme_override_styles/pressed = ExtResource("4_0cy5t")
+theme_override_styles/hover = ExtResource("5_njfyn")
+script = ExtResource("6_j2os7")
+target = NodePath("../..")
+direction = Vector2(-1, 1)
+
+[node name="Panel" type="Panel" parent="DraggableMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 13.0
+offset_top = 42.0
+offset_right = -13.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Panel" parent="DraggableMenu"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 13.0
+offset_top = 11.0
+offset_right = -13.0
+offset_bottom = 39.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="DraggableMenu/Title"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 1.0
+offset_right = -6.0
+offset_bottom = -1.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+text = "PART NAME HERE"

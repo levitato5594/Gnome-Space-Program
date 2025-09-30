@@ -22,6 +22,7 @@ config/icon="uid://bg3l0onjljdr4"
 GlobalLogger="*res://Scripts/Utility/Logger.cs"
 SaveManager="*res://Scripts/Utility/SaveManager.cs"
 ConfigUtility="*res://Scripts/Utility/ConfigUtility.cs"
+SingletonRegistry="*res://Scripts/Utility/SingletonRegistry.cs"
 
 [display]
 

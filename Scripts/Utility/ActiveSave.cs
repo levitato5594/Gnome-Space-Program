@@ -36,10 +36,18 @@ public partial class ActiveSave : Node3D
 	// In milliseconds
 	public double saveTime;
 
+	public void ReportSelf()
+	{
+		Logger.Print($"{classTag} Here!");
+	}
+
 	public override void _Ready()
 	{
 		Logger.Print($"{classTag} Active save starting...");
+
 		Instance = this;
+		SingletonRegistry.Register(this); // Register self
+
 		foreach (KeyValuePair<string, Variant> param in saveParams)
 		{
 			Logger.Print(param);

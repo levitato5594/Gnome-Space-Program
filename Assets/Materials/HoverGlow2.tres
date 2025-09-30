@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cq16nvjct50k6"]
+
+[ext_resource type="Shader" uid="uid://da4yhqlmh2w5b" path="res://Assets/Shaders/HoverGlow.gdshader" id="1_cdqlq"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_cdqlq")
+shader_parameter/colour = Vector3(0, 1, 0.2)
+shader_parameter/maxAlpha = 0.4
+shader_parameter/minAlpha = 0.1
+shader_parameter/pulseSpeed = 3.0

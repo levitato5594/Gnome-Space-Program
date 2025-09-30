@@ -38,6 +38,11 @@ public partial class Colony : Node3D
             part.LockRotation = true;
             part.Position = data.position;
             part.Rotation = data.rotation;
+
+            part.parentThing = this;
+            part.cachedPart = data.template;
+
+            part.InitPart();
         }
     }
 
