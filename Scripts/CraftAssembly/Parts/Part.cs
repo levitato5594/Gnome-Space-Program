@@ -16,6 +16,8 @@ public partial class Part : RigidBody3D
     public Node3D parentThing;
 
     public List<Node> partModules = [];
+    // Name, category
+    public Godot.Collections.Dictionary buttons = [];
 
     public override void _Process(double delta)
     {
@@ -61,10 +63,10 @@ public partial class Part : RigidBody3D
         }
     }
 
-    public void AddButton(string name)
+    public void AddButton(string category, string name)
     {
         Logger.Print($"(Instance {Name}) Adding button {name}");
-
+        buttons.Add(category, name);
     }
 
     public void Highlight(bool toggle)
@@ -75,5 +77,11 @@ public partial class Part : RigidBody3D
         }else{
             glowMesh.MaterialOverlay = null;
         }
+    }
+
+    // For C# -> GDScript scripting
+    public void SendButtonEvent(string name)
+    {
+        Logger.Print(name);
     }
 }

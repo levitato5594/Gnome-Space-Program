@@ -1,6 +1,7 @@
 using Godot;
 using Godot.Collections;
 using System;
+using System.Collections.Generic;
 
 public partial class PartMenuHandler : Node
 {
@@ -21,6 +22,8 @@ public partial class PartMenuHandler : Node
         ulong partInstanceID = part.GetInstanceId();
         string partName = $"{partInstanceID}_MENU";
 
+        Dictionary info = [];
+
         if (contextMenus.GetMenu(partName) == null)
         {
             PartMenu partMenu = (PartMenu)menuPrefab.Instantiate();
@@ -29,10 +32,10 @@ public partial class PartMenuHandler : Node
             contextMenus.AddChild(partMenu);
             contextMenus.menus.Add(partMenu);
         }
-
-        Dictionary info = [];
+        
         info.Add("part", part);
         info.Add("mousePos", GetViewport().GetMousePosition());
+        info.Add("buttons", part.buttons);
 
         contextMenus.OpenMenu(partName, info);
     }
@@ -49,7 +52,7 @@ public partial class PartMenuHandler : Node
             Vector3 to = from + camera3D.ProjectRayNormal(mouseMotion.Position) * rayLength;
 
             PhysicsRayQueryParameters3D rayParams = new PhysicsRayQueryParameters3D(){From = from, To = to};
-            Godot.Collections.Dictionary result = spaceState.IntersectRay(rayParams);
+            Dictionary result = spaceState.IntersectRay(rayParams);
 
             //Logger.Print(result);
             if (result.Count > 0)

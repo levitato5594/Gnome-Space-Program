@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://chuuxhnbua61m"]
+
+[ext_resource type="Script" uid="uid://87ah5fixoxte" path="res://Scripts/UserInterface/SignalButton.cs" id="1_b8mel"]
+
+[node name="EventButton" type="Button"]
+theme_override_font_sizes/font_size = 16
+text = "test button"
+script = ExtResource("1_b8mel")

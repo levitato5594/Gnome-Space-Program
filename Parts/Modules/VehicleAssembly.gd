@@ -11,3 +11,6 @@ var activeSave = SingletonRegistry.registry["ActiveSave"]
 func part_init():
 	GlobalLogger.GDPrint(activeSave)
 	GlobalLogger.GDPrint(part_node.name)
+
+	part_node.AddButton("enter", "brug")
+	part_node.AddButton("enter2", "brug")

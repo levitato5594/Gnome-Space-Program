@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c8odi3kjvqxhl"]
+[gd_scene load_steps=9 format=3 uid="uid://c8odi3kjvqxhl"]
 
 [ext_resource type="Script" uid="uid://cu3f6xtxbkvyi" path="res://Scripts/UserInterface/ContextMenus/PartMenu.cs" id="1_dewu6"]
 [ext_resource type="Theme" uid="uid://b4ia03110swah" path="res://Assets/Materials/GeneralUI/Theme.tres" id="1_pyjmw"]
@@ -7,8 +7,9 @@
 [ext_resource type="StyleBox" uid="uid://didwclm676g4f" path="res://Assets/Materials/GeneralUI/ResizeHandle/handle_press.tres" id="4_0cy5t"]
 [ext_resource type="StyleBox" uid="uid://d2x1glka2wnkb" path="res://Assets/Materials/GeneralUI/ResizeHandle/handle_hover.tres" id="5_njfyn"]
 [ext_resource type="Script" uid="uid://drlfgjufqytvn" path="res://Scripts/UserInterface/ResizeHandle.cs" id="6_j2os7"]
+[ext_resource type="PackedScene" uid="uid://chuuxhnbua61m" path="res://Assets/Prefabs/UI/event_button.tscn" id="8_t0q6y"]
 
-[node name="PartMenu" type="Control" node_paths=PackedStringArray("title", "dragMenu")]
+[node name="PartMenu" type="Control" node_paths=PackedStringArray("title", "itemList", "dragMenu")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,7 +20,9 @@ mouse_filter = 2
 theme = ExtResource("1_pyjmw")
 script = ExtResource("1_dewu6")
 title = NodePath("DraggableMenu/Title/Label")
+itemList = NodePath("DraggableMenu/ScrollContainer/ItemCont")
 dragMenu = NodePath("DraggableMenu")
+buttonPrefab = ExtResource("8_t0q6y")
 
 [node name="DraggableMenu" type="Panel" parent="."]
 layout_mode = 1
@@ -178,26 +181,14 @@ script = ExtResource("6_j2os7")
 target = NodePath("../..")
 direction = Vector2(-1, 1)
 
-[node name="Panel" type="Panel" parent="DraggableMenu"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 13.0
-offset_top = 42.0
-offset_right = -13.0
-offset_bottom = -11.0
-grow_horizontal = 2
-grow_vertical = 2
-
 [node name="Title" type="Panel" parent="DraggableMenu"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 13.0
-offset_top = 11.0
-offset_right = -13.0
-offset_bottom = 39.0
+offset_left = 10.0
+offset_top = 9.0
+offset_right = -10.0
+offset_bottom = 35.0
 grow_horizontal = 2
 
 [node name="Label" type="Label" parent="DraggableMenu/Title"]
@@ -213,3 +204,22 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 16
 text = "PART NAME HERE"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="DraggableMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 43.0
+offset_right = -10.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemCont" type="VBoxContainer" parent="DraggableMenu/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="EventButton" parent="DraggableMenu/ScrollContainer/ItemCont" instance=ExtResource("8_t0q6y")]
+layout_mode = 2
