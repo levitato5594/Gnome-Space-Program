@@ -1,7 +1,5 @@
 using Godot;
 using Godot.Collections;
-using System;
-using System.Collections.Generic;
 
 public partial class PartMenuHandler : Node
 {
@@ -15,6 +13,7 @@ public partial class PartMenuHandler : Node
     public override void _Ready()
     {
         Instance = this;
+        SingletonRegistry.Register(this);
     }
 
     public void CreateMenu(Part part)
@@ -59,9 +58,13 @@ public partial class PartMenuHandler : Node
             {
                 Node colliderResult = (Node)result["collider"];
 
-                if (colliderResult is Part part && part.parentThing == ActiveSave.Instance.activeThing)
+                if (colliderResult is Part part && part.parentThing == ActiveSave.Instance.activeThing && part.IsVisibleInTree())
                 {
-                    hoveredPart = part;
+                    // Add logic for craft later too
+                    if (IsPartSelectable(part))
+                    {
+                        hoveredPart = part;
+                    }
                 }
             }
         }
@@ -72,12 +75,28 @@ public partial class PartMenuHandler : Node
             {
                 if (hoveredPart != null)
                 {
-                    if (hoveredPart.Visible)
-                    {
-                        CreateMenu(hoveredPart);
-                    }
+                    CreateMenu(hoveredPart);
                 }
             }
         }
+    }
+
+    public bool IsPartSelectable(Part part)
+    {
+        string editorMode = BuildingManager.Instance.editorMode;
+
+        bool editorStatus = false;
+        switch (editorMode)
+        {
+            case "Craft": // If we're editing, and editing a craft
+                if (part.parentThing is not Colony) editorStatus = true;
+                break;
+            default: // Selection logic for if we're not editing
+                if (ActiveSave.Instance.activeThing is Colony colony && part.parentThing == colony) editorStatus = true;
+                if (ActiveSave.Instance.activeThing is Craft craft && part.parentThing is not Colony) editorStatus = true;
+                break;
+        }
+
+        return part.parentThing == ActiveSave.Instance.activeThing && part.IsVisibleInTree() && editorStatus;
     }
 }

@@ -22,6 +22,7 @@ public partial class PartMenu : ContextMenu
         dragMenu.Position = mousePos + new Vector2(-10,-10);
 
         foreach (Node child in itemList.GetChildren()) child.QueueFree();
+        buttonDict.Clear();
         MakeButtons(part, (Dictionary)info["buttons"]);
     }
 
@@ -32,7 +33,7 @@ public partial class PartMenu : ContextMenu
             SignalButton button = (SignalButton)buttonPrefab.Instantiate();
 
             itemList.AddChild(button);
-            button.AddThemeFontSizeOverride("font_size", 16);
+            button.AddThemeFontSizeOverride("font_size", 14);
 
             button.Text = (string)butt.Key;
             button.id += (string)butt.Key;

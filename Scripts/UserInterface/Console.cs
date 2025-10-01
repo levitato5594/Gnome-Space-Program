@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Runtime.ExceptionServices;
+using System.Threading.Tasks;
 
 public partial class Console : RichTextLabel
 {
@@ -9,6 +11,8 @@ public partial class Console : RichTextLabel
         GuiInput += OnInput;
         VisibilityChanged += () => {if(IsVisibleInTree())Logger.Print("[color=cyan]Welcome to the console! ctrl+scroll changes the font size.[color=white]"); };
         Logger.OnLogged += AddLog;
+        AppDomain.CurrentDomain.FirstChanceException += CatchException;
+
         Text = "";
         Logger.Print("Console ready");
         Logger.Print("[color=ff8080] _______    _______   _______");
@@ -23,6 +27,14 @@ public partial class Console : RichTextLabel
     public void AddLog(DateTime time, string content)
     {
         Text += $"[color=676767]{time:HH:mm:ss}[color=white]: {content}\n";
+    }
+
+    public void CatchException(object sender, FirstChanceExceptionEventArgs args)
+    {
+        // God forbid an exception happens in here
+        Logger.Print("[color=red]Exception was logged:");
+        if (args.Exception is Exception ex)
+            AddLog(DateTime.Now, $"[color=red]{ex}");
     }
 
     public override void _UnhandledInput(InputEvent inpEvent)

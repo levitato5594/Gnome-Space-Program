@@ -687,7 +687,8 @@ transform = Transform3D(0, 7.495284, 7.4952846, 0, 7.4952846, -7.4952846, -10.59
 mesh = SubResource("ArrayMesh_oqat1")
 skeleton = NodePath("")
 
-[node name="Node3D" type="Node3D" parent="."]
+[node name="VABPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 30, 0)
 script = ExtResource("3_2mt1h")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

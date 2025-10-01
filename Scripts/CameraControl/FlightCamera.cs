@@ -9,6 +9,7 @@ public partial class FlightCamera : Node3D
 	public static FlightCamera Instance { get; private set; }
 
     [Export] public bool inMap = true;
+    [Export] public bool canEnterMap = true;
     [Export] public Key mapKey = Key.M;
 	[Export] public Node3D target;
 	public (float, float, float) zoomLimits;
@@ -40,6 +41,8 @@ public partial class FlightCamera : Node3D
 	public override void _Ready()
 	{
         Instance = this;
+		SingletonRegistry.Register(this); // Register self
+
         rotTarget_Y = rotNode_Y.RotationDegrees;
 		rotTarget_X = rotNode_X.RotationDegrees;
 	}
@@ -76,6 +79,9 @@ public partial class FlightCamera : Node3D
 	// Map view
 	public void ToggleMapView(bool toggle)
 	{
+		// Leave if we can't do this
+		if (toggle && !canEnterMap) return;
+
         Logger.Print($"{classTag} Map view: {toggle}");
         inMap = toggle;
         ActiveSave.Instance.localSpace.Visible = !toggle;
@@ -129,16 +135,16 @@ public partial class FlightCamera : Node3D
     }
 
 	// We don't know whether this one has a scaled object so we pass an optional parameter
-	// Used for map icons
-	public void TargetObject(Node3D node, (float, float, float) limits, bool mapObj)
+	// Used for map icons. Vector3 limits is for GDscript interop
+	public void TargetObject(Node3D node, Vector3 limits, bool mapObj)
 	{
         if (!mapObj)
         {
             localTarget = node;
-            localZoomLimits = limits;
+            localZoomLimits = (limits.X,limits.Y,limits.Z);
         }else{
             mapTarget = node;
-            mapZoomLimits = limits;
+            mapZoomLimits = (limits.X,limits.Y,limits.Z);
         }
         
         Position = Vector3.Zero;
@@ -146,7 +152,7 @@ public partial class FlightCamera : Node3D
         Logger.Print($"{classTag} Targeting node: {node.Name}");
         Logger.Print($"{classTag} Node scale: {node.Scale}");
 
-        zoom = limits.Item3; //node.Scale.Z * 2f / ScaledSpace.Instance.scaleFactor;
+        zoom = limits.Z; //node.Scale.Z * 2f / ScaledSpace.Instance.scaleFactor;
     }
 
 	// Targeting colonies in LOCAL SPACE

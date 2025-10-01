@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://b08reqxmoktvk"]
+[gd_scene load_steps=25 format=3 uid="uid://b08reqxmoktvk"]
 
 [ext_resource type="Script" uid="uid://c3i0ynvo54sk1" path="res://Scripts/Utility/ActiveSave.cs" id="1_2c3j4"]
 [ext_resource type="Script" uid="uid://2vlhdf4w605i" path="res://Scripts/PlanetarySystem/PlanetSystem.cs" id="1_pocjb"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://bw23jl4jvv55y" path="res://Assets/Prefabs/UI/colony_icon.tscn" id="9_gusxr"]
 [ext_resource type="Script" uid="uid://djpke18bqs2nu" path="res://Scripts/Abominations/RealityTangler.cs" id="13_sfn14"]
 [ext_resource type="Script" uid="uid://byojjoj3wpnpd" path="res://Scripts/UserInterface/MapUI.cs" id="14_23wpb"]
+[ext_resource type="Script" uid="uid://cyombaxie5vkw" path="res://Scripts/Utility/BuildingManager.cs" id="14_uc177"]
 [ext_resource type="Script" uid="uid://b2koecyr2n2mv" path="res://Scripts/UserInterface/ContextMenus/PartMenuHandler.cs" id="15_cbqy2"]
 [ext_resource type="Script" uid="uid://b0otr6yt3ikn2" path="res://Scripts/UserInterface/ContextMenus/ColonyMenu.cs" id="15_p543u"]
 [ext_resource type="Script" uid="uid://bc0vnn6dhlhug" path="res://Scripts/UserInterface/ContextMenus/ContextMenus.cs" id="15_ue2ba"]
@@ -37,7 +38,7 @@ script = ExtResource("1_2c3j4")
 planetSystem = NodePath("PlanetSystem")
 partManager = NodePath("PartManager")
 colonyManager = NodePath("ColonyManager")
-flightCam = NodePath("Cam_Pos")
+flightCam = NodePath("FlightCamera")
 localCamera = NodePath("RenderLayers/LocalContainer/LocalView/Camera3D")
 localSpace = NodePath("RenderLayers/LocalContainer/LocalView/LocalSpace")
 
@@ -108,7 +109,7 @@ far = 10000000.0
 
 [node name="ScaledSpace" type="Node3D" parent="RenderLayers/ScaledContainer/ScaledView" node_paths=PackedStringArray("flightCamera")]
 script = ExtResource("5_yxkbd")
-flightCamera = NodePath("../../../../Cam_Pos")
+flightCamera = NodePath("../../../../FlightCamera")
 
 [node name="BackgroundContainer" type="SubViewportContainer" parent="RenderLayers"]
 z_index = -1
@@ -172,7 +173,10 @@ iconParent = NodePath("../UI/MapUI/ColonyIcons")
 process_priority = 100
 script = ExtResource("13_sfn14")
 
-[node name="Cam_Pos" type="Node3D" parent="." node_paths=PackedStringArray("rotNode_Y", "rotNode_X", "camNode")]
+[node name="BuildingManager" type="Node" parent="."]
+script = ExtResource("14_uc177")
+
+[node name="FlightCamera" type="Node3D" parent="." node_paths=PackedStringArray("rotNode_Y", "rotNode_X", "camNode")]
 script = ExtResource("6_0mdm0")
 multiplyScroll = true
 lerpSpeed = 10.0
@@ -183,22 +187,22 @@ camNode = NodePath("Cam_Rot_Y/Cam_Rot_X/RemoteCams")
 zoomAmnt = 1.1
 zoom = 2.0
 
-[node name="Cam_Rot_Y" type="Node3D" parent="Cam_Pos"]
+[node name="Cam_Rot_Y" type="Node3D" parent="FlightCamera"]
 
-[node name="Cam_Rot_X" type="Node3D" parent="Cam_Pos/Cam_Rot_Y"]
+[node name="Cam_Rot_X" type="Node3D" parent="FlightCamera/Cam_Rot_Y"]
 
-[node name="RemoteCams" type="Node3D" parent="Cam_Pos/Cam_Rot_Y/Cam_Rot_X"]
+[node name="RemoteCams" type="Node3D" parent="FlightCamera/Cam_Rot_Y/Cam_Rot_X"]
 
-[node name="Local" type="RemoteTransform3D" parent="Cam_Pos/Cam_Rot_Y/Cam_Rot_X/RemoteCams"]
+[node name="Local" type="RemoteTransform3D" parent="FlightCamera/Cam_Rot_Y/Cam_Rot_X/RemoteCams"]
 remote_path = NodePath("../../../../../RenderLayers/LocalContainer/LocalView/Camera3D")
 
-[node name="Scaled" type="RemoteTransform3D" parent="Cam_Pos/Cam_Rot_Y/Cam_Rot_X/RemoteCams"]
+[node name="Scaled" type="RemoteTransform3D" parent="FlightCamera/Cam_Rot_Y/Cam_Rot_X/RemoteCams"]
 remote_path = NodePath("../../../../../RenderLayers/ScaledContainer/ScaledView/Camera3D")
 
-[node name="Background" type="RemoteTransform3D" parent="Cam_Pos/Cam_Rot_Y/Cam_Rot_X/RemoteCams"]
+[node name="Background" type="RemoteTransform3D" parent="FlightCamera/Cam_Rot_Y/Cam_Rot_X/RemoteCams"]
 remote_path = NodePath("../../../../../RenderLayers/BackgroundContainer/BackgView/Camera3D")
 
-[node name="RemoteTransform3D" type="RemoteTransform3D" parent="Cam_Pos/Cam_Rot_Y/Cam_Rot_X/RemoteCams"]
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="FlightCamera/Cam_Rot_Y/Cam_Rot_X/RemoteCams"]
 remote_path = NodePath("../../../../../RenderLayers/BackgroundContainer/BackgView/Background/Sky")
 update_rotation = false
 update_scale = false
@@ -226,7 +230,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="PartMenus" type="Control" parent="UI" node_paths=PackedStringArray("contextMenus")]
+[node name="PartMenuHandler" type="Control" parent="UI" node_paths=PackedStringArray("contextMenus")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -238,7 +242,7 @@ script = ExtResource("15_cbqy2")
 contextMenus = NodePath("ContextMenus")
 menuPrefab = ExtResource("17_2vujl")
 
-[node name="ContextMenus" type="Control" parent="UI/PartMenus" node_paths=PackedStringArray("menus")]
+[node name="ContextMenus" type="Control" parent="UI/PartMenuHandler" node_paths=PackedStringArray("menus")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

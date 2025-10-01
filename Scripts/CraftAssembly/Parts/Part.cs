@@ -11,6 +11,9 @@ public partial class Part : RigidBody3D
     [Export] public bool enabled = false;
     [Export] public Material glowMat;
     [Export] public MeshInstance3D glowMesh;
+    [Export] public bool selectable = true;
+
+    [Signal] public delegate void SendButtonEventHandler(string name);
 
     public CachedPart cachedPart;
     public Node3D parentThing;
@@ -82,6 +85,7 @@ public partial class Part : RigidBody3D
     // For C# -> GDScript scripting
     public void SendButtonEvent(string name)
     {
-        Logger.Print(name);
+        Logger.Print($"(Instance {Name}) Sending button signal {name}");
+        EmitSignal(SignalName.SendButton, name);
     }
 }

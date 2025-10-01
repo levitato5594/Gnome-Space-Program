@@ -2,6 +2,7 @@ using Godot;
 using Godot.Collections;
 using System;
 
+// Registry of singletons for GDScript that otherwise couldn't be accessed.
 public partial class SingletonRegistry : Node
 {
     // Has to be non-static for GDScript
