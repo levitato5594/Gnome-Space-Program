@@ -6,8 +6,18 @@ public partial class BuildingManager : Node
     public static readonly string classTag = "([color=Turquoise]BuildingManager[color=white])";
 	public static BuildingManager Instance { get; private set; }
 
-    // None, Craft, or Colony
-    public string editorMode = "None";
+    public enum EditorMode
+    {
+        None,
+        Static,
+        Dynamic
+    }
+
+    // None (0), Static (1), or Dynamic (2)
+    public int editorMode = (int)EditorMode.None;
+    // Whether or not other crafts or colonies are included
+    // This should be true for static editing (in a VAB / editing colonies), and false for dynamic editing (EVA construction)
+    public bool excludeOtherThings; 
     public Node3D editedThing;
 
     // Called when the node enters the scene tree for the first time.

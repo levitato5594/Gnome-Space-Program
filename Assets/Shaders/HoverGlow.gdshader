@@ -5,9 +5,11 @@ uniform vec3 colour = vec3(0,1,0);
 uniform float maxAlpha = 0.8;
 uniform float minAlpha = 0.2;
 uniform float pulseSpeed = 2.5;
+uniform float expand = 2.5;
 
 void vertex() {
 	// Called for every vertex the material is visible on.
+	VERTEX *= expand;
 }
 
 void fragment() {

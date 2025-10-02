@@ -83,17 +83,18 @@ public partial class PartMenuHandler : Node
 
     public bool IsPartSelectable(Part part)
     {
-        string editorMode = BuildingManager.Instance.editorMode;
+        int editorMode = BuildingManager.Instance.editorMode;
 
         bool editorStatus = false;
+        // Add case for dynamic editing when EVA construction becomes relevant
         switch (editorMode)
         {
-            case "Craft": // If we're editing, and editing a craft
-                if (part.parentThing is not Colony) editorStatus = true;
+            case (int)BuildingManager.EditorMode.Static: // If we're editing a static thing
+                if (part.inEditor) editorStatus = true;
                 break;
             default: // Selection logic for if we're not editing
                 if (ActiveSave.Instance.activeThing is Colony colony && part.parentThing == colony) editorStatus = true;
-                if (ActiveSave.Instance.activeThing is Craft craft && part.parentThing is not Colony) editorStatus = true;
+                if (ActiveSave.Instance.activeThing is Craft && part.parentThing is not Colony) editorStatus = true;
                 break;
         }
 

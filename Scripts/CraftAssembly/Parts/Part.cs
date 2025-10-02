@@ -13,6 +13,9 @@ public partial class Part : RigidBody3D
     [Export] public MeshInstance3D glowMesh;
     [Export] public bool selectable = true;
 
+    // Whether or not to treat the part as "not real" (in the editor)
+    [Export] public bool inEditor;
+
     [Signal] public delegate void SendButtonEventHandler(string name);
 
     public CachedPart cachedPart;
@@ -74,11 +77,14 @@ public partial class Part : RigidBody3D
 
     public void Highlight(bool toggle)
     {
-        if (toggle)
+        if (glowMesh != null)
         {
-            glowMesh.MaterialOverlay = glowMat;
-        }else{
-            glowMesh.MaterialOverlay = null;
+            if (toggle)
+            {
+                glowMesh.MaterialOverlay = glowMat;
+            }else{
+                glowMesh.MaterialOverlay = null;
+            }
         }
     }
 

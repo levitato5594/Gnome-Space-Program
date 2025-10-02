@@ -28,6 +28,7 @@ public partial class FlightCamera : Node3D
     [Export] public Node3D camNode;
 
     [Export] public float zoomAmnt;
+    [Export] public bool canZoom = true;
     [Export] public float zoom;
 
     [Export] public Node3D facingDownObject;
@@ -82,6 +83,8 @@ public partial class FlightCamera : Node3D
 		// Leave if we can't do this
 		if (toggle && !canEnterMap) return;
 
+        MapUI.Instance.Visible = toggle;
+
         Logger.Print($"{classTag} Map view: {toggle}");
         inMap = toggle;
         ActiveSave.Instance.localSpace.Visible = !toggle;
@@ -104,7 +107,7 @@ public partial class FlightCamera : Node3D
 
         if (@event is InputEventMouseButton buttonEvent)
 		{
-			switch (buttonEvent.ButtonIndex)
+            switch (buttonEvent.ButtonIndex)
 			{
 				case MouseButton.Right:
 					camRotating = buttonEvent.Pressed;
@@ -112,17 +115,17 @@ public partial class FlightCamera : Node3D
 				case MouseButton.WheelUp:
 					if(multiplyScroll)
 					{
-						zoom /= zoomAmnt;
+						if(canZoom) zoom /= zoomAmnt;
 					}else{
-						zoom -= zoomAmnt;
+						if(canZoom) zoom -= zoomAmnt;
 					}
 					break;
 				case MouseButton.WheelDown:
 					if(multiplyScroll)
 					{
-						zoom *= zoomAmnt;
+						if(canZoom) zoom *= zoomAmnt;
 					}else{
-						zoom += zoomAmnt;
+						if(canZoom) zoom += zoomAmnt;
 					}
 					break;
 			}

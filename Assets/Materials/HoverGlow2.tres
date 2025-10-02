@@ -9,3 +9,4 @@ shader_parameter/colour = Vector3(0, 1, 0.2)
 shader_parameter/maxAlpha = 0.4
 shader_parameter/minAlpha = 0.1
 shader_parameter/pulseSpeed = 3.0
+shader_parameter/expand = 1.0
