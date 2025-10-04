@@ -19,3 +19,4 @@ columns = 2
 
 [node name="PartSelector" parent="GridContainer" instance=ExtResource("1_odp56")]
 layout_mode = 2
+script = null

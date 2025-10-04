@@ -98,6 +98,6 @@ public partial class PartMenuHandler : Node
                 break;
         }
 
-        return part.parentThing == ActiveSave.Instance.activeThing && part.IsVisibleInTree() && editorStatus;
+        return part.IsVisibleInTree() && editorStatus && part.enabled;
     }
 }

@@ -16,6 +16,8 @@ public partial class Part : RigidBody3D
     // Whether or not to treat the part as "not real" (in the editor)
     [Export] public bool inEditor;
 
+    [Export] public Godot.Collections.Array<AttachNode> attachNodes;
+
     [Signal] public delegate void SendButtonEventHandler(string name);
 
     public CachedPart cachedPart;
@@ -27,7 +29,10 @@ public partial class Part : RigidBody3D
 
     public override void _Process(double delta)
     {
-        Highlight(PartMenuHandler.Instance.hoveredPart == this);
+        if (PartMenuHandler.Instance != null)
+        {
+            Highlight(PartMenuHandler.Instance.hoveredPart == this); 
+        }
     }
 
     public void InitPart()

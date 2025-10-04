@@ -16,7 +16,6 @@
 
 [node name="MainMenu" parent="." instance=ExtResource("1_r150o")]
 z_index = 0
-mouse_filter = 2
 
 [node name="DebugUI" type="Control" parent="."]
 visible = false

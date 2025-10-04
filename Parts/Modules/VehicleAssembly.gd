@@ -50,7 +50,7 @@ func button_handler(buttonID:String):
 
 		active = true;
 
-# We sort of hijack the flight camera for this.. It should be fine though.... :glueless:
+# We sort of hijack the flight camera for this.. It should be fine though.... :glueless: haha get it? it's like clueles. but gnomes.. so the letter g.. so it's glueless AHHHHHHH
 func _unhandled_input(event: InputEvent):
 	if event is InputEventKey:
 		if active:

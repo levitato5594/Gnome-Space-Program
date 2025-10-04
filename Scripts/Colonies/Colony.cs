@@ -42,6 +42,8 @@ public partial class Colony : Node3D
             part.parentThing = this;
             part.cachedPart = data.template;
 
+            part.enabled = true;
+
             part.InitPart();
         }
     }
