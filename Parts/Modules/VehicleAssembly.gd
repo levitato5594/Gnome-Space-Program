@@ -48,6 +48,9 @@ func button_handler(buttonID:String):
 		# Close Part Menus
 		partMenuHandler.contextMenus.OpenMenu("", [], true)
 
+		# Initiate
+		buildingManager.OpenBuildUI(true, true)
+
 		active = true;
 
 # We sort of hijack the flight camera for this.. It should be fine though.... :glueless: haha get it? it's like clueles. but gnomes.. so the letter g.. so it's glueless AHHHHHHH

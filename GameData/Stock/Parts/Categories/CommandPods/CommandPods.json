@@ -1,0 +1,10 @@
+{
+  "configType": "PartCat",
+  "name": "commandPods",
+  "icon": "Stock/Parts/Categories/CommandPods/commandPodsIcon.svg",
+  "displayData": {
+	"displayName": "Command Pods",
+	"description": "Living stuff goes in here."
+  }
+}
+

@@ -1,0 +1,8 @@
+{
+    "configType": "PartDef",
+    "name": "MG1_Pod",
+    "displayName": "MG1 Command Pod",
+    "category": "commandPods",
+    "assets": "Stock/Parts/CommandPod/MG_1_Pod/MG1POD.pck",
+    "partScene": "Parts/Assets/MG_1_Pod/PARTMAIN.tscn",
+}

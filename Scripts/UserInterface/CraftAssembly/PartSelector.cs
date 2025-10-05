@@ -4,6 +4,7 @@ using System;
 public partial class PartSelector : Button
 {
     [Export] public SubViewportContainer vpContainer;
+    [Export] public Camera3D vpCam;
     [Export] public Node3D partContainer;
     [Export] public float sizeUp = 1.2f;
     [Export] public float sizeUpDuration = 0.2f;
@@ -19,13 +20,15 @@ public partial class PartSelector : Button
     }
 
     // Loads a passive version of a part into itself and assigns all the important values
-    public void LoadPart(CachedPart part)
+    public void LoadPart()
     {
-        Part partObj = part.Instantiate(partContainer);
+        Part partObj = partRef.Instantiate(partContainer);
         partObj.Freeze = true;
         partObj.enabled = false;
 
         partObj.GlobalPosition = Vector3.Zero;
+
+        vpCam.LookAt(partObj.CenterOfMass + partObj.GlobalPosition);
     }
 
     public void ExpandPart(bool expand)

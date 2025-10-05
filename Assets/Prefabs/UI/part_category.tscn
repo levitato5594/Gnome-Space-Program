@@ -1,26 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://f72it1x2go4q"]
+[gd_scene load_steps=2 format=3 uid="uid://f72it1x2go4q"]
 
-[ext_resource type="StyleBox" uid="uid://ckhcrj6nsl8lr" path="res://Assets/Materials/Overrides/CategoryButton_Hover.tres" id="1_s0jkt"]
-[ext_resource type="StyleBox" uid="uid://boucpukflih8t" path="res://Assets/Materials/Overrides/CategoryButton_Normal.tres" id="2_f31hb"]
-[ext_resource type="Script" uid="uid://y33i4cd8f58o" path="res://Scripts/PartCategory.cs" id="3_f31hb"]
-[ext_resource type="Texture2D" uid="uid://c42k3f3gfpng4" path="res://Assets/Textures/category_capsules.png" id="3_juc3s"]
+[ext_resource type="Script" uid="uid://y33i4cd8f58o" path="res://Scripts/CraftAssembly/Parts/PartCategoryContainer.cs" id="3_f31hb"]
 
-[node name="Category" type="Button" node_paths=PackedStringArray("texture")]
-custom_minimum_size = Vector2(48, 48)
-offset_right = 37.0
-offset_bottom = 36.0
-mouse_default_cursor_shape = 2
-theme_override_styles/hover = ExtResource("1_s0jkt")
-theme_override_styles/pressed = ExtResource("2_f31hb")
-theme_override_styles/normal = ExtResource("2_f31hb")
+[node name="PartCategory" type="ScrollContainer" node_paths=PackedStringArray("container")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("3_f31hb")
-texture = NodePath("TextureRect")
+container = NodePath("GridContainer")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-texture_filter = 1
-layout_mode = 0
-offset_right = 48.0
-offset_bottom = 48.0
-texture = ExtResource("3_juc3s")
-
-[connection signal="pressed" from="." to="." method="OnClick"]
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 2
+columns = 3

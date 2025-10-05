@@ -6,6 +6,8 @@ public partial class BuildingManager : Node
     public static readonly string classTag = "([color=Turquoise]BuildingManager[color=white])";
 	public static BuildingManager Instance { get; private set; }
 
+    [Export] public BuildUI buildUI;
+
     public enum EditorMode
     {
         None,
@@ -25,5 +27,15 @@ public partial class BuildingManager : Node
 	{
         Instance = this;
 		SingletonRegistry.Register(this); // Register self
+    }
+
+    public void OpenBuildUI(bool open, bool selector = true)
+    {
+        buildUI.Visible = open;
+        buildUI.partListContainer.Visible = open && selector;
+        if (open)
+        {
+            buildUI.partList.LoadPartList();
+        }
     }
 }

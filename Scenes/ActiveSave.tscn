@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://b08reqxmoktvk"]
+[gd_scene load_steps=35 format=3 uid="uid://b08reqxmoktvk"]
 
 [ext_resource type="Script" uid="uid://c3i0ynvo54sk1" path="res://Scripts/Utility/ActiveSave.cs" id="1_2c3j4"]
 [ext_resource type="Script" uid="uid://2vlhdf4w605i" path="res://Scripts/PlanetarySystem/PlanetSystem.cs" id="1_pocjb"]
@@ -23,10 +23,15 @@
 [ext_resource type="PackedScene" uid="uid://dam6vsicmpefq" path="res://Assets/Meshes/Gizmo/gizmo.glb" id="17_h3s5b"]
 [ext_resource type="Script" uid="uid://nutgi3n1uf8j" path="res://Scripts/UserInterface/ContextMenus/PlanetMenu.cs" id="17_ue2ba"]
 [ext_resource type="StyleBox" uid="uid://cmyfacsvlil8r" path="res://Assets/Materials/GeneralUI/ResizeHandle/handle_normal.tres" id="23_2c3fv"]
+[ext_resource type="Script" uid="uid://dshwjlk4h8fed" path="res://Scripts/UserInterface/CraftAssembly/BuildUI.cs" id="23_hx2xn"]
 [ext_resource type="PackedScene" uid="uid://cr52dmkgty470" path="res://Assets/Prefabs/UI/part_selector.tscn" id="23_vd1dx"]
+[ext_resource type="Script" uid="uid://tn3h1s53tlmy" path="res://Scripts/UserInterface/CraftAssembly/PartList.cs" id="24_287u4"]
 [ext_resource type="StyleBox" uid="uid://didwclm676g4f" path="res://Assets/Materials/GeneralUI/ResizeHandle/handle_press.tres" id="24_vd1dx"]
+[ext_resource type="PackedScene" uid="uid://f72it1x2go4q" path="res://Assets/Prefabs/UI/part_category.tscn" id="25_51qm0"]
 [ext_resource type="StyleBox" uid="uid://d2x1glka2wnkb" path="res://Assets/Materials/GeneralUI/ResizeHandle/handle_hover.tres" id="25_hx2xn"]
 [ext_resource type="Script" uid="uid://drlfgjufqytvn" path="res://Scripts/UserInterface/ResizeHandle.cs" id="26_287u4"]
+[ext_resource type="Texture2D" uid="uid://dtmn6yl7f8lne" path="res://GameData/Stock/Parts/Categories/CommandPods/commandPodsIcon.svg" id="29_287u4"]
+[ext_resource type="PackedScene" uid="uid://4gm81i1keb5p" path="res://Assets/Prefabs/UI/part_cat_button.tscn" id="30_d1dok"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_h3s5b"]
 material = ExtResource("3_sfn14")
@@ -178,8 +183,9 @@ iconParent = NodePath("../UI/MapUI/ColonyIcons")
 process_priority = 100
 script = ExtResource("13_sfn14")
 
-[node name="BuildingManager" type="Node" parent="."]
+[node name="BuildingManager" type="Node" parent="." node_paths=PackedStringArray("buildUI")]
 script = ExtResource("14_uc177")
+buildUI = NodePath("../UI/BuildUI")
 
 [node name="FlightCamera" type="Node3D" parent="." node_paths=PackedStringArray("rotNode_Y", "rotNode_X", "camNode")]
 script = ExtResource("6_0mdm0")
@@ -413,7 +419,21 @@ text = "OTHER INFO"
 layout_mode = 2
 text = "OTHER INFO"
 
-[node name="BuildUI" type="Control" parent="UI"]
+[node name="BuildUI" type="Control" parent="UI" node_paths=PackedStringArray("partListContainer", "partList")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("23_hx2xn")
+partListContainer = NodePath("Selector")
+partList = NodePath("Selector/PartSelector/SelectMenu")
+
+[node name="Selector" type="Control" parent="UI/BuildUI"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -422,18 +442,18 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="PartSelector" type="Control" parent="UI/BuildUI"]
-custom_minimum_size = Vector2(100, 0)
+[node name="PartSelector" type="Control" parent="UI/BuildUI/Selector"]
+custom_minimum_size = Vector2(288, 0)
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
-offset_left = 45.0
-offset_top = 42.0
-offset_right = 333.0
-offset_bottom = -52.0
+offset_left = 106.225
+offset_top = 45.0
+offset_right = 394.225
+offset_bottom = -45.0
 grow_vertical = 2
 
-[node name="SelectMenu" type="Panel" parent="UI/BuildUI/PartSelector"]
+[node name="SelectMenu" type="Panel" parent="UI/BuildUI/Selector/PartSelector" node_paths=PackedStringArray("categoryList")]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -441,23 +461,16 @@ anchor_bottom = 1.0
 offset_bottom = -152.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("24_287u4")
+buttonPrefab = ExtResource("30_d1dok")
+categoryPrefab = ExtResource("25_51qm0")
+partSelector = ExtResource("23_vd1dx")
+categoryList = NodePath("../../PartCategories/ScrollContainer/CatList")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UI/BuildUI/PartSelector/SelectMenu"]
+[node name="PartCategory" parent="UI/BuildUI/Selector/PartSelector/SelectMenu" instance=ExtResource("25_51qm0")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 
-[node name="GridContainer" type="GridContainer" parent="UI/BuildUI/PartSelector/SelectMenu/ScrollContainer"]
-layout_mode = 2
-columns = 3
-
-[node name="PartSelector" parent="UI/BuildUI/PartSelector/SelectMenu/ScrollContainer/GridContainer" instance=ExtResource("23_vd1dx")]
-layout_mode = 2
-
-[node name="PartModifiers" type="Panel" parent="UI/BuildUI/PartSelector"]
+[node name="PartModifiers" type="Panel" parent="UI/BuildUI/Selector/PartSelector"]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 1.0
@@ -467,7 +480,7 @@ offset_top = -149.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ResizeHandles" type="Control" parent="UI/BuildUI/PartSelector"]
+[node name="ResizeHandles" type="Control" parent="UI/BuildUI/Selector/PartSelector"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -476,7 +489,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="R" type="Button" parent="UI/BuildUI/PartSelector/ResizeHandles" node_paths=PackedStringArray("target")]
+[node name="R" type="Button" parent="UI/BuildUI/Selector/PartSelector/ResizeHandles" node_paths=PackedStringArray("target")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -493,5 +506,43 @@ theme_override_styles/hover = ExtResource("25_hx2xn")
 script = ExtResource("26_287u4")
 target = NodePath("../..")
 direction = Vector2(1, 0)
+
+[node name="PartCategories" type="Panel" parent="UI/BuildUI/Selector"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 45.0
+offset_top = 45.0
+offset_right = 101.0
+offset_bottom = -45.0
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/BuildUI/Selector/PartCategories"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CatList" type="VBoxContainer" parent="UI/BuildUI/Selector/PartCategories/ScrollContainer"]
+layout_mode = 2
+
+[node name="PartCatButton" parent="UI/BuildUI/Selector/PartCategories/ScrollContainer/CatList" instance=ExtResource("30_d1dok")]
+layout_mode = 2
+
+[node name="Button2" type="Button" parent="UI/BuildUI/Selector/PartCategories/ScrollContainer/CatList"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/BuildUI/Selector/PartCategories/ScrollContainer/CatList/Button2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("29_287u4")
 
 [connection signal="pressed" from="UI/MapUI/ContextMenus/ColonyMenu/EnterButton" to="UI/MapUI/ContextMenus/ColonyMenu" method="EnterButtonPressed"]
