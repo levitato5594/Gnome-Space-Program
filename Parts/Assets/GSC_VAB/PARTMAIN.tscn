@@ -659,10 +659,11 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_hfs3h")
 
-[node name="GscVab" type="RigidBody3D" node_paths=PackedStringArray("glowMesh")]
+[node name="GscVab" type="RigidBody3D" node_paths=PackedStringArray("glowMesh", "attachNodes")]
 script = ExtResource("1_2gjxd")
 glowMat = ExtResource("2_2mt1h")
 glowMesh = NodePath("mesh/Main")
+attachNodes = []
 
 [node name="VAB" type="Node3D" parent="." node_paths=PackedStringArray("camPivot")]
 script = ExtResource("3_2mt1h")

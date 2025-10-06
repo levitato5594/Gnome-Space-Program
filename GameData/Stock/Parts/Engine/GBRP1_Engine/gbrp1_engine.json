@@ -1,0 +1,9 @@
+{
+    "configType": "PartDef",
+    "name": "gbrp1Engine",
+    "displayName": "GBRP1 Engine",
+    "category": "engines",
+    "assets": "Stock/Parts/Engine/GBRP1_Engine/GBRP1ENGINE.pck",
+    "partScene": "Parts/Assets/GBRP1_Engine/PARTMAIN.tscn",
+    "listedInSelector": true,
+}

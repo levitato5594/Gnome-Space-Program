@@ -99,4 +99,43 @@ public partial class Part : RigidBody3D
         Logger.Print($"(Instance {Name}) Sending button signal {name}");
         EmitSignal(SignalName.SendButton, name);
     }
+
+    // Recursive function to get all meshes
+    public List<MeshInstance3D> GetMeshes(Node node = null)
+    {
+        node ??= this;
+
+        List<MeshInstance3D> meshList = [];
+
+        foreach(Node child in node.GetChildren())
+        {
+            if (child is MeshInstance3D mesh)
+            {
+                meshList.Add(mesh);
+            }
+
+            if (child.GetChildCount() > 0)
+            {
+                List<MeshInstance3D> meshBuffer = GetMeshes(child);
+                meshList.AddRange(meshBuffer);
+            }
+        }
+
+        return meshList;
+    }
+
+    public Aabb GetAABB()
+    {
+        List<MeshInstance3D> meshList = GetMeshes(this);
+
+        Aabb aabb = meshList[0].GetAabb();
+
+        foreach (MeshInstance3D mesh in meshList)
+        {
+            //Logger.Print($"{Name} {mesh.GetAabb()}");
+            aabb.Merge(mesh.GetAabb());
+        }
+
+        return aabb;
+    }
 }

@@ -1,0 +1,9 @@
+{
+    "configType": "PartDef",
+    "name": "1x2_FuelTank",
+    "displayName": "1m x 2m Fuel Tank",
+    "category": "fuelTanks",
+    "assets": "Stock/Parts/FuelTank/1x2_FuelTank/1X2TANK.pck",
+    "partScene": "Parts/Assets/1x2_FuelTank/PARTMAIN.tscn",
+    "listedInSelector": true,
+}

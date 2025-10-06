@@ -2,7 +2,8 @@
     "configType": "PartDef",
     "name": "GSC_VAB",
     "displayName": "Vehicle Assembly Building",
-    "category": "Colony Parts",
+    "category": "colonyParts",
     "assets": "Stock/Parts/Colony/GSC_VAB/GSCVAB.pck",
     "partScene": "Parts/Assets/GSC_VAB/PARTMAIN.tscn",
+    "listedInSelector": false,
 }

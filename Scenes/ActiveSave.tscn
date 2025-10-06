@@ -30,8 +30,8 @@
 [ext_resource type="PackedScene" uid="uid://f72it1x2go4q" path="res://Assets/Prefabs/UI/part_category.tscn" id="25_51qm0"]
 [ext_resource type="StyleBox" uid="uid://d2x1glka2wnkb" path="res://Assets/Materials/GeneralUI/ResizeHandle/handle_hover.tres" id="25_hx2xn"]
 [ext_resource type="Script" uid="uid://drlfgjufqytvn" path="res://Scripts/UserInterface/ResizeHandle.cs" id="26_287u4"]
-[ext_resource type="Texture2D" uid="uid://dtmn6yl7f8lne" path="res://GameData/Stock/Parts/Categories/CommandPods/commandPodsIcon.svg" id="29_287u4"]
 [ext_resource type="PackedScene" uid="uid://4gm81i1keb5p" path="res://Assets/Prefabs/UI/part_cat_button.tscn" id="30_d1dok"]
+[ext_resource type="Texture2D" uid="uid://bxe8uo40enbck" path="res://Assets/Textures/UserInterface/allIcon.svg" id="32_nej1p"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_h3s5b"]
 material = ExtResource("3_sfn14")
@@ -420,7 +420,6 @@ layout_mode = 2
 text = "OTHER INFO"
 
 [node name="BuildUI" type="Control" parent="UI" node_paths=PackedStringArray("partListContainer", "partList")]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -433,7 +432,6 @@ partListContainer = NodePath("Selector")
 partList = NodePath("Selector/PartSelector/SelectMenu")
 
 [node name="Selector" type="Control" parent="UI/BuildUI"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -453,7 +451,7 @@ offset_right = 394.225
 offset_bottom = -45.0
 grow_vertical = 2
 
-[node name="SelectMenu" type="Panel" parent="UI/BuildUI/Selector/PartSelector" node_paths=PackedStringArray("categoryList")]
+[node name="SelectMenu" type="Panel" parent="UI/BuildUI/Selector/PartSelector" node_paths=PackedStringArray("categoryList", "partPreviewContainer", "allButton")]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -466,9 +464,8 @@ buttonPrefab = ExtResource("30_d1dok")
 categoryPrefab = ExtResource("25_51qm0")
 partSelector = ExtResource("23_vd1dx")
 categoryList = NodePath("../../PartCategories/ScrollContainer/CatList")
-
-[node name="PartCategory" parent="UI/BuildUI/Selector/PartSelector/SelectMenu" instance=ExtResource("25_51qm0")]
-layout_mode = 1
+partPreviewContainer = NodePath("../../PreviewContainer")
+allButton = NodePath("../../AllButton")
 
 [node name="PartModifiers" type="Panel" parent="UI/BuildUI/Selector/PartSelector"]
 layout_mode = 1
@@ -512,8 +509,8 @@ layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_left = 45.0
-offset_top = 45.0
-offset_right = 101.0
+offset_top = 106.0
+offset_right = 103.0
 offset_bottom = -45.0
 grow_vertical = 2
 
@@ -522,27 +519,39 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="CatList" type="VBoxContainer" parent="UI/BuildUI/Selector/PartCategories/ScrollContainer"]
 layout_mode = 2
 
-[node name="PartCatButton" parent="UI/BuildUI/Selector/PartCategories/ScrollContainer/CatList" instance=ExtResource("30_d1dok")]
-layout_mode = 2
-
-[node name="Button2" type="Button" parent="UI/BuildUI/Selector/PartCategories/ScrollContainer/CatList"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="UI/BuildUI/Selector/PartCategories/ScrollContainer/CatList/Button2"]
+[node name="PreviewContainer" type="Control" parent="UI/BuildUI/Selector"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("29_287u4")
+mouse_filter = 2
+
+[node name="AllButton" type="Button" parent="UI/BuildUI/Selector"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 0
+offset_left = 45.0
+offset_top = 44.0
+offset_right = 103.0
+offset_bottom = 102.0
+
+[node name="Icon" type="TextureRect" parent="UI/BuildUI/Selector/AllButton"]
+texture_filter = 4
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("32_nej1p")
+expand_mode = 1
+stretch_mode = 5
 
 [connection signal="pressed" from="UI/MapUI/ContextMenus/ColonyMenu/EnterButton" to="UI/MapUI/ContextMenus/ColonyMenu" method="EnterButtonPressed"]

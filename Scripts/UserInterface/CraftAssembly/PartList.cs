@@ -8,6 +8,8 @@ public partial class PartList : Control
 	[Export] public PackedScene categoryPrefab;
 	[Export] public PackedScene partSelector;
 	[Export] public VBoxContainer categoryList;
+    [Export] public Control partPreviewContainer;
+    [Export] public Button allButton;
 
     public Dictionary<string, PartCategoryContainer> categories = [];
 
@@ -23,6 +25,11 @@ public partial class PartList : Control
 		{
             node.QueueFree();
         }
+
+        PartCategoryContainer allCategory = (PartCategoryContainer)categoryPrefab.Instantiate();
+        AddChild(allCategory);
+        allCategory.button = allButton;
+        allCategory.Initialize();
 
         foreach (KeyValuePair<string, PartCategory> category in PartManager.Instance.partCategories)
 		{
@@ -45,15 +52,34 @@ public partial class PartList : Control
 
         foreach (KeyValuePair<string, CachedPart> part in PartManager.Instance.partCache)
 		{
-            string categoryName = part.Value.category;
-            if (categories.TryGetValue(categoryName, out PartCategoryContainer categoryContainer))
-			{
-				PartSelector selector = (PartSelector)partSelector.Instantiate();
-                selector.Name = $"{part.Key}_Selector";
-                selector.partRef = part.Value;
-                categoryContainer.AddChild(selector);
-                selector.LoadPart();
+            if (part.Value.listedInSelector)
+            {
+               string categoryName = part.Value.category;
+
+                // Load all parts into the "all" category
+                PartSelector allSelector = (PartSelector)partSelector.Instantiate();
+                allSelector.Name = $"{part.Key}_AllSelector";
+                allSelector.partRef = part.Value;
+                allSelector.partPreviewContainer = partPreviewContainer;
+
+                allCategory.container.AddChild(allSelector);
+                allSelector.LoadPart();
+
+                if (categories.TryGetValue(categoryName, out PartCategoryContainer categoryContainer))
+                {
+                    PartSelector selector = (PartSelector)partSelector.Instantiate();
+                    selector.Name = $"{part.Key}_Selector";
+                    selector.partRef = part.Value;
+                    selector.partPreviewContainer = partPreviewContainer;
+
+                    categoryContainer.container.AddChild(selector);
+                    selector.LoadPart();
+                } 
             }
         }
+
+        // Open
+        allCategory.Visible = false;
+        allCategory.OnClick();
     }
 }

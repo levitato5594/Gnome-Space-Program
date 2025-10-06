@@ -91,7 +91,8 @@ public partial class PartManager : Node
                 displayName = (string)data["displayName"],
                 category = (string)data["category"],
                 pckFile = (string)data["assets"],
-                scenePath = (string)data["partScene"]
+                scenePath = (string)data["partScene"],
+                listedInSelector = (bool)data["listedInSelector"]
             };
 
             parts.Add(part);

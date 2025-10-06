@@ -8,6 +8,7 @@ public partial class CachedPart
     public string category;
     public string pckFile;
     public string scenePath;
+    public bool listedInSelector = true;
 
     // Dynamic stuff - self assigned
     public PackedScene partScene;

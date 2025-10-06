@@ -1,0 +1,10 @@
+{
+  "configType": "PartCat",
+  "name": "fuelTanks",
+  "icon": "Stock/Parts/Categories/FuelTanks/fuelTanksIcon.svg",
+  "displayData": {
+	"displayName": "Fuel Tanks",
+	"description": "Similar to command pods in the sense that it stores things. Different in the sense that it shouldn't store living things."
+  }
+}
+

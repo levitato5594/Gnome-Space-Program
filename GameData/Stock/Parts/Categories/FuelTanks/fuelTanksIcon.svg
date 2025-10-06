@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="512"
+   height="512"
+   viewBox="0 0 135.46666 135.46667"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="fuelTanksIcon.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1"
+     inkscape:cx="90"
+     inkscape:cy="265"
+     inkscape:window-width="1920"
+     inkscape:window-height="1051"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="rect3712"
+       style="fill:#e6e6e6;stroke-width:2.63897"
+       d="m 35.598155,17.153288 c -3.894737,0 -7.081626,3.186891 -7.081626,7.081627 v 5.62512 l -3.532442,-0.0084 V 118.31338 H 109.39438 V 61.15814 l -6.67983,-6.981176 7.14859,-7.148592 -4.19373,-4.193728 4.81317,-4.813162 -9.71841,-9.72677 -4.821527,4.821531 -3.741711,-3.741709 -6.763537,6.763537 -5.909726,-6.177587 -4.285806,-0.0084 v -5.717169 c 0,-3.894736 -3.220373,-7.081627 -7.115109,-7.081627 z m 0,4.2021 h 32.528599 c 1.631324,0 2.879528,1.24821 2.879528,2.879527 v 5.708826 l -38.287653,-0.07532 v -5.633504 c 0,-1.631323 1.24821,-2.879527 2.879526,-2.879527 z m 31.591079,30.695413 c 0,0 16.071774,18.307741 16.071774,27.112749 0,8.805007 -7.196031,15.946212 -16.071774,15.946212 -8.875741,0 -16.071774,-7.141205 -16.071774,-15.946212 0,-8.805008 16.071774,-27.112749 16.071774,-27.112749 z" />
+  </g>
+</svg>
