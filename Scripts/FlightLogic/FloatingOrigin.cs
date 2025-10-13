@@ -23,8 +23,8 @@ public partial class FloatingOrigin : Node
         {
             Craft currentCraft = FlightManager.Instance.currentCraft;
 
-            if (currentCraft.GlobalPosition != null)
-            {
+            //if (currentCraft.GlobalPosition != null)
+            //{
                 double craftDistance = currentCraft.GlobalPosition.Length();
 
                 if (craftDistance > distanceThreshold)
@@ -36,7 +36,7 @@ public partial class FloatingOrigin : Node
                         //cbody.ProcessOrbitalPosition();
                     }
                 }
-            }
+            //}
         }else{
             offset = Double3.Zero;
         }

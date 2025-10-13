@@ -31,7 +31,7 @@ public partial class Part : RigidBody3D
     {
         if (PartMenuHandler.Instance != null)
         {
-            Highlight(PartMenuHandler.Instance.hoveredPart == this); 
+            Highlight(PartManager.Instance.hoveredPart == this); 
         }
     }
 

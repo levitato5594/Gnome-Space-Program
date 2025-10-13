@@ -66,9 +66,9 @@ public partial class BuildingManager : Node
         {
             if (mouseButt.Pressed && mouseButt.ButtonIndex == MouseButton.Left)
             {
-                if (draggingPart == null && PartMenuHandler.Instance.hoveredPart != null && PartMenuHandler.Instance.hoveredPart.inEditor) 
+                if (draggingPart == null && PartManager.Instance.hoveredPart != null && PartManager.Instance.hoveredPart.inEditor) 
                 {
-                    draggingPart = PartMenuHandler.Instance.hoveredPart;
+                    draggingPart = PartManager.Instance.hoveredPart;
                     Logger.Print("Selecting part");
                 }else{
                     draggingPart = null;
