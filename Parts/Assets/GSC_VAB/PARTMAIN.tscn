@@ -665,13 +665,19 @@ glowMat = ExtResource("2_2mt1h")
 glowMesh = NodePath("mesh/Main")
 attachNodes = []
 
-[node name="VAB" type="Node3D" parent="." node_paths=PackedStringArray("camPivot")]
+[node name="VAB" type="Node3D" parent="." node_paths=PackedStringArray("camPivot", "craftContainer")]
 script = ExtResource("3_2mt1h")
+targetZoom = 2
 camPivot = NodePath("CamPivot")
+craftContainer = NodePath("CraftContainer")
 pivotTgtPos = Vector3(0, 20, 0)
-pivotMoveSpeed = 8.0
+pivotMove = 0.5
+pivotMoveSpeed = 4.0
 
 [node name="CamPivot" type="Node3D" parent="VAB"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0)
+
+[node name="CraftContainer" type="Node3D" parent="VAB"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

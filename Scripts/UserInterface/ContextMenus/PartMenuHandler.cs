@@ -39,6 +39,7 @@ public partial class PartMenuHandler : Node
         contextMenus.OpenMenu(partName, info);
     }
 
+    // MOVE THIS TO PARTMANAGER.CS SOON
     public override void _UnhandledInput(InputEvent @event)
     {
         if (@event is InputEventMouseMotion mouseMotion)
@@ -50,7 +51,7 @@ public partial class PartMenuHandler : Node
             Vector3 from = camera3D.ProjectRayOrigin(mouseMotion.Position);
             Vector3 to = from + camera3D.ProjectRayNormal(mouseMotion.Position) * rayLength;
 
-            PhysicsRayQueryParameters3D rayParams = new PhysicsRayQueryParameters3D(){From = from, To = to};
+            PhysicsRayQueryParameters3D rayParams = new(){From = from, To = to};
             Dictionary result = spaceState.IntersectRay(rayParams);
 
             //Logger.Print(result);
@@ -58,7 +59,7 @@ public partial class PartMenuHandler : Node
             {
                 Node colliderResult = (Node)result["collider"];
 
-                if (colliderResult is Part part && part.parentThing == ActiveSave.Instance.activeThing && part.IsVisibleInTree())
+                if (colliderResult is Part part && part.IsVisibleInTree())
                 {
                     // Add logic for craft later too
                     if (IsPartSelectable(part))
@@ -85,19 +86,19 @@ public partial class PartMenuHandler : Node
     {
         int editorMode = BuildingManager.Instance.editorMode;
 
-        bool editorStatus = false;
+        bool selectionStatus = false;
         // Add case for dynamic editing when EVA construction becomes relevant
         switch (editorMode)
         {
             case (int)BuildingManager.EditorMode.Static: // If we're editing a static thing
-                if (part.inEditor) editorStatus = true;
+                if (part.inEditor) selectionStatus = true;
                 break;
             default: // Selection logic for if we're not editing
-                if (ActiveSave.Instance.activeThing is Colony colony && part.parentThing == colony) editorStatus = true;
-                if (ActiveSave.Instance.activeThing is Craft && part.parentThing is not Colony) editorStatus = true;
+                if (ActiveSave.Instance.activeThing is Colony colony && part.parentThing == colony) selectionStatus = true;
+                if (ActiveSave.Instance.activeThing is Craft && part.parentThing is not Colony) selectionStatus = true;
                 break;
         }
 
-        return part.IsVisibleInTree() && editorStatus && part.enabled;
+        return part.IsVisibleInTree() && selectionStatus;
     }
 }

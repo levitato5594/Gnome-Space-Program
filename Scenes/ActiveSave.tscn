@@ -39,9 +39,8 @@ flip_faces = true
 
 [sub_resource type="Environment" id="Environment_h3s5b"]
 background_mode = 1
-ssao_radius = 12.11
-ssao_intensity = 13.62
-ssao_detail = 3.03
+ssao_radius = 14.58
+ssao_intensity = 16.0
 
 [node name="ActiveSave" type="Node3D" node_paths=PackedStringArray("planetSystem", "partManager", "colonyManager", "flightCam", "localCamera", "localSpace")]
 script = ExtResource("1_2c3j4")
@@ -186,6 +185,7 @@ script = ExtResource("13_sfn14")
 [node name="BuildingManager" type="Node" parent="." node_paths=PackedStringArray("buildUI")]
 script = ExtResource("14_uc177")
 buildUI = NodePath("../UI/BuildUI")
+partMoveSpeed = 25.0
 
 [node name="FlightCamera" type="Node3D" parent="." node_paths=PackedStringArray("rotNode_Y", "rotNode_X", "camNode")]
 script = ExtResource("6_0mdm0")
@@ -420,6 +420,7 @@ layout_mode = 2
 text = "OTHER INFO"
 
 [node name="BuildUI" type="Control" parent="UI" node_paths=PackedStringArray("partListContainer", "partList")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -432,6 +433,7 @@ partListContainer = NodePath("Selector")
 partList = NodePath("Selector/PartSelector/SelectMenu")
 
 [node name="Selector" type="Control" parent="UI/BuildUI"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

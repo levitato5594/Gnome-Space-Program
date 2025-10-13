@@ -37,10 +37,12 @@ public partial class CachedPart
         }
     }
 
-    public Part Instantiate(Node parent)
+    public Part Instantiate(Node parent, bool inEditor = false)
     {
         Logger.Print($"(Cached {name}) Instantiating...");
         Part part = (Part)partScene.Instantiate();
+        part.inEditor = inEditor;
+        part.Freeze = true;
         parent.AddChild(part);
 
         return part;

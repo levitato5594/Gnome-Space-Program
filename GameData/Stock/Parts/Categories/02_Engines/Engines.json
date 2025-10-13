@@ -1,7 +1,7 @@
 {
   "configType": "PartCat",
   "name": "engines",
-  "icon": "Stock/Parts/Categories/Engines/enginesIcon.svg",
+  "icon": "Stock/Parts/Categories/02_Engines/enginesIcon.svg",
   "displayData": {
 	"displayName": "Engines",
 	"description": "Takes things from fuel tanks, burns them, and throws that hot burning stuff out the other end."

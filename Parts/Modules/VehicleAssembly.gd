@@ -7,6 +7,7 @@ class_name VehicleAssembly
 @export var maxZoom:int = 35
 @export var targetZoom:int = 1
 @export var camPivot:Node3D
+@export var craftContainer:Node3D
 
 @export var pivotTgtPos:Vector3
 @export var pivotMove:float = 1.25
@@ -37,7 +38,10 @@ func part_init():
 
 func button_handler(buttonID:String):
 	if buttonID == enterButtonName:
-		# Reposition cam and disable selection for the colony
+		# Assign self to activeVAB
+		buildingManager.activeVAB = self
+
+		# Reposition cam
 		flightCam.TargetObject(camPivot, Vector3(0.1,maxZoom,targetZoom), false)
 		buildingManager.editorMode = 1 # "Static"
 

@@ -27,12 +27,12 @@ public partial class PartSelector : Button
 
     public override void _Process(double delta)
     {
-        Node3D camPivot = (Node3D)vpCam.GetParent();
+        //Node3D camPivot = (Node3D)vpCam.GetParent();
         if (partRotating)
         {
-            camPivot.RotationDegrees = camPivot.RotationDegrees.Lerp(camPivot.RotationDegrees + rotationDirection, rotationSpeed * (float)delta);
+            partContainer.RotationDegrees = partContainer.RotationDegrees.Lerp(partContainer.RotationDegrees + rotationDirection, rotationSpeed * (float)delta);
         }else{
-            camPivot.RotationDegrees = camPivot.RotationDegrees.Lerp(originalRotation, rotationSpeed / 5f * (float)delta);
+            partContainer.RotationDegrees = partContainer.RotationDegrees.Lerp(originalRotation, rotationSpeed / 5f * (float)delta);
         }
     }
 
@@ -92,6 +92,9 @@ public partial class PartSelector : Button
     // Instantiate a "fake" part
     public void OnPress()
     {
-
+        Node3D activeVAB = BuildingManager.Instance.activeVAB;
+        Node3D partContainer = (Node3D)activeVAB.Get("craftContainer");
+        Part part = partRef.Instantiate(partContainer, true);
+        BuildingManager.Instance.draggingPart = part;
     }
 }

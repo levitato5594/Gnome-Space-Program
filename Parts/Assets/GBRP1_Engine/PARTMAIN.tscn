@@ -1,6 +1,7 @@
-[gd_scene load_steps=38 format=4 uid="uid://drmdivxomqm0s"]
+[gd_scene load_steps=39 format=4 uid="uid://drmdivxomqm0s"]
 
 [ext_resource type="Script" uid="uid://2jguooep700o" path="res://Scripts/CraftAssembly/Parts/Part.cs" id="1_3lrrq"]
+[ext_resource type="Material" uid="uid://cq16nvjct50k6" path="res://Assets/Materials/HoverGlow2.tres" id="2_20msv"]
 [ext_resource type="Script" uid="uid://bju7ped2nl5sy" path="res://Scripts/CraftAssembly/AttachNode.cs" id="2_rnlsl"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_pjnpj"]
@@ -383,10 +384,12 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_dmeqv")
 
-[node name="GBRP_1_Engine" type="RigidBody3D" node_paths=PackedStringArray("attachNodes")]
+[node name="GBRP_1_Engine" type="RigidBody3D" node_paths=PackedStringArray("glowMesh", "attachNodes")]
 mass = 500.0
 gravity_scale = 0.0
 script = ExtResource("1_3lrrq")
+glowMat = ExtResource("2_20msv")
+glowMesh = NodePath("GBRP1_Engine_Ver1/Nozzle")
 attachNodes = [NodePath("AttachNodes/AttachmentNode"), NodePath("AttachNodes/AttachmentNode2")]
 
 [node name="AttachNodes" type="Node3D" parent="."]

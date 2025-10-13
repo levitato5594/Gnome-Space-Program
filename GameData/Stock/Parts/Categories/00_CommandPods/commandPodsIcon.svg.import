@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://4lb3ajt7houp"
-path="res://.godot/imported/enginesIcon.svg-1430abc05e9e7fb319cc71e88e68ec2d.ctex"
+uid="uid://dtmn6yl7f8lne"
+path="res://.godot/imported/commandPodsIcon.svg-f7c2b73f68059833492eac017f8cdca2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://GameData/Stock/Parts/Categories/Engines/enginesIcon.svg"
-dest_files=["res://.godot/imported/enginesIcon.svg-1430abc05e9e7fb319cc71e88e68ec2d.ctex"]
+source_file="res://GameData/Stock/Parts/Categories/00_CommandPods/commandPodsIcon.svg"
+dest_files=["res://.godot/imported/commandPodsIcon.svg-f7c2b73f68059833492eac017f8cdca2.ctex"]
 
 [params]
 
