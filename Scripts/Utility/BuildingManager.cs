@@ -15,6 +15,7 @@ public partial class BuildingManager : Node
     [Export] public BuildUI buildUI;
     [Export] public float partMoveSpeed = 5f;
     [Export] public float partHoldDistance = 5f;
+    [Export] public float partSnapDistance = 25f;
 
     public enum EditorMode
     {
@@ -48,7 +49,44 @@ public partial class BuildingManager : Node
 			Vector2 mousePos = GetViewport().GetMousePosition();
 			Vector3 projectedPosition = camera.ProjectPosition(mousePos, partHoldDistance);
 
-			draggingPart.GlobalPosition = draggingPart.GlobalPosition.Lerp(projectedPosition, partMoveSpeed*(float)delta);
+            foreach (Part part in partsList)
+            {
+                if (part != draggingPart) // Redundant but who tf cares
+                {
+                    foreach (AttachNode attachNode0 in part.attachNodes)
+                    {
+                        if (attachNode0.connectedNode == null)
+                        {
+                            // Iterate over the dragged part's nodes
+
+                            foreach (AttachNode attachNode1 in draggingPart.attachNodes)
+                            {
+                                // We get screen positions to avoid depth problems
+                                Camera3D localCam = ActiveSave.Instance.localCamera;
+
+                                Vector3 node0Pos = attachNode0.GlobalPosition;
+                                // Imagine this one (relative node position + supposed global position)
+                                Vector3 node1Pos = attachNode1.GlobalPosition - draggingPart.GlobalPosition + projectedPosition;
+
+                                Vector2 nodeScreenPos0 = localCam.UnprojectPosition(node0Pos);
+                                Vector2 nodeScreenPos1 = localCam.UnprojectPosition(node1Pos);
+
+                                float distance = nodeScreenPos0.DistanceSquaredTo(nodeScreenPos1);
+
+                                if (distance <= partSnapDistance*partSnapDistance)
+                                {
+                                    // Override the part's position with a new one !!
+                                    projectedPosition = attachNode0.GlobalPosition - (attachNode1.GlobalPosition - draggingPart.GlobalPosition);
+                                    break; // Exit the loop
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // We apply! !! !!! ! 1
+            draggingPart.GlobalPosition = draggingPart.GlobalPosition.Lerp(projectedPosition, partMoveSpeed*(float)delta);;
 		}
 
         Godot.Collections.Array<Node> parts = editorPartContainer.GetChildren();
