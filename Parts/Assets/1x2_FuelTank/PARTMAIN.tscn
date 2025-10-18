@@ -88,11 +88,11 @@ shape = SubResource("CylinderShape3D_3iijt")
 [node name="AttachNodes" type="Node3D" parent="."]
 
 [node name="AttachmentNode" type="Node3D" parent="AttachNodes"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("3_fsto2")
 
 [node name="AttachmentNode2" type="Node3D" parent="AttachNodes"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 script = ExtResource("3_fsto2")
 
 [node name="1x2_FuelTank_Ver1" type="Node3D" parent="."]

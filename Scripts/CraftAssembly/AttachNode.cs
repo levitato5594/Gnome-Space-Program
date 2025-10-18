@@ -7,4 +7,19 @@ public partial class AttachNode : Node3D
 
     // The other part's node.
     public AttachNode connectedNode;
+
+	public void Attach(AttachNode otherNode)
+	{
+        connectedNode = otherNode;
+        otherNode.connectedNode = this;
+    }
+
+	public void Detach()
+	{
+		if (connectedNode != null)
+		{
+			connectedNode.connectedNode = null;
+    		connectedNode = null;
+		}
+	}
 }

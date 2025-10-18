@@ -29,6 +29,7 @@ public partial class BuildingManager : Node
     
     // Guess what, it's the part being dragged!
     public Part draggingPart;
+    public (AttachNode, AttachNode) nodesToAttach;
     public List<Part> partsList;
     // We orient around this one
     public Part centralPart;
@@ -48,6 +49,8 @@ public partial class BuildingManager : Node
 
 			Vector2 mousePos = GetViewport().GetMousePosition();
 			Vector3 projectedPosition = camera.ProjectPosition(mousePos, partHoldDistance);
+
+            (AttachNode, AttachNode) attachNodeBuffer = (null, null);
 
             foreach (Part part in partsList)
             {
@@ -77,6 +80,7 @@ public partial class BuildingManager : Node
                                 {
                                     // Override the part's position with a new one !!
                                     projectedPosition = attachNode0.GlobalPosition - (attachNode1.GlobalPosition - draggingPart.GlobalPosition);
+                                    attachNodeBuffer = (attachNode0, attachNode1);
                                     break; // Exit the loop
                                 }
                             }
@@ -86,8 +90,9 @@ public partial class BuildingManager : Node
             }
 
             // We apply! !! !!! ! 1
-            draggingPart.GlobalPosition = draggingPart.GlobalPosition.Lerp(projectedPosition, partMoveSpeed*(float)delta);;
-		}
+            draggingPart.GlobalPosition = draggingPart.GlobalPosition.Lerp(projectedPosition, partMoveSpeed*(float)delta);
+            nodesToAttach = attachNodeBuffer;
+        }
 
         Godot.Collections.Array<Node> parts = editorPartContainer.GetChildren();
 
@@ -138,10 +143,22 @@ public partial class BuildingManager : Node
                 {
                     draggingPart = PartManager.Instance.hoveredPart;
                     draggingPart.Reparent(floatingPartContainer);
+
+                    // Fully detach
+                    foreach (AttachNode attachNode in draggingPart.attachNodes)
+                    {
+                        attachNode.Detach();
+                    }
+
                     Logger.Print("Selecting part");
                 }else if (draggingPart != null) {
                     draggingPart.Reparent(editorPartContainer);
+
+                    if (nodesToAttach.Item1 != null && nodesToAttach.Item2 != null)
+                        nodesToAttach.Item1.Attach(nodesToAttach.Item2);
+
                     draggingPart = null;
+
                     Logger.Print("Unselecting part");
                 }
             }
