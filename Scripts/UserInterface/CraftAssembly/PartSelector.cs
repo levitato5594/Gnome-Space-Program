@@ -92,9 +92,10 @@ public partial class PartSelector : Button
     // Instantiate a "fake" part
     public void OnPress()
     {
-        Node3D activeVAB = BuildingManager.Instance.activeVAB;
-        Node3D partContainer = (Node3D)activeVAB.Get("craftContainer");
+        // Because the VAB is a part module
+        Node3D partContainer = BuildingManager.Instance.floatingPartContainer; //(Node3D)activeVAB.Get("craftContainer");
         Part part = partRef.Instantiate(partContainer, true);
+        part.cachedPart = partRef;
         BuildingManager.Instance.draggingPart = part;
     }
 }

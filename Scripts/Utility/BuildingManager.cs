@@ -1,13 +1,17 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class BuildingManager : Node
 {
     public static readonly string classTag = "([color=Turquoise]BuildingManager[color=white])";
 	public static BuildingManager Instance { get; private set; }
 
-    // Current active VAB. Where parts are instantiated into
+    // Current active VAB.
     public Node3D activeVAB;
+    // Where to instantiate parts
+    [Export] public Node3D editorPartContainer;
+    [Export] public Node3D floatingPartContainer;
     [Export] public BuildUI buildUI;
     [Export] public float partMoveSpeed = 5f;
     [Export] public float partHoldDistance = 5f;
@@ -21,13 +25,12 @@ public partial class BuildingManager : Node
 
     // None (0), Static (1), or Dynamic (2)
     public int editorMode = (int)EditorMode.None;
-    // Whether or not other crafts or colonies are included
-    // This should be true for static editing (in a VAB / editing colonies), and false for dynamic editing (EVA construction)
-    public bool excludeOtherThings; 
-    public Node3D editedThing;
-
+    
     // Guess what, it's the part being dragged!
     public Part draggingPart;
+    public List<Part> partsList;
+    // We orient around this one
+    public Part centralPart;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -47,6 +50,33 @@ public partial class BuildingManager : Node
 
 			draggingPart.GlobalPosition = draggingPart.GlobalPosition.Lerp(projectedPosition, partMoveSpeed*(float)delta);
 		}
+
+        Godot.Collections.Array<Node> parts = editorPartContainer.GetChildren();
+
+        // There's no concrete reason for a buffer but it makes some of this more manageable maybe?? uhhm uhh err :3
+        List<Part> partListBuffer = [];
+        foreach (Node node in parts)
+        {
+            if (node is Part part)
+            {
+                partListBuffer.Add(part);
+            }
+        }
+        partsList = partListBuffer;
+
+        // Just pick one if it's null (the user will take control, otherwise)
+        if (partListBuffer.Count > 0 && centralPart == null)
+        {
+            centralPart = partListBuffer[0];
+            Logger.Print($"{classTag} Auto assigned central part to: {centralPart.Name}");
+        }
+    }
+
+    public void SetVAB(Node3D vab)
+    {
+        activeVAB = vab;
+        editorPartContainer.GlobalTransform = vab.GlobalTransform;
+        floatingPartContainer.GlobalTransform = vab.GlobalTransform;
     }
 
     public void OpenBuildUI(bool open, bool selector = true)
@@ -69,8 +99,10 @@ public partial class BuildingManager : Node
                 if (draggingPart == null && PartManager.Instance.hoveredPart != null && PartManager.Instance.hoveredPart.inEditor) 
                 {
                     draggingPart = PartManager.Instance.hoveredPart;
+                    draggingPart.Reparent(floatingPartContainer);
                     Logger.Print("Selecting part");
-                }else{
+                }else if (draggingPart != null) {
+                    draggingPart.Reparent(editorPartContainer);
                     draggingPart = null;
                     Logger.Print("Unselecting part");
                 }

@@ -153,6 +153,6 @@ public partial class PartManager : Node
                 break;
         }
 
-        return part.IsVisibleInTree() && selectionStatus;
+        return part.IsVisibleInTree() && selectionStatus && BuildingManager.Instance.draggingPart != part;
     }
 }

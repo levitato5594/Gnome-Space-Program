@@ -182,10 +182,16 @@ iconParent = NodePath("../UI/MapUI/ColonyIcons")
 process_priority = 100
 script = ExtResource("13_sfn14")
 
-[node name="BuildingManager" type="Node" parent="." node_paths=PackedStringArray("buildUI")]
+[node name="BuildingManager" type="Node" parent="." node_paths=PackedStringArray("editorPartContainer", "floatingPartContainer", "buildUI")]
 script = ExtResource("14_uc177")
+editorPartContainer = NodePath("EditorParts")
+floatingPartContainer = NodePath("FloatingParts")
 buildUI = NodePath("../UI/BuildUI")
 partMoveSpeed = 25.0
+
+[node name="EditorParts" type="Node3D" parent="BuildingManager"]
+
+[node name="FloatingParts" type="Node3D" parent="BuildingManager"]
 
 [node name="FlightCamera" type="Node3D" parent="." node_paths=PackedStringArray("rotNode_Y", "rotNode_X", "camNode")]
 script = ExtResource("6_0mdm0")

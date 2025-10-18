@@ -39,7 +39,7 @@ func part_init():
 func button_handler(buttonID:String):
 	if buttonID == enterButtonName:
 		# Assign self to activeVAB
-		buildingManager.activeVAB = self
+		buildingManager.SetVAB(self);
 
 		# Reposition cam
 		flightCam.TargetObject(camPivot, Vector3(0.1,maxZoom,targetZoom), false)
