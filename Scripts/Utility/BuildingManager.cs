@@ -29,7 +29,7 @@ public partial class BuildingManager : Node
     
     // Guess what, it's the part being dragged!
     public Part draggingPart;
-    public (AttachNode, AttachNode) nodesToAttach;
+    public (AttachNode, AttachNode) snappedNodes;
     public List<Part> partsList;
     // We orient around this one
     public Part centralPart;
@@ -52,6 +52,7 @@ public partial class BuildingManager : Node
 
             (AttachNode, AttachNode) attachNodeBuffer = (null, null);
 
+            // Part Snappy
             foreach (Part part in partsList)
             {
                 if (part != draggingPart) // Redundant but who tf cares
@@ -80,6 +81,7 @@ public partial class BuildingManager : Node
                                 {
                                     // Override the part's position with a new one !!
                                     projectedPosition = attachNode0.GlobalPosition - (attachNode1.GlobalPosition - draggingPart.GlobalPosition);
+                                    // We remember those two nodes if we ever want to place the part again
                                     attachNodeBuffer = (attachNode0, attachNode1);
                                     break; // Exit the loop
                                 }
@@ -91,7 +93,7 @@ public partial class BuildingManager : Node
 
             // We apply! !! !!! ! 1
             draggingPart.GlobalPosition = draggingPart.GlobalPosition.Lerp(projectedPosition, partMoveSpeed*(float)delta);
-            nodesToAttach = attachNodeBuffer;
+            snappedNodes = attachNodeBuffer;
         }
 
         Godot.Collections.Array<Node> parts = editorPartContainer.GetChildren();
@@ -144,22 +146,21 @@ public partial class BuildingManager : Node
                     draggingPart = PartManager.Instance.hoveredPart;
                     draggingPart.Reparent(floatingPartContainer);
 
-                    // Fully detach
+                    // Fully detach, since we're taking the part off of others.
                     foreach (AttachNode attachNode in draggingPart.attachNodes)
                     {
                         attachNode.Detach();
                     }
 
-                    Logger.Print("Selecting part");
+                    Logger.Print($"{classTag} Selected part {draggingPart.Name}");
                 }else if (draggingPart != null) {
                     draggingPart.Reparent(editorPartContainer);
 
-                    if (nodesToAttach.Item1 != null && nodesToAttach.Item2 != null)
-                        nodesToAttach.Item1.Attach(nodesToAttach.Item2);
+                    if (snappedNodes.Item1 != null && snappedNodes.Item2 != null)
+                        snappedNodes.Item1.Attach(snappedNodes.Item2);
 
+                    Logger.Print($"{classTag} Unselected part {draggingPart.Name}");
                     draggingPart = null;
-
-                    Logger.Print("Unselecting part");
                 }
             }
         }

@@ -43,6 +43,7 @@ public partial class CachedPart
         Part part = (Part)partScene.Instantiate();
         part.inEditor = inEditor;
         part.Freeze = true;
+        part.Name = $"{name}_{part.GetInstanceId()}";
         parent.AddChild(part);
 
         return part;
