@@ -3,10 +3,10 @@ using Godot;
 // Class for handing craft motion (which is why it's in the FlightLogic folder and not the OrbitalMechanics folder)
 public partial class OrbitDriver : Node
 {
-    [Export] public bool enabled;
-    [Export] public Craft craft;
+    //[Export] public bool enabled;
+    //[Export] public Craft craft;
 
-    public static readonly string classTag = "([color=cyan]OrbitDriver[color=white])";
+    //public static readonly string classTag = "([color=cyan]OrbitDriver[color=white])";
 
     /* 
     Some things to note:
@@ -14,6 +14,7 @@ public partial class OrbitDriver : Node
     2. Orbital parameters and cartesian data are relative to the parent body
     3. As per rule 2, parameters will need to be translated upon SOI change
     */
+    /*
     public Orbit orbit = new();
     public CartesianData cartData = new();
 
@@ -57,4 +58,5 @@ public partial class OrbitDriver : Node
         double force = PatchedConics.GravConstant * (craft.mass * orbit.parent.mass) / cartData.position.DistanceTo(orbit.parent.cartesianData.position);
         return cartData.position.DirectionTo(orbit.parent.cartesianData.position) * force;
     }
+    */
 }

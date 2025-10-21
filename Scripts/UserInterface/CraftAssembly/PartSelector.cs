@@ -40,12 +40,12 @@ public partial class PartSelector : Button
     public void LoadPart()
     {
         Part partObj = partRef.Instantiate(partContainer);
-        partObj.Freeze = true;
-        partObj.enabled = false;
+        //partObj.Freeze = true;
+        //partObj.enabled = false;
 
         partObj.GlobalPosition = Vector3.Zero;
 
-        vpCam.LookAt(partObj.CenterOfMass + partObj.GlobalPosition);
+        //vpCam.LookAt(partObj.CenterOfMass + partObj.GlobalPosition);
 
         vpCam.Position *= partObj.GetAABB().Size.Length() * zoomCompMult;
     }

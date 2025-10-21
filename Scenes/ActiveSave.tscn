@@ -187,7 +187,7 @@ script = ExtResource("14_uc177")
 editorPartContainer = NodePath("EditorParts")
 floatingPartContainer = NodePath("FloatingParts")
 buildUI = NodePath("../UI/BuildUI")
-partMoveSpeed = 25.0
+partMoveSpeed = 42.0
 
 [node name="EditorParts" type="Node3D" parent="BuildingManager"]
 

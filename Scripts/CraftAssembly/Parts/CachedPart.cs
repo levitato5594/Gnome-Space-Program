@@ -42,7 +42,7 @@ public partial class CachedPart
         Logger.Print($"(Cached {name}) Instantiating...");
         Part part = (Part)partScene.Instantiate();
         part.inEditor = inEditor;
-        part.Freeze = true;
+        //part.Freeze = true;
         part.Name = $"{name}_{part.GetInstanceId()}";
         parent.AddChild(part);
 

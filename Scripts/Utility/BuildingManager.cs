@@ -13,7 +13,7 @@ public partial class BuildingManager : Node
     [Export] public Node3D editorPartContainer;
     [Export] public Node3D floatingPartContainer;
     [Export] public BuildUI buildUI;
-    [Export] public float partMoveSpeed = 5f;
+    [Export] public float partMoveSpeed = 15f;
     [Export] public float partHoldDistance = 5f;
     [Export] public float partSnapDistance = 25f;
 

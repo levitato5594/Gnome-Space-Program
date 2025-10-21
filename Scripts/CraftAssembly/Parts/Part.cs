@@ -6,7 +6,7 @@ using System.Collections.Generic;
 Technically this class encompasses both colony AND ship parts, as I intend for them to be used interchangeably.
 Why? Because I want players to have the freedom to get up to any sort of shenanigans with these systems.
 */
-public partial class Part : RigidBody3D
+public partial class Part : Area3D
 {
     [Export] public bool enabled = false;
     [Export] public Material glowMat;

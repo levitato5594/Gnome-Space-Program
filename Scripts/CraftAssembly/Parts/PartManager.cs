@@ -116,7 +116,12 @@ public partial class PartManager : Node
             Vector3 from = camera3D.ProjectRayOrigin(mouseMotion.Position);
             Vector3 to = from + camera3D.ProjectRayNormal(mouseMotion.Position) * rayLength;
 
-            PhysicsRayQueryParameters3D rayParams = new() { From = from, To = to };
+            PhysicsRayQueryParameters3D rayParams = new()
+            {
+                From = from,
+                To = to,
+                CollideWithAreas = true
+            };
             Dictionary result = spaceState.IntersectRay(rayParams);
 
             //Logger.Print(result);
