@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 using System;
 using System.Collections.Generic;
 
@@ -16,7 +17,10 @@ public partial class Part : Area3D
     // Whether or not to treat the part as "not real" (in the editor)
     [Export] public bool inEditor;
 
-    [Export] public Godot.Collections.Array<AttachNode> attachNodes;
+    [Export] public Array<AttachNode> attachNodes;
+
+    // What to copy over to the craft upon intantiation
+    [Export] public Array<CollisionShape3D> colliders;
 
     [Signal] public delegate void SendButtonEventHandler(string name);
 
@@ -25,7 +29,7 @@ public partial class Part : Area3D
 
     public List<Node> partModules = [];
     // Name, category
-    public Godot.Collections.Dictionary buttons = [];
+    public Dictionary buttons = [];
 
     public override void _Process(double delta)
     {
@@ -41,6 +45,36 @@ public partial class Part : Area3D
         partModules = GetModules(this);
         Logger.Print($"(Instance {Name}) Got all part modules! Count: {partModules.Count}");
         InitModules();
+    }
+
+    public void GetData()
+    {
+        Dictionary data = [];
+
+        // Throw basic info into here
+        data.Add("position", Position);
+        data.Add("rotation", RotationDegrees);
+
+        // Index - Index of attachment node HERE
+        // Key - Path of other part
+        // Value - Index of the OTHER attachment node
+        Dictionary attachmentData = [];
+        foreach (AttachNode node in attachNodes)
+        {
+            if (node.connectedNode != null)
+            {
+                Logger.Print($"(Instance {Name}) Saving attached part as ({GetPathTo(node.connectedNode.part)})");
+                attachmentData.Add(GetPathTo(node.connectedNode.part), 1);
+            }
+        }
+
+        // Call the fetch method on every part module
+        // IMPLEMENT C# TOO SOMEDAY
+        foreach (Node module in partModules)
+        {
+            Dictionary moduleData = (Dictionary)module.Call("getData");
+            data.Add(module.GetScript(), moduleData);
+        }
     }
 
     // Recursive function to find every part module GAAHH DAMN CROSS LANGUAGE SCRIPTING SUCKS

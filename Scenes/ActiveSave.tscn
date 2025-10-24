@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://b08reqxmoktvk"]
+[gd_scene load_steps=36 format=3 uid="uid://b08reqxmoktvk"]
 
 [ext_resource type="Script" uid="uid://c3i0ynvo54sk1" path="res://Scripts/Utility/ActiveSave.cs" id="1_2c3j4"]
 [ext_resource type="Script" uid="uid://2vlhdf4w605i" path="res://Scripts/PlanetarySystem/PlanetSystem.cs" id="1_pocjb"]
@@ -31,7 +31,8 @@
 [ext_resource type="StyleBox" uid="uid://d2x1glka2wnkb" path="res://Assets/Materials/GeneralUI/ResizeHandle/handle_hover.tres" id="25_hx2xn"]
 [ext_resource type="Script" uid="uid://drlfgjufqytvn" path="res://Scripts/UserInterface/ResizeHandle.cs" id="26_287u4"]
 [ext_resource type="PackedScene" uid="uid://4gm81i1keb5p" path="res://Assets/Prefabs/UI/part_cat_button.tscn" id="30_d1dok"]
-[ext_resource type="Texture2D" uid="uid://bxe8uo40enbck" path="res://Assets/Textures/UserInterface/allIcon.svg" id="32_nej1p"]
+[ext_resource type="Texture2D" uid="uid://bxe8uo40enbck" path="res://Assets/Textures/UserInterface/Buttons/allIcon.svg" id="32_nej1p"]
+[ext_resource type="Texture2D" uid="uid://6gd5l8bljd83" path="res://Assets/Textures/UserInterface/Buttons/launchbutton.svg" id="33_8ed1a"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_h3s5b"]
 material = ExtResource("3_sfn14")
@@ -439,7 +440,6 @@ partListContainer = NodePath("Selector")
 partList = NodePath("Selector/PartSelector/SelectMenu")
 
 [node name="Selector" type="Control" parent="UI/BuildUI"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -559,6 +559,55 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("32_nej1p")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Misc" type="Control" parent="UI/BuildUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SideButtons" type="Panel" parent="UI/BuildUI/Misc"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -112.0
+offset_top = 47.0
+offset_right = -46.0
+offset_bottom = -45.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/BuildUI/Misc/SideButtons"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LaunchButton" type="Button" parent="UI/BuildUI/Misc/SideButtons/VBoxContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="UI/BuildUI/Misc/SideButtons/VBoxContainer/LaunchButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("33_8ed1a")
 expand_mode = 1
 stretch_mode = 5
 

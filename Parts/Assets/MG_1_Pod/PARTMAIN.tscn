@@ -143,21 +143,24 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_7cmij")
 
-[node name="MG1Pod" type="Area3D" node_paths=PackedStringArray("glowMesh", "attachNodes")]
+[node name="MG1Pod" type="Area3D" node_paths=PackedStringArray("glowMesh", "attachNodes", "colliders")]
 script = ExtResource("1_fdmar")
 glowMat = ExtResource("2_xqvd7")
 glowMesh = NodePath("MG1_Pod_Ver5/Capsule_001")
 attachNodes = [NodePath("AttachNodes/AttachmentNode"), NodePath("AttachNodes/AttachmentNode2")]
+colliders = []
 
 [node name="AttachNodes" type="Node3D" parent="."]
 
-[node name="AttachmentNode" type="Node3D" parent="AttachNodes"]
+[node name="AttachmentNode" type="Node3D" parent="AttachNodes" node_paths=PackedStringArray("part")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.315, 0)
 script = ExtResource("5_gtcd5")
+part = NodePath("../..")
 
-[node name="AttachmentNode2" type="Node3D" parent="AttachNodes"]
+[node name="AttachmentNode2" type="Node3D" parent="AttachNodes" node_paths=PackedStringArray("part")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.315, 0)
 script = ExtResource("5_gtcd5")
+part = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("ConvexPolygonShape3D_xqvd7")

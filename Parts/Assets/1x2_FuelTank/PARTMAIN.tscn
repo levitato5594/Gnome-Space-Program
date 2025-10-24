@@ -74,24 +74,27 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_sakwe")
 
-[node name="1X2_FuelTank" type="Area3D" node_paths=PackedStringArray("glowMesh", "attachNodes")]
+[node name="1X2_FuelTank" type="Area3D" node_paths=PackedStringArray("glowMesh", "attachNodes", "colliders")]
 script = ExtResource("1_ebewe")
 glowMat = ExtResource("2_b55kr")
 glowMesh = NodePath("1x2_FuelTank_Ver1/Tank")
 attachNodes = [NodePath("AttachNodes/AttachmentNode"), NodePath("AttachNodes/AttachmentNode2")]
+colliders = []
 
 [node name="Collider" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_3iijt")
 
 [node name="AttachNodes" type="Node3D" parent="."]
 
-[node name="AttachmentNode" type="Node3D" parent="AttachNodes"]
+[node name="AttachmentNode" type="Node3D" parent="AttachNodes" node_paths=PackedStringArray("part")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("3_fsto2")
+part = NodePath("../..")
 
-[node name="AttachmentNode2" type="Node3D" parent="AttachNodes"]
+[node name="AttachmentNode2" type="Node3D" parent="AttachNodes" node_paths=PackedStringArray("part")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 script = ExtResource("3_fsto2")
+part = NodePath("../..")
 
 [node name="1x2_FuelTank_Ver1" type="Node3D" parent="."]
 

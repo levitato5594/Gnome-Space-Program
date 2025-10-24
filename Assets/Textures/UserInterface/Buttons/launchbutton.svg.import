@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxe8uo40enbck"
-path="res://.godot/imported/allIcon.svg-6ebe8490b2f6c9ca18b58a41e0ac3686.ctex"
+uid="uid://6gd5l8bljd83"
+path="res://.godot/imported/launchbutton.svg-a47de0244bab77ff443431e55bdf1d4e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Textures/UserInterface/allIcon.svg"
-dest_files=["res://.godot/imported/allIcon.svg-6ebe8490b2f6c9ca18b58a41e0ac3686.ctex"]
+source_file="res://Assets/Textures/UserInterface/Buttons/launchbutton.svg"
+dest_files=["res://.godot/imported/launchbutton.svg-a47de0244bab77ff443431e55bdf1d4e.ctex"]
 
 [params]
 

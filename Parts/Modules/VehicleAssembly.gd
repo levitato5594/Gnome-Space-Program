@@ -24,7 +24,7 @@ var flightCam = SingletonRegistry.registry["FlightCamera"]
 var partMenuHandler = SingletonRegistry.registry["PartMenuHandler"]
 var buildingManager = SingletonRegistry.registry["BuildingManager"]
 
-var verticalScroll = false;
+var verticalScroll = true;
 var active = false;
 
 func _process(delta: float):
@@ -45,6 +45,9 @@ func button_handler(buttonID:String):
 		flightCam.TargetObject(camPivot, Vector3(0.1,maxZoom,targetZoom), false)
 		buildingManager.editorMode = 1 # "Static"
 
+		verticalScroll = true;
+		flightCam.canZoom = false;
+
 		# Disable map view while in flight
 		flightCam.ToggleMapView(false)
 		flightCam.canEnterMap = false
@@ -62,13 +65,13 @@ func _unhandled_input(event: InputEvent):
 	if event is InputEventKey:
 		if active:
 			if event.keycode == Key.KEY_SHIFT && event.pressed:
-				verticalScroll = true;
-				flightCam.canZoom = false;
-			else:
 				verticalScroll = false;
 				flightCam.canZoom = true;
+			else:
+				verticalScroll = true;
+				flightCam.canZoom = false;
 		else:
-			verticalScroll = false;
+			verticalScroll = true;
 
 	if event is InputEventMouseButton:
 		if event.button_index == MouseButton.MOUSE_BUTTON_WHEEL_UP && verticalScroll:
