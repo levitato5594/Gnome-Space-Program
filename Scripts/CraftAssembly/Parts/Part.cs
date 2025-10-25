@@ -47,7 +47,7 @@ public partial class Part : Area3D
         InitModules();
     }
 
-    public void GetData()
+    public Dictionary GetData()
     {
         Dictionary data = [];
 
@@ -63,8 +63,7 @@ public partial class Part : Area3D
         {
             if (node.connectedNode != null)
             {
-                Logger.Print($"(Instance {Name}) Saving attached part as ({GetPathTo(node.connectedNode.part)})");
-                attachmentData.Add(GetPathTo(node.connectedNode.part), 1);
+                attachmentData.Add(GetPathTo(node.connectedNode.part), node.connectedNode.part.attachNodes.IndexOf(node.connectedNode));
             }
         }
 
@@ -75,6 +74,8 @@ public partial class Part : Area3D
             Dictionary moduleData = (Dictionary)module.Call("getData");
             data.Add(module.GetScript(), moduleData);
         }
+
+        return data;
     }
 
     // Recursive function to find every part module GAAHH DAMN CROSS LANGUAGE SCRIPTING SUCKS

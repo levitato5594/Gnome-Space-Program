@@ -104,6 +104,19 @@ public partial class PartManager : Node
         return parts;
     }
 
+    // Returns a dictionary that sums up the information of every part in a given list
+    // This information can be saved as a JSON and is compatible with GDScript
+    public static Dictionary CompilePartData(List<Part> parts)
+    {
+        Dictionary compiledData = [];
+        foreach (Part part in parts)
+        {
+            Dictionary partData = part.GetData();
+            compiledData.Add(part.cachedPart.name, partData);
+        }
+        return compiledData;
+    }
+
     // We shoot a ray occasionally to get the current hovered part. Can be used for all sorts of part selection shenanigans.
     public override void _UnhandledInput(InputEvent @event)
     {

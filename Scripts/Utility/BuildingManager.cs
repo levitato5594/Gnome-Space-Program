@@ -29,7 +29,6 @@ public partial class BuildingManager : Node
     
     // Guess what, it's the part being dragged!
     public Part draggingPart;
-    public Part snappedPart;
     public (AttachNode, AttachNode) snappedNodes;
     public List<Part> partsList;
     public Dictionary<Part, SavedPart> savedParts;
@@ -161,10 +160,6 @@ public partial class BuildingManager : Node
 
                     if (snappedNodes.Item1 != null && snappedNodes.Item2 != null)
                         snappedNodes.Item1.Attach(snappedNodes.Item2);
-
-                    // TEST - Not permanent
-                    draggingPart.GetData();
-
 
                     Logger.Print($"{classTag} Unselected part {draggingPart.Name}");
                     draggingPart = null;
