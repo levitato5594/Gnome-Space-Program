@@ -47,6 +47,18 @@ public partial class Part : Area3D
         InitModules();
     }
 
+    public void ReadData(Dictionary data)
+    {
+        Position = (Vector3)data["position"];
+        RotationDegrees = (Vector3)data["rotation"];
+
+        Dictionary attachmentData = (Dictionary)data["attachments"];
+        foreach (KeyValuePair<Variant, Variant> node in attachmentData)
+        {
+            // IMplement lateor
+        }
+    }
+
     public Dictionary GetData()
     {
         Dictionary data = [];
@@ -67,13 +79,18 @@ public partial class Part : Area3D
             }
         }
 
-        // Call the fetch method on every part module
-        // IMPLEMENT C# TOO SOMEDAY
+        data.Add("attachments", attachmentData);
+
+        // Fetch data from every part module
+        // IMPLEMENT C# TOO SOMEDAY pppwwweeaaaaaseeeeeee 
+        Dictionary moduleDataContainer = [];
         foreach (Node module in partModules)
         {
             Dictionary moduleData = (Dictionary)module.Call("getData");
-            data.Add(module.GetScript(), moduleData);
+            moduleDataContainer.Add(module.GetScript(), moduleData);
         }
+
+        data.Add("modules", moduleDataContainer);
 
         return data;
     }

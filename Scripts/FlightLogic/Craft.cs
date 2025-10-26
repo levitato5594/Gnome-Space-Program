@@ -4,26 +4,29 @@ using System.Collections.Generic;
 
 public partial class Craft : RigidBody3D
 {
-    public List<SavedPart> savedParts;
+    public Godot.Collections.Dictionary partData;
     public List<Part> loadedParts;
 
     // Hiujjj??
     public void Instantiate()
     {
-        Instantiate(savedParts);
+        Instantiate(partData);
     }
 
     // I don't wants parts to be individually simulated so we mangle the shit out of this physics engine
-    public void Instantiate(List<SavedPart> parts)
+    public void Instantiate(Godot.Collections.Dictionary partData)
     {
-        foreach (SavedPart savedPart in parts)
+        this.partData = partData;
+        foreach (KeyValuePair<Variant, Variant> data in partData)
         {
-            Part part = savedPart.reference.Instantiate(this);
-            Godot.Collections.Dictionary partData = savedPart.partData;
-            part.Position = (Vector3)partData["position"];
-            part.Rotation = (Vector3)partData["rotation"];
+            if (data.Key.VariantType == Variant.Type.String)
+            {
+                string partName = (string)data.Key;
+                CachedPart cachedPart = PartManager.Instance.partCache[partName];
 
-            loadedParts.Add(part);
+                Part part = cachedPart.Instantiate(this, false, true);
+                part.ReadData((Godot.Collections.Dictionary)data.Value);
+            }
         }
     }
 }

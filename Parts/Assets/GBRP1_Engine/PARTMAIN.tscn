@@ -389,7 +389,7 @@ script = ExtResource("1_3lrrq")
 glowMat = ExtResource("2_20msv")
 glowMesh = NodePath("GBRP1_Engine_Ver1/Nozzle")
 attachNodes = [NodePath("AttachNodes/AttachmentNode"), NodePath("AttachNodes/AttachmentNode2")]
-colliders = []
+colliders = [NodePath("Collider1"), NodePath("Collider2")]
 
 [node name="AttachNodes" type="Node3D" parent="."]
 

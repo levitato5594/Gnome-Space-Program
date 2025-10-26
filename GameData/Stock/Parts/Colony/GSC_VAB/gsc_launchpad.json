@@ -1,0 +1,9 @@
+{
+    "configType": "PartDef",
+    "name": "GSC_Launchpad",
+    "displayName": "Launchpad",
+    "category": "colonyParts",
+    "assets": "Stock/Parts/Colony/GSC_Launchpad/GSCPAD.pck",
+    "partScene": "Parts/Assets/GSC_Launchpad/PARTMAIN.tscn",
+    "listedInSelector": false,
+}

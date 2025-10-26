@@ -148,7 +148,7 @@ script = ExtResource("1_fdmar")
 glowMat = ExtResource("2_xqvd7")
 glowMesh = NodePath("MG1_Pod_Ver5/Capsule_001")
 attachNodes = [NodePath("AttachNodes/AttachmentNode"), NodePath("AttachNodes/AttachmentNode2")]
-colliders = []
+colliders = [NodePath("CollisionShape3D")]
 
 [node name="AttachNodes" type="Node3D" parent="."]
 

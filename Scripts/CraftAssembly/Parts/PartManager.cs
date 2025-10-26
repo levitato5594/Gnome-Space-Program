@@ -106,6 +106,7 @@ public partial class PartManager : Node
 
     // Returns a dictionary that sums up the information of every part in a given list
     // This information can be saved as a JSON and is compatible with GDScript
+    // Also used for reading crafts in the editor and "rebuilding" them upon launch
     public static Dictionary CompilePartData(List<Part> parts)
     {
         Dictionary compiledData = [];

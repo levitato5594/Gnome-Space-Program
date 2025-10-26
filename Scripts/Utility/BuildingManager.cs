@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 using System;
 using System.Collections.Generic;
 
@@ -16,6 +17,7 @@ public partial class BuildingManager : Node
     [Export] public float partMoveSpeed = 15f;
     [Export] public float partHoldDistance = 5f;
     [Export] public float partSnapDistance = 30f;
+    [Export] public bool verboseLogging;
 
     public enum EditorMode
     {
@@ -31,7 +33,6 @@ public partial class BuildingManager : Node
     public Part draggingPart;
     public (AttachNode, AttachNode) snappedNodes;
     public List<Part> partsList;
-    public Dictionary<Part, SavedPart> savedParts;
     // We orient around this one
     public Part centralPart;
 
@@ -117,6 +118,31 @@ public partial class BuildingManager : Node
             Logger.Print($"{classTag} Auto assigned central part to: {centralPart.Name}");
             centralPart.Position = new Vector3(0, 0, 0);
         }
+    }
+
+    public void LaunchCraft()
+    {
+        Dictionary partData = PartManager.CompilePartData(partsList);
+
+        if (verboseLogging)
+            Logger.Print(partData);
+
+        Craft craft = new();
+        ActiveSave.Instance.localSpace.AddChild(craft);
+        craft.Instantiate(partData);
+
+        craft.GlobalPosition = editorPartContainer.GlobalPosition;
+    }
+
+    public void ClearParts()
+    {
+        foreach (Part part in partsList)
+        {
+            part.QueueFree();
+        }
+
+        centralPart = null;
+        partsList = [];
     }
 
     public void SetVAB(Node3D vab)

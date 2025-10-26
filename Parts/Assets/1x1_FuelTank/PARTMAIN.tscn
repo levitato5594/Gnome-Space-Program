@@ -80,7 +80,7 @@ script = ExtResource("1_3n4on")
 glowMat = ExtResource("2_yuqok")
 glowMesh = NodePath("1x1_FuelTank_Ver2/Tank")
 attachNodes = [NodePath("AttachNodes/AttachmentNode"), NodePath("AttachNodes/AttachmentNode2")]
-colliders = []
+colliders = [NodePath("Collider")]
 
 [node name="Collider" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_3iijt")

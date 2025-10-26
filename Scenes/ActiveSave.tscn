@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://b08reqxmoktvk"]
+[gd_scene load_steps=39 format=3 uid="uid://b08reqxmoktvk"]
 
 [ext_resource type="Script" uid="uid://c3i0ynvo54sk1" path="res://Scripts/Utility/ActiveSave.cs" id="1_2c3j4"]
 [ext_resource type="Script" uid="uid://2vlhdf4w605i" path="res://Scripts/PlanetarySystem/PlanetSystem.cs" id="1_pocjb"]
@@ -33,6 +33,9 @@
 [ext_resource type="PackedScene" uid="uid://4gm81i1keb5p" path="res://Assets/Prefabs/UI/part_cat_button.tscn" id="30_d1dok"]
 [ext_resource type="Texture2D" uid="uid://bxe8uo40enbck" path="res://Assets/Textures/UserInterface/Buttons/allIcon.svg" id="32_nej1p"]
 [ext_resource type="Texture2D" uid="uid://6gd5l8bljd83" path="res://Assets/Textures/UserInterface/Buttons/launchbutton.svg" id="33_8ed1a"]
+[ext_resource type="Script" uid="uid://dt2716mcyojap" path="res://Scripts/UserInterface/ButtonHandlers/BuildModeLaunch.cs" id="33_yged2"]
+[ext_resource type="Script" uid="uid://0n7uvn3scbtd" path="res://Scripts/UserInterface/ButtonHandlers/BuildModeClear.cs" id="35_p24xc"]
+[ext_resource type="Texture2D" uid="uid://xp6y4oqgn2ko" path="res://Assets/Textures/UserInterface/Buttons/clearicon.svg" id="36_7j3xb"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_h3s5b"]
 material = ExtResource("3_sfn14")
@@ -599,6 +602,7 @@ grow_vertical = 2
 [node name="LaunchButton" type="Button" parent="UI/BuildUI/Misc/SideButtons/VBoxContainer"]
 custom_minimum_size = Vector2(58, 58)
 layout_mode = 2
+script = ExtResource("33_yged2")
 
 [node name="Icon" type="TextureRect" parent="UI/BuildUI/Misc/SideButtons/VBoxContainer/LaunchButton"]
 layout_mode = 1
@@ -608,6 +612,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("33_8ed1a")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ClearButton" type="Button" parent="UI/BuildUI/Misc/SideButtons/VBoxContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+script = ExtResource("35_p24xc")
+
+[node name="Icon" type="TextureRect" parent="UI/BuildUI/Misc/SideButtons/VBoxContainer/ClearButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("36_7j3xb")
 expand_mode = 1
 stretch_mode = 5
 

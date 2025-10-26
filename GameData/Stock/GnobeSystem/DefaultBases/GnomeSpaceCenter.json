@@ -9,8 +9,18 @@
 
     "buildings": {
         "GSC_VAB": {
-            "position": [0,0,0],
+            "position": [0,28,-200],
             "rotation": [0,0,0],
+            "scale": [1,1,1],
+            "destroyed": false,
+
+            "additionalData": {},
+
+            "attachedBuildings": {}
+        },
+        "GSC_Launchpad": {
+            "position": [0,5,300],
+            "rotation": [0,180,0],
             "scale": [1,1,1],
             "destroyed": false,
 

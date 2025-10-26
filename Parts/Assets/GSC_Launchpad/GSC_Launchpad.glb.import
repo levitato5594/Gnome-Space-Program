@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://ceq5lchcrx5xm"
-path="res://.godot/imported/mesh.glb-4e654824b3ca4840a7b9f70f00265e81.scn"
+uid="uid://cg1hqwv14mau"
+path="res://.godot/imported/GSC_Launchpad.glb-e9f6a5d64def49f291bbd39358440fc2.scn"
 
 [deps]
 
-source_file="res://Parts/Assets/GSC_VAB/mesh.glb"
-dest_files=["res://.godot/imported/mesh.glb-4e654824b3ca4840a7b9f70f00265e81.scn"]
+source_file="res://Parts/Assets/GSC_Launchpad/GSC_Launchpad.glb"
+dest_files=["res://.godot/imported/GSC_Launchpad.glb-e9f6a5d64def49f291bbd39358440fc2.scn"]
 
 [params]
 
@@ -38,5 +38,5 @@ materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
 _subresources={}
-gltf/naming_version=1
+gltf/naming_version=2
 gltf/embedded_image_handling=1

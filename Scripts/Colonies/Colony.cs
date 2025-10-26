@@ -37,7 +37,7 @@ public partial class Colony : Node3D
             //part.Freeze = true;
             //part.LockRotation = true;
             part.Position = data.position;
-            part.Rotation = data.rotation;
+            part.RotationDegrees = data.rotation;
 
             part.parentThing = this;
             part.cachedPart = data.template;
