@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://b08reqxmoktvk"]
+[gd_scene load_steps=42 format=3 uid="uid://b08reqxmoktvk"]
 
 [ext_resource type="Script" uid="uid://c3i0ynvo54sk1" path="res://Scripts/Utility/ActiveSave.cs" id="1_2c3j4"]
 [ext_resource type="Script" uid="uid://2vlhdf4w605i" path="res://Scripts/PlanetarySystem/PlanetSystem.cs" id="1_pocjb"]
@@ -33,9 +33,10 @@
 [ext_resource type="PackedScene" uid="uid://4gm81i1keb5p" path="res://Assets/Prefabs/UI/part_cat_button.tscn" id="30_d1dok"]
 [ext_resource type="Texture2D" uid="uid://bxe8uo40enbck" path="res://Assets/Textures/UserInterface/Buttons/allIcon.svg" id="32_nej1p"]
 [ext_resource type="Texture2D" uid="uid://6gd5l8bljd83" path="res://Assets/Textures/UserInterface/Buttons/launchbutton.svg" id="33_8ed1a"]
-[ext_resource type="Script" uid="uid://dt2716mcyojap" path="res://Scripts/UserInterface/ButtonHandlers/BuildModeLaunch.cs" id="33_yged2"]
+[ext_resource type="Script" uid="uid://dt2716mcyojap" path="res://Scripts/UserInterface/ButtonHandlers/BuildModeLaunchMenu.cs" id="33_yged2"]
 [ext_resource type="Script" uid="uid://0n7uvn3scbtd" path="res://Scripts/UserInterface/ButtonHandlers/BuildModeClear.cs" id="35_p24xc"]
 [ext_resource type="Texture2D" uid="uid://xp6y4oqgn2ko" path="res://Assets/Textures/UserInterface/Buttons/clearicon.svg" id="36_7j3xb"]
+[ext_resource type="Script" uid="uid://bxldarynbrqxw" path="res://Scripts/UserInterface/ContextMenus/LaunchsiteMenu.cs" id="37_7j3xb"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_h3s5b"]
 material = ExtResource("3_sfn14")
@@ -45,6 +46,10 @@ flip_faces = true
 background_mode = 1
 ssao_radius = 14.58
 ssao_intensity = 16.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p24xc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7j3xb"]
 
 [node name="ActiveSave" type="Node3D" node_paths=PackedStringArray("planetSystem", "partManager", "colonyManager", "flightCam", "localCamera", "localSpace")]
 script = ExtResource("1_2c3j4")
@@ -115,6 +120,7 @@ size = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="RenderLayers/ScaledContainer/ScaledView"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
 cull_mask = 1047554
 attributes = ExtResource("2_cbqy2")
 fov = 90.0
@@ -145,6 +151,7 @@ size = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="RenderLayers/LocalContainer/LocalView"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
 cull_mask = 1047553
 attributes = ExtResource("2_cbqy2")
 current = true
@@ -192,6 +199,7 @@ editorPartContainer = NodePath("EditorParts")
 floatingPartContainer = NodePath("FloatingParts")
 buildUI = NodePath("../UI/BuildUI")
 partMoveSpeed = 42.0
+verboseLogging = true
 
 [node name="EditorParts" type="Node3D" parent="BuildingManager"]
 
@@ -213,6 +221,7 @@ zoom = 2.0
 [node name="Cam_Rot_X" type="Node3D" parent="FlightCamera/Cam_Rot_Y"]
 
 [node name="RemoteCams" type="Node3D" parent="FlightCamera/Cam_Rot_Y/Cam_Rot_X"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
 
 [node name="Local" type="RemoteTransform3D" parent="FlightCamera/Cam_Rot_Y/Cam_Rot_X/RemoteCams"]
 remote_path = NodePath("../../../../../RenderLayers/LocalContainer/LocalView/Camera3D")
@@ -223,7 +232,7 @@ remote_path = NodePath("../../../../../RenderLayers/ScaledContainer/ScaledView/C
 [node name="Background" type="RemoteTransform3D" parent="FlightCamera/Cam_Rot_Y/Cam_Rot_X/RemoteCams"]
 remote_path = NodePath("../../../../../RenderLayers/BackgroundContainer/BackgView/Camera3D")
 
-[node name="RemoteTransform3D" type="RemoteTransform3D" parent="FlightCamera/Cam_Rot_Y/Cam_Rot_X/RemoteCams"]
+[node name="Skybox" type="RemoteTransform3D" parent="FlightCamera/Cam_Rot_Y/Cam_Rot_X/RemoteCams"]
 remote_path = NodePath("../../../../../RenderLayers/BackgroundContainer/BackgView/Background/Sky")
 update_rotation = false
 update_scale = false
@@ -630,5 +639,99 @@ grow_vertical = 2
 texture = ExtResource("36_7j3xb")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="ContextMenus" type="Control" parent="UI/BuildUI" node_paths=PackedStringArray("menus")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("15_ue2ba")
+menus = [NodePath("SiteSelector")]
+
+[node name="SiteSelector" type="Panel" parent="UI/BuildUI/ContextMenus"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1546.0
+offset_top = 47.0
+offset_right = -120.0
+offset_bottom = -833.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("37_7j3xb")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/BuildUI/ContextMenus/SiteSelector"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_p24xc")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7j3xb")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/BuildUI/ContextMenus/SiteSelector/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="UI/BuildUI/ContextMenus/SiteSelector/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "TestOption"
+
+[node name="Button2" type="Button" parent="UI/BuildUI/ContextMenus/SiteSelector/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "TestOption"
+
+[node name="Button3" type="Button" parent="UI/BuildUI/ContextMenus/SiteSelector/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "TestOption"
+
+[node name="Button4" type="Button" parent="UI/BuildUI/ContextMenus/SiteSelector/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "TestOption"
+
+[node name="Button5" type="Button" parent="UI/BuildUI/ContextMenus/SiteSelector/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "TestOption"
+
+[node name="Button6" type="Button" parent="UI/BuildUI/ContextMenus/SiteSelector/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "TestOption"
+
+[node name="Button7" type="Button" parent="UI/BuildUI/ContextMenus/SiteSelector/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "TestOption"
+
+[node name="Button8" type="Button" parent="UI/BuildUI/ContextMenus/SiteSelector/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "TestOption"
+
+[node name="Button9" type="Button" parent="UI/BuildUI/ContextMenus/SiteSelector/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "TestOption"
+
+[node name="Button10" type="Button" parent="UI/BuildUI/ContextMenus/SiteSelector/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "TestOption"
 
 [connection signal="pressed" from="UI/MapUI/ContextMenus/ColonyMenu/EnterButton" to="UI/MapUI/ContextMenus/ColonyMenu" method="EnterButtonPressed"]

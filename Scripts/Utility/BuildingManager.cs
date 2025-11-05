@@ -36,6 +36,9 @@ public partial class BuildingManager : Node
     // We orient around this one
     public Part centralPart;
 
+    // The colony we should search when looking for stuff like launchsites
+    public Colony activeColony;
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
@@ -145,11 +148,11 @@ public partial class BuildingManager : Node
         partsList = [];
     }
 
-    public void SetVAB(Node3D vab)
+    public void SetVAB(VehicleAssembly vab)
     {
-        activeVAB = vab;
-        editorPartContainer.GlobalTransform = vab.GlobalTransform;
-        floatingPartContainer.GlobalTransform = vab.GlobalTransform;
+        //activeVAB = vab;
+       // editorPartContainer.GlobalTransform = vab.GlobalTransform;
+        //floatingPartContainer.GlobalTransform = vab.GlobalTransform;
     }
 
     public void OpenBuildUI(bool open, bool selector = true)
@@ -160,6 +163,28 @@ public partial class BuildingManager : Node
         {
             buildUI.partList.LoadPartList();
         }
+    }
+
+    public void OpenBuildMode(VehicleAssembly VAB)
+    {
+        SetVAB(VAB);
+
+        // Reposition cam
+        FlightCamera.Instance.TargetObject(VAB.camPivot, new Vector3(0.1f, VAB.maxZoom, VAB.targetZoom), false);
+        editorMode = 1;
+
+        //verticalScroll = true;
+        //flightCam.canZoom = false;
+
+        // Disable map view while in flight
+        FlightCamera.Instance.ToggleMapView(false);
+        FlightCamera.Instance.canEnterMap = false;
+
+        // Close Part Menus
+        PartMenuHandler.Instance.contextMenus.OpenMenu("", [], true);
+
+        // Initiate
+        OpenBuildUI(true, true);
     }
 
     // Inputs !!!

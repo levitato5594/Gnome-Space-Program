@@ -52,4 +52,25 @@ public partial class Colony : Node3D
     {
         
     }
+
+    /*
+    public Godot.Collections.Array<Part> GetPartsWithModule(string name)
+    {
+        Godot.Collections.Array<Part> parts = [];
+        foreach (Part part in allParts)
+        {
+            List<PartModule> modules = part.GetModules();
+            foreach (Node module in modules)
+            {
+                // TODO: Make launchpad module and check for it here
+                if (module.Name.ToString().Contains(name))
+                {
+                    parts.Add(part);
+                    break;
+                }
+            }
+        }
+        return parts;
+    }
+    */
 }

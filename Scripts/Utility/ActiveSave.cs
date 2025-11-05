@@ -83,7 +83,8 @@ public partial class ActiveSave : Node3D
 		}
 
 		Logger.Print($"{classTag} Starting PartManager");
-		// Start it
+        partManager.LoadPartModules();
+        // Start it
         partManager.LoadPartPacks(pPacksToLoad);
 
 		Logger.Print($"{classTag} Starting ColonyManager");

@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using Godot;
-using System;
-
+using Godot.Collections;
 public partial class CachedPart
 {
     public string name;
@@ -10,8 +10,12 @@ public partial class CachedPart
     public string scenePath;
     public bool listedInSelector = true;
 
+    public Dictionary config;
+
     // Dynamic stuff - self assigned
     public PackedScene partScene;
+
+    public List<PartModule> modules;
 
     // Run this ONLY ONCE per part!
     public void LoadAssets()
@@ -35,6 +39,11 @@ public partial class CachedPart
         }else{
             Logger.Print($"(Cached {name}) Could not load part.");
         }
+    }
+
+    public void LoadModules()
+    {
+        
     }
 
     public Part Instantiate(Node parent, bool inEditor = false, bool copyColliders = false)

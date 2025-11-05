@@ -1,8 +1,7 @@
-[gd_scene load_steps=65 format=4 uid="uid://b2pba25ejflam"]
+[gd_scene load_steps=64 format=4 uid="uid://b2pba25ejflam"]
 
 [ext_resource type="Script" uid="uid://2jguooep700o" path="res://Scripts/CraftAssembly/Parts/Part.cs" id="1_2gjxd"]
 [ext_resource type="Material" uid="uid://cq16nvjct50k6" path="res://Assets/Materials/HoverGlow2.tres" id="2_2mt1h"]
-[ext_resource type="Script" uid="uid://3wcjqffkl2aw" path="res://Parts/Modules/VehicleAssembly.gd" id="3_2mt1h"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2gjxd"]
 size = Vector3(104, 88, 86)
@@ -665,18 +664,6 @@ glowMat = ExtResource("2_2mt1h")
 glowMesh = NodePath("mesh/Main")
 attachNodes = []
 colliders = []
-
-[node name="VAB" type="Node3D" parent="." node_paths=PackedStringArray("camPivot")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0)
-script = ExtResource("3_2mt1h")
-targetZoom = 6
-camPivot = NodePath("CamPivot")
-pivotMove = 0.5
-pivotMoveSpeed = 4.0
-pivotMinHeight = -20.0
-pivotMaxHeight = 60.0
-
-[node name="CamPivot" type="Node3D" parent="VAB"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.5, 43.5, 0)

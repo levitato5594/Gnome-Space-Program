@@ -27,9 +27,12 @@ public partial class Part : Area3D
     public CachedPart cachedPart;
     public Node3D parentThing;
 
-    public List<Node> partModules = [];
+    public List<PartModule> partModules = [];
     // Name, category
     public Dictionary buttons = [];
+
+    // Assigned by stufffy like the part picker in the editor
+    public long id;
 
     public override void _Process(double delta)
     {
@@ -41,16 +44,33 @@ public partial class Part : Area3D
 
     public void InitPart()
     {
+        //Dictionary moduleData = (Dictionary)cachedPart.config["modules"];
         Logger.Print($"(Instance {Name}) Getting part modules...");
-        partModules = GetModules(this);
+        //partModules = GetModules(this);
         Logger.Print($"(Instance {Name}) Got all part modules! Count: {partModules.Count}");
-        InitModules();
+        //InitModules();
+    }
+    
+    public List<PartModule> CreateModules(Dictionary data)
+    {
+        List<PartModule> modules = [];
+        
+        foreach (KeyValuePair<Variant,Variant> pair in data)
+        {
+            if (pair.Value.VariantType == Variant.Type.Dictionary)
+            {
+                string moduleName = (string)pair.Key;
+            }
+        }
+
+        return modules;
     }
 
     public void ReadData(Dictionary data)
     {
         Position = (Vector3)data["position"];
         RotationDegrees = (Vector3)data["rotation"];
+        id = (int)data["partID"];
 
         Dictionary attachmentData = (Dictionary)data["attachments"];
         foreach (KeyValuePair<Variant, Variant> node in attachmentData)
@@ -66,16 +86,17 @@ public partial class Part : Area3D
         // Throw basic info into here
         data.Add("position", Position);
         data.Add("rotation", RotationDegrees);
+        data.Add("partID", id);
 
         // Index - Index of attachment node HERE
-        // Key - Path of other part
+        // Key - ID of the other part
         // Value - Index of the OTHER attachment node
         Dictionary attachmentData = [];
         foreach (AttachNode node in attachNodes)
         {
             if (node.connectedNode != null)
             {
-                attachmentData.Add(GetPathTo(node.connectedNode.part), node.connectedNode.part.attachNodes.IndexOf(node.connectedNode));
+                attachmentData.Add(node.connectedNode.part.id, node.connectedNode.part.attachNodes.IndexOf(node.connectedNode));
             }
         }
 
@@ -84,46 +105,15 @@ public partial class Part : Area3D
         // Fetch data from every part module
         // IMPLEMENT C# TOO SOMEDAY pppwwweeaaaaaseeeeeee 
         Dictionary moduleDataContainer = [];
-        foreach (Node module in partModules)
-        {
-            Dictionary moduleData = (Dictionary)module.Call("getData");
-            moduleDataContainer.Add(module.GetScript(), moduleData);
-        }
+        //foreach (Node module in partModules)
+        //{
+        //    Dictionary moduleData = (Dictionary)module.Call("getData");
+        //    moduleDataContainer.Add(module.GetScript(), moduleData);
+        //}
 
         data.Add("modules", moduleDataContainer);
 
         return data;
-    }
-
-    // Recursive function to find every part module GAAHH DAMN CROSS LANGUAGE SCRIPTING SUCKS
-    public List<Node> GetModules(Node parent)
-    {
-        List<Node> modules = [];
-        foreach (Node node in parent.GetChildren())
-        {
-            GDScript script = (GDScript)node.GetScript();
-            
-            if (script != null)
-            {
-                string id = (string)node.Get("identification");
-                if (id == "PartModule")
-                {
-                    node.Set("part_node", this);
-                    modules.Add(node);
-                }
-            }
-            if(node.GetChildCount() > 0) modules.AddRange(GetModules(node));
-        }
-        return modules;
-    }
-
-    // Start it all up
-    public void InitModules()
-    {
-        foreach (Node node in partModules)
-        {
-            node.Call("part_init");
-        }
     }
 
     public void AddButton(string category, string name)

@@ -2,6 +2,7 @@ using Godot;
 using Godot.Collections;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 public partial class PartManager : Node
 {
@@ -13,12 +14,33 @@ public partial class PartManager : Node
     public System.Collections.Generic.Dictionary<string, CachedPart> partCache = [];
     public System.Collections.Generic.Dictionary<string, PartCategory> partCategories = [];
 
+    // Just.. All of them..
+    public System.Collections.Generic.Dictionary<string, Type> partModules = [];
+
     public Part hoveredPart;
 
     public override void _Ready()
     {
         Instance = this;
         Logger.Print($"{classTag} PartManager ready!");
+    }
+
+    // Only searches the current assemblies, doesn't load in any new ones
+    public void LoadPartModules()
+    {
+        Logger.Print($"{classTag} Found part modules:");
+        Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+        foreach (Assembly ass in assemblies)
+        {
+            foreach (Type type in ass.GetTypes())
+            {
+                if (type.IsClass && !type.IsAbstract && typeof(PartModule).IsAssignableFrom(type))
+                {
+                    Logger.Print(type);
+                    partModules.Add(type.ToString(), type);
+                }
+            }
+        }
     }
 
     public void LoadPartPacks(List<PartPack> packs)
@@ -95,7 +117,8 @@ public partial class PartManager : Node
                 category = (string)data["category"],
                 pckFile = (string)data["assets"],
                 scenePath = (string)data["partScene"],
-                listedInSelector = (bool)data["listedInSelector"]
+                listedInSelector = (bool)data["listedInSelector"],
+                config = data
             };
 
             parts.Add(part);
