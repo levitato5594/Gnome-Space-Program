@@ -6,4 +6,5 @@
     "assets": "Stock/Parts/FuelTank/1x1_FuelTank/1X1TANK.pck",
     "partScene": "Parts/Assets/1x1_FuelTank/PARTMAIN.tscn",
     "listedInSelector": true,
+    "modules": {}
 }

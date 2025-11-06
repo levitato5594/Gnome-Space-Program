@@ -13,27 +13,32 @@ public partial class PartMenuHandler : Node
         SingletonRegistry.Register(this);
     }
 
-    public void CreateMenu(Part part)
+    public void ToggleMenu(Part part)
     {
         ulong partInstanceID = part.GetInstanceId();
         string partName = $"{partInstanceID}_MENU";
 
         Dictionary info = [];
-
-        if (contextMenus.GetMenu(partName) == null)
-        {
-            PartMenu partMenu = (PartMenu)menuPrefab.Instantiate();
-            partMenu.Name = partName;
-            partMenu.menus = contextMenus;
-            contextMenus.AddChild(partMenu);
-            contextMenus.menus.Add(partMenu);
-        }
-        
-        info.Add("part", part);
         info.Add("mousePos", GetViewport().GetMousePosition());
-        info.Add("buttons", part.buttons);
 
         contextMenus.OpenMenu(partName, info);
+    }
+
+    public PartMenu CreateMenu(Part part)
+    {
+        ulong partInstanceID = part.GetInstanceId();
+        string partName = $"{partInstanceID}_MENU";
+
+        PartMenu partMenu = (PartMenu)menuPrefab.Instantiate();
+        partMenu.Name = partName;
+        partMenu.menus = contextMenus;
+        partMenu.part = part;
+        contextMenus.AddChild(partMenu);
+        contextMenus.menus.Add(partMenu);
+
+        partMenu.Visible = false;
+
+        return partMenu;
     }
 
     public override void _UnhandledInput(InputEvent @event)
@@ -44,7 +49,7 @@ public partial class PartMenuHandler : Node
             {
                 if (PartManager.Instance.hoveredPart != null)
                 {
-                    CreateMenu(PartManager.Instance.hoveredPart);
+                    ToggleMenu(PartManager.Instance.hoveredPart);
                 }
             }
         }

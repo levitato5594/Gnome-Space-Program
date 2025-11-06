@@ -34,6 +34,8 @@ public partial class Part : Area3D
     // Assigned by stufffy like the part picker in the editor
     public long id;
 
+    public PartMenu contextMenu;
+
     public override void _Process(double delta)
     {
         if (PartMenuHandler.Instance != null)
@@ -44,9 +46,10 @@ public partial class Part : Area3D
 
     public void InitPart()
     {
-        //Dictionary moduleData = (Dictionary)cachedPart.config["modules"];
-        Logger.Print($"(Instance {Name}) Getting part modules...");
-        //partModules = GetModules(this);
+        contextMenu = PartMenuHandler.Instance.CreateMenu(this);
+        Dictionary moduleData = (Dictionary)cachedPart.config["modules"];
+        Logger.Print($"(Instance {Name}) Creating part modules...");
+        partModules = CreateModules(moduleData);
         Logger.Print($"(Instance {Name}) Got all part modules! Count: {partModules.Count}");
         //InitModules();
     }
@@ -60,6 +63,14 @@ public partial class Part : Area3D
             if (pair.Value.VariantType == Variant.Type.Dictionary)
             {
                 string moduleName = (string)pair.Key;
+                Type moduleType = PartManager.Instance.partModules[moduleName];
+
+                // create an object of the type
+                PartModule module = (PartModule)Activator.CreateInstance(moduleType);
+                module.part = this;
+                module.configData = data;
+
+                module.PartInit();
             }
         }
 
@@ -116,10 +127,10 @@ public partial class Part : Area3D
         return data;
     }
 
-    public void AddButton(string category, string name)
+    public void AddButton(string name, string id)
     {
         Logger.Print($"(Instance {Name}) Adding button {name}");
-        buttons.Add(category, name);
+        buttons.Add(name, id);
     }
 
     public void Highlight(bool toggle)
@@ -133,13 +144,6 @@ public partial class Part : Area3D
                 glowMesh.MaterialOverlay = null;
             }
         }
-    }
-
-    // For C# -> GDScript scripting
-    public void SendButtonEvent(string name)
-    {
-        Logger.Print($"(Instance {Name}) Sending button signal {name}");
-        EmitSignal(SignalName.SendButton, name);
     }
 
     // Recursive function to get all meshes

@@ -6,4 +6,5 @@
     "assets": "Stock/Parts/CommandPod/MG_1_Pod/MG1POD.pck",
     "partScene": "Parts/Assets/MG_1_Pod/PARTMAIN.tscn",
     "listedInSelector": true,
+    "modules": {}
 }
