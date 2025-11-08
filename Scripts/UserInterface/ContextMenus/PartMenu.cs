@@ -18,7 +18,7 @@ public partial class PartMenu : ContextMenu
         Vector2 mousePos = (Vector2)info["mousePos"];
         dragMenu.Position = mousePos + new Vector2(-10,-10);
 
-        foreach (Node child in itemList.GetChildren()) child.QueueFree();
+        //foreach (Node child in itemList.GetChildren()) child.QueueFree();
     }
 
     public override void _UnhandledInput(InputEvent @event)

@@ -28,8 +28,6 @@ public partial class Part : Area3D
     public Node3D parentThing;
 
     public List<PartModule> partModules = [];
-    // Name, category
-    public Dictionary buttons = [];
 
     // Assigned by stufffy like the part picker in the editor
     public long id;
@@ -68,7 +66,7 @@ public partial class Part : Area3D
                 // create an object of the type
                 PartModule module = (PartModule)Activator.CreateInstance(moduleType);
                 module.part = this;
-                module.configData = data;
+                module.configData = (Dictionary)pair.Value;
 
                 module.PartInit();
             }
@@ -125,12 +123,6 @@ public partial class Part : Area3D
         data.Add("modules", moduleDataContainer);
 
         return data;
-    }
-
-    public void AddButton(string name, string id)
-    {
-        Logger.Print($"(Instance {Name}) Adding button {name}");
-        buttons.Add(name, id);
     }
 
     public void Highlight(bool toggle)

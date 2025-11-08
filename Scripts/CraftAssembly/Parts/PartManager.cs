@@ -180,13 +180,13 @@ public partial class PartManager : Node
 
     public bool IsPartSelectable(Part part)
     {
-        int editorMode = BuildingManager.Instance.editorMode;
+        BuildingManager.EditorMode editorMode = BuildingManager.Instance.editorMode;
 
         bool selectionStatus = false;
         // Add case for dynamic editing when EVA construction becomes relevant
         switch (editorMode)
         {
-            case (int)BuildingManager.EditorMode.Static: // If we're editing a static thing
+            case BuildingManager.EditorMode.Static: // If we're editing a static thing
                 if (part.inEditor) selectionStatus = true;
                 break;
             default: // Selection logic for if we're not editing

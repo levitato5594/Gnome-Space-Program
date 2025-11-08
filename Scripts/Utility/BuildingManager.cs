@@ -27,7 +27,7 @@ public partial class BuildingManager : Node
     }
 
     // None (0), Static (1), or Dynamic (2)
-    public int editorMode = (int)EditorMode.None;
+    public EditorMode editorMode = EditorMode.None;
     
     // Guess what, it's the part being dragged!
     public Part draggingPart;
@@ -148,13 +148,6 @@ public partial class BuildingManager : Node
         partsList = [];
     }
 
-    public void SetVAB(VehicleAssembly vab)
-    {
-        //activeVAB = vab;
-       // editorPartContainer.GlobalTransform = vab.GlobalTransform;
-        //floatingPartContainer.GlobalTransform = vab.GlobalTransform;
-    }
-
     public void OpenBuildUI(bool open, bool selector = true)
     {
         buildUI.Visible = open;
@@ -165,16 +158,12 @@ public partial class BuildingManager : Node
         }
     }
 
-    public void OpenBuildMode(VehicleAssembly VAB)
+    // Enter VAB build mode
+    public void EnterBuildMode(Node3D pivot, float maxZoom, float targetZoom, bool verticalMovement)
     {
-        SetVAB(VAB);
-
         // Reposition cam
-        FlightCamera.Instance.TargetObject(VAB.camPivot, new Vector3(0.1f, VAB.maxZoom, VAB.targetZoom), false);
-        editorMode = 1;
-
-        //verticalScroll = true;
-        //flightCam.canZoom = false;
+        FlightCamera.Instance.TargetObject(pivot, new Vector3(0.1f, maxZoom, targetZoom), false);
+        editorMode = EditorMode.Static;
 
         // Disable map view while in flight
         FlightCamera.Instance.ToggleMapView(false);

@@ -8,7 +8,10 @@
     "listedInSelector": false,
     "modules": {
         "VehicleAssembly": {
-
+            "verticalScroll": true,
+            "pivotInitialPos": [0,0,0],
+            "maxZoom": 35,
+            "targetZoom": 1
         }
     }
 }

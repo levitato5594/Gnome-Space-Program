@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://b08reqxmoktvk"]
+[gd_scene load_steps=43 format=3 uid="uid://b08reqxmoktvk"]
 
 [ext_resource type="Script" uid="uid://c3i0ynvo54sk1" path="res://Scripts/Utility/ActiveSave.cs" id="1_2c3j4"]
 [ext_resource type="Script" uid="uid://2vlhdf4w605i" path="res://Scripts/PlanetarySystem/PlanetSystem.cs" id="1_pocjb"]
@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://c8odi3kjvqxhl" path="res://Assets/Prefabs/UI/part_menu.tscn" id="17_2vujl"]
 [ext_resource type="PackedScene" uid="uid://dam6vsicmpefq" path="res://Assets/Meshes/Gizmo/gizmo.glb" id="17_h3s5b"]
 [ext_resource type="Script" uid="uid://nutgi3n1uf8j" path="res://Scripts/UserInterface/ContextMenus/PlanetMenu.cs" id="17_ue2ba"]
+[ext_resource type="PackedScene" uid="uid://chuuxhnbua61m" path="res://Assets/Prefabs/UI/partmenu_button.tscn" id="19_cuu2x"]
 [ext_resource type="StyleBox" uid="uid://cmyfacsvlil8r" path="res://Assets/Materials/GeneralUI/ResizeHandle/handle_normal.tres" id="23_2c3fv"]
 [ext_resource type="Script" uid="uid://dshwjlk4h8fed" path="res://Scripts/UserInterface/CraftAssembly/BuildUI.cs" id="23_hx2xn"]
 [ext_resource type="PackedScene" uid="uid://cr52dmkgty470" path="res://Assets/Prefabs/UI/part_selector.tscn" id="23_vd1dx"]
@@ -280,6 +281,7 @@ mouse_filter = 2
 script = ExtResource("15_cbqy2")
 contextMenus = NodePath("ContextMenus")
 menuPrefab = ExtResource("17_2vujl")
+buttonPrefab = ExtResource("19_cuu2x")
 
 [node name="ContextMenus" type="Control" parent="UI/PartMenuHandler" node_paths=PackedStringArray("menus")]
 layout_mode = 1
