@@ -9,7 +9,7 @@ public partial class BuildingManager : Node
 	public static BuildingManager Instance { get; private set; }
 
     // Current active VAB.
-    public Node3D activeVAB;
+    public VehicleAssembly activeVAB;
     // Where to instantiate parts
     [Export] public Node3D editorPartContainer;
     [Export] public Node3D floatingPartContainer;
@@ -156,6 +156,13 @@ public partial class BuildingManager : Node
         {
             buildUI.partList.LoadPartList();
         }
+    }
+
+    public void SetVAB(VehicleAssembly module)
+    {
+        activeVAB = module;
+        editorPartContainer.GlobalTransform = module.vab.GlobalTransform;
+        floatingPartContainer.GlobalTransform = module.vab.GlobalTransform;
     }
 
     // Enter VAB build mode

@@ -9,9 +9,9 @@
     "modules": {
         "VehicleAssembly": {
             "verticalScroll": true,
-            "pivotInitialPos": [0,0,0],
+            "nodePosition": [0,20,0],
             "maxZoom": 35,
-            "targetZoom": 1
+            "targetZoom": 5
         }
     }
 }

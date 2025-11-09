@@ -442,7 +442,6 @@ layout_mode = 2
 text = "OTHER INFO"
 
 [node name="BuildUI" type="Control" parent="UI" node_paths=PackedStringArray("partListContainer", "partList")]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -611,10 +610,11 @@ offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LaunchButton" type="Button" parent="UI/BuildUI/Misc/SideButtons/VBoxContainer"]
+[node name="LaunchButton" type="Button" parent="UI/BuildUI/Misc/SideButtons/VBoxContainer" node_paths=PackedStringArray("contextMenus")]
 custom_minimum_size = Vector2(58, 58)
 layout_mode = 2
 script = ExtResource("33_yged2")
+contextMenus = NodePath("../../../../ContextMenus")
 
 [node name="Icon" type="TextureRect" parent="UI/BuildUI/Misc/SideButtons/VBoxContainer/LaunchButton"]
 layout_mode = 1
@@ -644,6 +644,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="ContextMenus" type="Control" parent="UI/BuildUI" node_paths=PackedStringArray("menus")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
