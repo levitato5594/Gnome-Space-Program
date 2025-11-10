@@ -6,12 +6,13 @@
     "assets": "Stock/Parts/Colony/GSC_VAB/GSCVAB.pck",
     "partScene": "Parts/Assets/GSC_VAB/PARTMAIN.tscn",
     "listedInSelector": false,
-    "modules": {
-        "VehicleAssembly": {
+    "modules": [
+        {
+            "type": "VehicleAssembly",
             "verticalScroll": true,
             "nodePosition": [0,20,0],
             "maxZoom": 35,
             "targetZoom": 5
         }
-    }
+    ]
 }

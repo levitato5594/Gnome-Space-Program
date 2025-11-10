@@ -8,8 +8,6 @@ public partial class BuildingManager : Node
     public static readonly string classTag = "([color=Turquoise]BuildingManager[color=white])";
 	public static BuildingManager Instance { get; private set; }
 
-    // Current active VAB.
-    public VehicleAssembly activeVAB;
     // Where to instantiate parts
     [Export] public Node3D editorPartContainer;
     [Export] public Node3D floatingPartContainer;
@@ -36,8 +34,10 @@ public partial class BuildingManager : Node
     // We orient around this one
     public Part centralPart;
 
-    // The colony we should search when looking for stuff like launchsites
-    public Colony activeColony;
+    // The colony/craft we should search when looking for stuff like launchsites
+    public Node3D activeThing;
+    // Current active VAB.
+    public VehicleAssembly activeVAB;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -160,6 +160,8 @@ public partial class BuildingManager : Node
 
     public void SetVAB(VehicleAssembly module)
     {
+        activeThing = module.part.parentThing;
+
         activeVAB = module;
         editorPartContainer.GlobalTransform = module.vab.GlobalTransform;
         floatingPartContainer.GlobalTransform = module.vab.GlobalTransform;

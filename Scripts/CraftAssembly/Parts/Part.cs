@@ -25,6 +25,7 @@ public partial class Part : Area3D
     [Signal] public delegate void SendButtonEventHandler(string name);
 
     public CachedPart cachedPart;
+    // Craft or Colony
     public Node3D parentThing;
 
     public List<PartModule> partModules = [];
@@ -45,28 +46,32 @@ public partial class Part : Area3D
     public void InitPart()
     {
         contextMenu = PartMenuHandler.Instance.CreateMenu(this);
-        Dictionary moduleData = (Dictionary)cachedPart.config["modules"];
+        Godot.Collections.Array moduleData = (Godot.Collections.Array)cachedPart.config["modules"];
         Logger.Print($"(Instance {Name}) Creating part modules...");
         partModules = CreateModules(moduleData);
         Logger.Print($"(Instance {Name}) Got all part modules! Count: {partModules.Count}");
         //InitModules();
     }
     
-    public List<PartModule> CreateModules(Dictionary data)
+    public List<PartModule> CreateModules(Godot.Collections.Array data)
     {
         List<PartModule> modules = [];
         
-        foreach (KeyValuePair<Variant,Variant> pair in data)
+        foreach (Variant mod in data)
         {
-            if (pair.Value.VariantType == Variant.Type.Dictionary)
+            if (mod.VariantType == Variant.Type.Dictionary)
             {
-                string moduleName = (string)pair.Key;
+                Dictionary modData = (Dictionary)mod;
+
+                string moduleName = (string)modData["type"];
                 Type moduleType = PartManager.Instance.partModules[moduleName];
 
                 // create an object of the type
                 PartModule module = (PartModule)Activator.CreateInstance(moduleType);
                 module.part = this;
-                module.configData = (Dictionary)pair.Value;
+                module.configData = modData;
+
+                modules.Add(module);
 
                 module.PartInit();
             }
@@ -175,5 +180,23 @@ public partial class Part : Area3D
         }
 
         return aabb;
+    }
+
+    public List<PartModule> GetPartModules(Type filter = null)
+    {
+        if (filter == null)
+        {
+            // We don't need to filter anything in this case
+            return partModules;
+        }else{
+            List<PartModule> modules = [];
+
+            foreach (PartModule module in partModules)
+            {
+                if (module.GetType() == filter) modules.Add(module);
+            }
+
+            return modules;
+        }
     }
 }

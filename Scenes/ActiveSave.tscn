@@ -442,6 +442,7 @@ layout_mode = 2
 text = "OTHER INFO"
 
 [node name="BuildUI" type="Control" parent="UI" node_paths=PackedStringArray("partListContainer", "partList")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -644,7 +645,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="ContextMenus" type="Control" parent="UI/BuildUI" node_paths=PackedStringArray("menus")]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -655,7 +655,7 @@ mouse_filter = 2
 script = ExtResource("15_ue2ba")
 menus = [NodePath("SiteSelector")]
 
-[node name="SiteSelector" type="Panel" parent="UI/BuildUI/ContextMenus"]
+[node name="SiteSelector" type="Panel" parent="UI/BuildUI/ContextMenus" node_paths=PackedStringArray("buttonContainer")]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -668,6 +668,7 @@ offset_bottom = -833.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("37_7j3xb")
+buttonContainer = NodePath("ScrollContainer/VBoxContainer")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UI/BuildUI/ContextMenus/SiteSelector"]
 layout_mode = 1

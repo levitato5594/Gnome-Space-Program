@@ -13,7 +13,11 @@ public partial class BuildModeLaunchMenu : Button
     public void Launch()
     {
         Dictionary info = [];
-        //info.Add("sites", BuildingManager.Instance.activeColony.GetPartsWithModule("launchsite"));
+        Node3D activeThing = BuildingManager.Instance.activeThing;
+        if (activeThing is Colony colony)
+        {
+            info.Add("sites", colony.GetPartsWithModule(typeof(LaunchSite)));
+        } // ADD FUNCTIONALITY FOR CRAFTS IN THE FUTURE
         contextMenus.OpenMenu("SiteSelector", info);
     }
 }

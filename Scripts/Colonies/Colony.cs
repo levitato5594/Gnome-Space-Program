@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 
 public partial class Colony : Node3D
@@ -18,8 +19,8 @@ public partial class Colony : Node3D
     public Dictionary<string, UnloadedPart> savedRootParts = []; // Only lists the saved root parts
     public Dictionary<string, UnloadedPart> savedParts = [];
 
-    public List<Part> rootParts;
-    public List<Part> allParts;
+    public List<Part> rootParts = [];
+    public List<Part> allParts = [];
 
     public void Load()
     {
@@ -34,6 +35,7 @@ public partial class Colony : Node3D
             // ... Okay now that we made a part manager.....
 
             Part part = data.template.Instantiate(this);
+            allParts.Add(part);
             //part.Freeze = true;
             //part.LockRotation = true;
             part.Position = data.position;
@@ -50,27 +52,17 @@ public partial class Colony : Node3D
 
     public void Unload()
     {
-        
+        // lol no
     }
 
-    /*
-    public Godot.Collections.Array<Part> GetPartsWithModule(string name)
+    public Godot.Collections.Array<Part> GetPartsWithModule(Type type)
     {
         Godot.Collections.Array<Part> parts = [];
         foreach (Part part in allParts)
         {
-            List<PartModule> modules = part.GetModules();
-            foreach (Node module in modules)
-            {
-                // TODO: Make launchpad module and check for it here
-                if (module.Name.ToString().Contains(name))
-                {
-                    parts.Add(part);
-                    break;
-                }
-            }
+            List<PartModule> modules = part.GetPartModules(type);
+            if (modules.Count > 0) parts.Add(part);
         }
         return parts;
     }
-    */
 }
