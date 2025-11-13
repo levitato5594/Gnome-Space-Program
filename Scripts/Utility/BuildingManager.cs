@@ -97,7 +97,8 @@ public partial class BuildingManager : Node
             }
 
             // We apply! !! !!! ! 1
-            draggingPart.GlobalPosition = draggingPart.GlobalPosition.Lerp(projectedPosition, partMoveSpeed*(float)delta);
+            draggingPart.GlobalPosition = projectedPosition; 
+            // Linear interp is broken at low FPS so bye bye !! draggingPart.GlobalPosition.Lerp(projectedPosition, partMoveSpeed);
             snappedNodes = attachNodeBuffer;
         }
 
