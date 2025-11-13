@@ -1,5 +1,5 @@
 using Godot;
-using System;
+using Godot.Collections;
 using System.Collections.Generic;
 
 public partial class Craft : RigidBody3D
@@ -14,18 +14,20 @@ public partial class Craft : RigidBody3D
     }
 
     // I don't wants parts to be individually simulated so we mangle the shit out of this physics engine
-    public void Instantiate(Godot.Collections.Dictionary partData)
+    public void Instantiate(Dictionary partData)
     {
         this.partData = partData;
         foreach (KeyValuePair<Variant, Variant> data in partData)
         {
-            if (data.Key.VariantType == Variant.Type.String)
+            if (data.Key.VariantType == Variant.Type.Int)
             {
-                string partName = (string)data.Key;
+                string partName = (string)((Dictionary)data.Value)["name"];
+                Dictionary theActualFuckingData = (Dictionary)((Dictionary)data.Value)["data"];
+
                 CachedPart cachedPart = PartManager.Instance.partCache[partName];
 
                 Part part = cachedPart.Instantiate(this, false, true);
-                part.ReadData((Godot.Collections.Dictionary)data.Value);
+                part.ReadData(theActualFuckingData);
             }
         }
     }

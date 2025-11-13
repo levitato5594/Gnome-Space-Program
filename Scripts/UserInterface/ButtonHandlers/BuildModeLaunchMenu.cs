@@ -5,6 +5,7 @@ using System;
 public partial class BuildModeLaunchMenu : Button
 {
     [Export] public ContextMenus contextMenus;
+    [Export] public string menuName = "SiteSelector";
     public override void _Ready()
     {
         Pressed += Launch;
@@ -12,12 +13,18 @@ public partial class BuildModeLaunchMenu : Button
 
     public void Launch()
     {
-        Dictionary info = [];
-        Node3D activeThing = BuildingManager.Instance.activeThing;
-        if (activeThing is Colony colony)
+        ContextMenu menu = contextMenus.GetMenu(menuName);
+        if (menu.Visible)
         {
-            info.Add("sites", colony.GetPartsWithModule(typeof(LaunchSite)));
-        } // ADD FUNCTIONALITY FOR CRAFTS IN THE FUTURE
-        contextMenus.OpenMenu("SiteSelector", info);
+            menu.Visible = false;
+        }else{
+            Dictionary info = [];
+            Node3D activeThing = BuildingManager.Instance.activeThing;
+            if (activeThing is Colony colony)
+            {
+                info.Add("sites", colony.GetPartsWithModule(typeof(LaunchSite)));
+            } // ADD FUNCTIONALITY FOR CRAFTS IN THE FUTURE
+            contextMenus.OpenMenu(menuName, info);
+        }
     }
 }

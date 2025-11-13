@@ -1,9 +1,9 @@
 using Godot;
+using Godot.Collections;
 
 public partial class BuildModeLaunch : Button
 {
-    // should have the launchsite module
-    public Part launchsite;
+    public LaunchSite launchsite;
     public override void _Ready()
     {
         Pressed += Launch;
@@ -11,6 +11,8 @@ public partial class BuildModeLaunch : Button
 
     public void Launch()
     {
-        BuildingManager.Instance.LaunchCraft();
+        // Get the current list of parts in the editor
+        Dictionary partData = PartManager.CompilePartData(BuildingManager.Instance.partsList);
+        launchsite.SpawnCraft(partData);
     }
 }

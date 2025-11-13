@@ -20,7 +20,7 @@ public partial class LaunchsiteMenu : ContextMenu
 
                 BuildModeLaunch launchButton = new();
                 buttonContainer.AddChild(launchButton);
-                launchButton.launchsite = launchsite;
+                launchButton.launchsite = launchsiteModule;
                 launchButton.Text = launchsiteModule.siteName;
             }
         }

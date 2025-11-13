@@ -10,7 +10,8 @@
         {
             "type": "LaunchSite",
             "launchsiteType": "VAB",
-            "siteName": "GSC LaunchPad 1"
+            "siteName": "GSC LaunchPad 1",
+            "spawnPos": [0, 9, 0]
         }
     ]
 }

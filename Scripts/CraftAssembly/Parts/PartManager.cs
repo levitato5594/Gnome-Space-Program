@@ -136,7 +136,12 @@ public partial class PartManager : Node
         foreach (Part part in parts)
         {
             Dictionary partData = part.GetData();
-            compiledData.Add(part.cachedPart.name, partData);
+            Dictionary wrapper = [];
+
+            wrapper.Add("name", part.cachedPart.name);
+            wrapper.Add("data", partData);
+
+            compiledData.Add(part.id, wrapper);
         }
         return compiledData;
     }
