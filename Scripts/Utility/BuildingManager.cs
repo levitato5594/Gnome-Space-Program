@@ -189,6 +189,38 @@ public partial class BuildingManager : Node
     // Inputs !!!
     public override void _UnhandledInput(InputEvent @event)
     {
+        // Delete a part if dragging
+        if (@event is InputEventKey key)
+        {
+            if (key.Pressed && key.Keycode == Key.Delete)
+            {
+                if (draggingPart != null)
+                {
+                    partsList.Remove(draggingPart);
+                    Logger.Print("try this");
+                    Logger.Print("draggingPart id, after removing:" + draggingPart.id);
+                    Logger.Print("that worked");
+                    // If picking up the central part, we need to reassign this
+                    // (to prevent having a null central part)
+                    if (centralPart == draggingPart)
+                    {
+                        if (partsList.Count != 0)
+                        {
+                            // For now, just choose the first part?
+                            // Probably figure out a better method to choose
+                            // central part.
+                            centralPart = partsList[0];
+                        } else {
+                            // We've deleted the last part in this case
+                            centralPart = null;
+                        }
+                    }
+                    draggingPart.QueueFree();
+                    draggingPart = null;
+                }
+            }
+        }
+
         if (@event is InputEventMouseButton mouseButt)
         {
             if (mouseButt.Pressed && mouseButt.ButtonIndex == MouseButton.Left)
