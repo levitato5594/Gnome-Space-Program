@@ -1,16 +1,13 @@
-[gd_scene load_steps=32 format=3 uid="uid://fbrup73dcc5k"]
+[gd_scene load_steps=27 format=3 uid="uid://fbrup73dcc5k"]
 
 [ext_resource type="PackedScene" uid="uid://cba4211bkgp0s" path="res://Assets/Prefabs/orbit_cam.tscn" id="2_gicfr"]
 [ext_resource type="Script" uid="uid://gr3sksxxiiif" path="res://Scripts/UniverseManager.cs" id="3_4aor2"]
 [ext_resource type="Script" uid="uid://bttvjiyoqtv5f" path="res://Scripts/TerrainGeneration/Planet.cs" id="4_eoic4"]
 [ext_resource type="Script" uid="uid://ksmq4us6ndfy" path="res://Scripts/TerrainGeneration/TerrainGen.cs" id="5_qh1gc"]
 [ext_resource type="Script" uid="uid://ddfdx2rbv2oln" path="res://Scripts/CraftAssembly/Building.cs" id="6_etsk8"]
-[ext_resource type="Material" uid="uid://c6ajox4r7txx4" path="res://Assets/Materials/Grass.tres" id="6_lplsg"]
-[ext_resource type="Material" uid="uid://d23tukoaw8yvl" path="res://Assets/Materials/Water.tres" id="7_ehry5"]
 [ext_resource type="Material" uid="uid://c5iy0ppbidkgo" path="res://Assets/Materials/HoverGlow.tres" id="8_0oag7"]
 [ext_resource type="Material" uid="uid://c1axwyeo5awwa" path="res://Assets/Materials/SpaceCenter/VAB.tres" id="8_v6q7w"]
 [ext_resource type="ArrayMesh" uid="uid://d3aboyvjyrokf" path="res://Assets/Meshes/gnomeVAB.obj" id="9_p1hye"]
-[ext_resource type="Material" uid="uid://fse6i8dj044i" path="res://Assets/Materials/Sun.tres" id="10_qsb58"]
 [ext_resource type="ArrayMesh" uid="uid://bmvfs84rflyx6" path="res://Assets/Meshes/VAB_Stand.obj" id="11_ehry5"]
 [ext_resource type="Texture2D" uid="uid://ck7qlvqe75vuk" path="res://Assets/Textures/sunSpikes.png" id="11_gicfr"]
 [ext_resource type="Material" uid="uid://0cojceu0d0x8" path="res://Assets/Materials/SpaceCenter/VAB_Stand.tres" id="11_v6q7w"]
@@ -23,18 +20,6 @@
 [ext_resource type="Material" uid="uid://d1oqsahgrjcuk" path="res://Assets/Materials/SpaceCenter/Rail.tres" id="16_021u1"]
 [ext_resource type="PackedScene" uid="uid://hlhaljtudxey" path="res://Assets/Prefabs/world_environment.tscn" id="16_lplsg"]
 [ext_resource type="ArrayMesh" uid="uid://cokocbd0j4nlj" path="res://Assets/Meshes/GSC_Rail.obj" id="17_6xq50"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_lhdhw"]
-frequency = 0.0281
-offset = Vector3(-0.2, 0, 0)
-fractal_type = 3
-fractal_octaves = 10
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_2vltj"]
-noise_type = 2
-frequency = 0.0856
-fractal_octaves = 10
-fractal_lacunarity = 3.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cq0lr"]
 size = Vector3(70, 50, 60)
@@ -59,7 +44,7 @@ distance_fade_max_distance = 4096.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_i4vn6"]
 material = SubResource("StandardMaterial3D_m06uv")
-size = Vector2(1e+07, 1e+07)
+size = Vector2(10000000, 10000000)
 
 [node name="Node3D" type="Node3D"]
 
@@ -111,7 +96,7 @@ render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="RenderLayers/LocalContainer/LocalView"]
 cull_mask = 1047553
-far = 1e+06
+far = 1000000.0
 
 [node name="LocalSpace" type="Node3D" parent="RenderLayers/LocalContainer/LocalView" groups=["LocalSpace"]]
 
@@ -128,25 +113,15 @@ radius = 600000.0
 script = ExtResource("5_qh1gc")
 runInSeparateThread = false
 radius = 599000.0
-perQuadSubdivison = 8
 minRenderLevel = 5
 minColliderLevel = 9999
-material = ExtResource("6_lplsg")
-baseNoise = SubResource("FastNoiseLite_lhdhw")
-baseNoiseDeformity = 0.02
-detailNoise = SubResource("FastNoiseLite_2vltj")
-detailNoiseDeformity = 0.01
 
 [node name="PQS_Container_Ocean" type="Node3D" parent="RenderLayers/LocalContainer/LocalView/LocalSpace/Gnobe"]
 script = ExtResource("5_qh1gc")
 runInSeparateThread = false
 radius = 600000.0
-perQuadSubdivison = 8
 minRenderLevel = 5
 minColliderLevel = 9999
-material = ExtResource("7_ehry5")
-baseNoise = SubResource("FastNoiseLite_lhdhw")
-detailNoise = SubResource("FastNoiseLite_2vltj")
 
 [node name="Misc" type="Node3D" parent="RenderLayers/LocalContainer/LocalView/LocalSpace/Gnobe"]
 
@@ -216,21 +191,15 @@ directional_shadow_fade_start = 0.385
 directional_shadow_max_distance = 2680.8
 
 [node name="Sun" type="Node3D" parent="RenderLayers/LocalContainer/LocalView/LocalSpace/DirectionalLight3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.49598e+10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 14959800000)
 
 [node name="PQS_Container" type="Node3D" parent="RenderLayers/LocalContainer/LocalView/LocalSpace/DirectionalLight3D/Sun"]
 script = ExtResource("5_qh1gc")
 runInSeparateThread = false
-radius = 6.957e+07
-perQuadSubdivison = 8
+radius = 69570000.0
 maxLevel = 15
 minRenderLevel = 5
 minColliderLevel = 9999999
-material = ExtResource("10_qsb58")
-baseNoise = SubResource("FastNoiseLite_lhdhw")
-baseNoiseDeformity = 0.02
-detailNoise = SubResource("FastNoiseLite_2vltj")
-detailNoiseDeformity = 0.01
 scaledBillboard = SubResource("QuadMesh_i4vn6")
 
 [node name="ScaledContainer" type="SubViewportContainer" parent="RenderLayers"]
@@ -250,7 +219,7 @@ render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="RenderLayers/ScaledContainer/ScaledView"]
 near = 10.0
-far = 2e+08
+far = 200000000.0
 
 [node name="ScaledSpace" type="Node3D" parent="RenderLayers/ScaledContainer/ScaledView" groups=["ScaledSpace"]]
 

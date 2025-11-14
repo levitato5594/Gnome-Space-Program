@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bum74xq50p03b"]
 
-[ext_resource type="PackedScene" uid="uid://bbui2a1g5tf6j" path="res://Assets/Prefabs/UI/part_selector.tscn" id="1_odp56"]
+[ext_resource type="PackedScene" uid="uid://cr52dmkgty470" path="res://Assets/Prefabs/UI/part_selector.tscn" id="1_odp56"]
 
 [node name="ScrollContainer" type="ScrollContainer"]
 anchors_preset = 15

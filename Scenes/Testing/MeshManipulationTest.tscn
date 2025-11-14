@@ -309,10 +309,9 @@ samplerMeshSize = 1.445
 samplerMesh = SubResource("QuadMesh_qsvdv")
 noise = SubResource("FastNoiseLite_qsvdv")
 
-[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("speedUI")]
+[node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.229)
 script = ExtResource("1_7wi5w")
-speedUI = NodePath("../CamSpeed")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.181594, -0.794351, -0.579681, 0.237464, -0.607459, 0.758027, -0.954272, 7.56204e-08, 0.298941, 0, 0, 0)
