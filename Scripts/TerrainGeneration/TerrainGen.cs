@@ -75,76 +75,76 @@ public partial class TerrainGen : Node3D
     private void createCube()
     {
         Quad quadU = new();
-		Quad quadD = new();
+        Quad quadD = new();
 
-		Quad quadF = new();
-		Quad quadB = new();
+        Quad quadF = new();
+        Quad quadB = new();
 
-		Quad quadL = new();
-		Quad quadR = new();
+        Quad quadL = new();
+        Quad quadR = new();
 
         quadU.position = new Vector3(0, radius, 0);
-		quadD.position = new Vector3(0, -radius, 0);
+        quadD.position = new Vector3(0, -radius, 0);
 
-		quadF.position = new Vector3(0, 0, radius);
-		quadB.position = new Vector3(0, 0, -radius);
+        quadF.position = new Vector3(0, 0, radius);
+        quadB.position = new Vector3(0, 0, -radius);
 
-		quadL.position = new Vector3(radius, 0, 0);
-		quadR.position = new Vector3(-radius, 0, 0);
+        quadL.position = new Vector3(radius, 0, 0);
+        quadR.position = new Vector3(-radius, 0, 0);
 
         quadU.basis = new Basis(new Vector3(1,0,0),  new Vector3(0,0,-1), new Vector3(0,1,0)); //new Vector3(-90,0,0);
-		quadD.basis = new Basis(new Vector3(1,0,0),  new Vector3(0,0,1),  new Vector3(0,-1,0)); //new Vector3(90,0,0);
+        quadD.basis = new Basis(new Vector3(1,0,0),  new Vector3(0,0,1),  new Vector3(0,-1,0)); //new Vector3(90,0,0);
 
-  		quadF.basis = new Basis(new Vector3(1,0,0),  new Vector3(0,1,0),  new Vector3(0,0,1)); //new Vector3(0,0,0);
-  		quadB.basis = new Basis(new Vector3(-1,0,0), new Vector3(0,1,0),  new Vector3(0,0,-1)); //new Vector3(0,180,0);
-		
-		quadL.basis = new Basis(new Vector3(0,0,-1), new Vector3(0,1,0),  new Vector3(1,0,0)); //new Vector3(0,90,0);
-		quadR.basis = new Basis(new Vector3(0,0,1),  new Vector3(0,1,0),  new Vector3(-1,0,0)); //new Vector3(0,-90,0);
+          quadF.basis = new Basis(new Vector3(1,0,0),  new Vector3(0,1,0),  new Vector3(0,0,1)); //new Vector3(0,0,0);
+          quadB.basis = new Basis(new Vector3(-1,0,0), new Vector3(0,1,0),  new Vector3(0,0,-1)); //new Vector3(0,180,0);
+        
+        quadL.basis = new Basis(new Vector3(0,0,-1), new Vector3(0,1,0),  new Vector3(1,0,0)); //new Vector3(0,90,0);
+        quadR.basis = new Basis(new Vector3(0,0,1),  new Vector3(0,1,0),  new Vector3(-1,0,0)); //new Vector3(0,-90,0);
 
         // shut the hell up about simplifying you're making it more bloody complex
 
         // starting mesh (UP)
         QuadMesh quadUMesh = new();
-		quadUMesh.Orientation = PlaneMesh.OrientationEnum.Y;
-		quadU.mesh = quadUMesh;
+        quadUMesh.Orientation = PlaneMesh.OrientationEnum.Y;
+        quadU.mesh = quadUMesh;
 
         quadU.colliderRotation = new Vector3(0,0,0);
 
         // starting mesh (DOWN)
-		QuadMesh quadDMesh = new();
-		quadDMesh.Orientation = PlaneMesh.OrientationEnum.Y;
-		quadDMesh.FlipFaces = true;
-		quadD.mesh = quadDMesh;
+        QuadMesh quadDMesh = new();
+        quadDMesh.Orientation = PlaneMesh.OrientationEnum.Y;
+        quadDMesh.FlipFaces = true;
+        quadD.mesh = quadDMesh;
 
         quadD.colliderRotation = new Vector3(180,0,0);
 
         // starting mesh (FRONT)
-		QuadMesh quadFMesh = new();
-		quadFMesh.Orientation = PlaneMesh.OrientationEnum.Z;
-		quadF.mesh = quadFMesh;
+        QuadMesh quadFMesh = new();
+        quadFMesh.Orientation = PlaneMesh.OrientationEnum.Z;
+        quadF.mesh = quadFMesh;
 
         quadF.colliderRotation = new Vector3(90,0,0);
 
         // starting mesh (BACK)
-		QuadMesh quadBMesh = new();
-		quadBMesh.Orientation = PlaneMesh.OrientationEnum.Z;
-		quadBMesh.FlipFaces = true;
-		quadB.mesh = quadBMesh;
+        QuadMesh quadBMesh = new();
+        quadBMesh.Orientation = PlaneMesh.OrientationEnum.Z;
+        quadBMesh.FlipFaces = true;
+        quadB.mesh = quadBMesh;
 
         quadB.colliderRotation = new Vector3(-90,0,0);
 
         // starting mesh (LEFT)
-		QuadMesh quadLMesh = new();
-		quadLMesh.Orientation = PlaneMesh.OrientationEnum.X;
-		quadL.mesh = quadLMesh;
+        QuadMesh quadLMesh = new();
+        quadLMesh.Orientation = PlaneMesh.OrientationEnum.X;
+        quadL.mesh = quadLMesh;
 
         quadL.colliderRotation = new Vector3(0,0,-90);
 
         // starting mesh (RIGHT)
-		QuadMesh quadRMesh = new();
-		quadRMesh.Orientation = PlaneMesh.OrientationEnum.X;
-		quadRMesh.FlipFaces = true;
-		quadR.mesh = quadRMesh;
+        QuadMesh quadRMesh = new();
+        quadRMesh.Orientation = PlaneMesh.OrientationEnum.X;
+        quadRMesh.FlipFaces = true;
+        quadR.mesh = quadRMesh;
 
         quadR.colliderRotation = new Vector3(0,0,90);
 
@@ -202,7 +202,7 @@ public partial class TerrainGen : Node3D
             for (int i = 0; i < quadList.Count; i++)
             {
                 Quad planetQuad = quadList[i];
-                float distanceFromPlr = (planetQuad.centerPosition - (playerPos-planetCenter)).Length();
+                double distanceFromPlr = (planetQuad.centerPosition - (playerPos-planetCenter)).Length();
                 int quadDetail = planetQuad.detailLevel;
 
                 planetQuad.readyToSubdivide = false;
@@ -262,25 +262,26 @@ public partial class TerrainGen : Node3D
 
     private void SubdivideQuad(Quad quad)
     {
-        float quadRadius = quad.scale.X/4;
+        // Cast to float for compatibility with the rest of this routine
+        float quadRadius = (float)quad.scale.X/4;
 
-		Quad quad1 = new();
-		Quad quad2 = new();
-		Quad quad3 = new();
-		Quad quad4 = new();
+        Quad quad1 = new();
+        Quad quad2 = new();
+        Quad quad3 = new();
+        Quad quad4 = new();
 
-		// Turned on some neurons to think of this one
-		Vector3 globalFacingX = quad.basis.X;
-		Vector3 globalFacingY = quad.basis.Y;
+        // Turned on some neurons to think of this one
+        Vector3 globalFacingX = quad.basis.X;
+        Vector3 globalFacingY = quad.basis.Y;
 
-		quad1.position = (-globalFacingX + globalFacingY)*quadRadius + quad.position;
-		quad2.position = (globalFacingX + globalFacingY)*quadRadius + quad.position;
-		quad3.position = (globalFacingX + -globalFacingY)*quadRadius + quad.position;
-		quad4.position = (-globalFacingX + -globalFacingY)*quadRadius + quad.position;
+        quad1.position = (-globalFacingX + globalFacingY)*quadRadius + quad.position;
+        quad2.position = (globalFacingX + globalFacingY)*quadRadius + quad.position;
+        quad3.position = (globalFacingX + -globalFacingY)*quadRadius + quad.position;
+        quad4.position = (-globalFacingX + -globalFacingY)*quadRadius + quad.position;
 
-		List<Quad> quadArray = [quad1, quad2, quad3, quad4];
+        List<Quad> quadArray = [quad1, quad2, quad3, quad4];
 
-		quad.children = quadArray;
+        quad.children = quadArray;
 
         foreach (Quad newQuad in quadArray)
         {
@@ -380,35 +381,35 @@ public partial class TerrainGen : Node3D
     }
     
     // get center mmm yummy and important
-	private static Vector3 GetCenterOfMesh(List<Vector3> vertices)
-	{
-		Vector3 totalVertexThing = Vector3.Zero;
+    private static Vector3 GetCenterOfMesh(List<Vector3> vertices)
+    {
+        Vector3 totalVertexThing = Vector3.Zero;
 
-		foreach (Vector3 vertex in vertices)
-		{
-			totalVertexThing += vertex;
-		}
+        foreach (Vector3 vertex in vertices)
+        {
+            totalVertexThing += vertex;
+        }
 
-		return totalVertexThing/vertices.Count;
-	}
+        return totalVertexThing/vertices.Count;
+    }
 
     private static (Godot.Collections.Array, List<Vector3>) ProcessQuadMesh(Quad quad, QuadMesh quadMesh)
     {
         Godot.Collections.Array meshData = quadMesh.SurfaceGetArrays(0);
 
-		Godot.Collections.Array verticesUnfiltered = (Godot.Collections.Array) meshData[0];
+        Godot.Collections.Array verticesUnfiltered = (Godot.Collections.Array) meshData[0];
 
-		//List<Vector3> vertices = [];
-		List<Vector3> globalVertices = [];
-		
-		for (int v = 0; v < verticesUnfiltered.Count; v++)
-		{
-			Vector3 vertex = (Vector3) verticesUnfiltered[v];
-			//vertices.Add(vertex);
-			globalVertices.Add(vertex + quad.position);
-		}
+        //List<Vector3> vertices = [];
+        List<Vector3> globalVertices = [];
+        
+        for (int v = 0; v < verticesUnfiltered.Count; v++)
+        {
+            Vector3 vertex = (Vector3) verticesUnfiltered[v];
+            //vertices.Add(vertex);
+            globalVertices.Add(vertex + quad.position);
+        }
 
-		return (meshData, globalVertices);
+        return (meshData, globalVertices);
     }
 
     private (ArrayMesh, Godot.Collections.Array, List<Vector3>) InheritQuadMesh(Quad quad)
@@ -428,8 +429,9 @@ public partial class TerrainGen : Node3D
         Godot.Collections.Array newMeshData = quad.originalMeshData.Duplicate();
 
         // processing of the mesh data
-        (Vector3[] newVertices, List<Vector3> newGlobalVertices) = ProcessVertices(quadNodeGlobalPos, quadScale.X, originalVertices, 1f);
-        (Vector3[] newLargeVertices, _) = ProcessVertices(quadNodeGlobalPos, quadScale.X, largeVertices, 1.445f);
+        // quadScale is cast to float for compatibility with already-written code expecting floats.
+        (Vector3[] newVertices, List<Vector3> newGlobalVertices) = ProcessVertices(quadNodeGlobalPos, (float)quadScale.X, originalVertices, 1f);
+        (Vector3[] newLargeVertices, _) = ProcessVertices(quadNodeGlobalPos, (float)quadScale.X, largeVertices, 1.445f);
 
         Vector3[] newTemporaryNormals = MeshManipulation.calculateSmoothNormals(newLargeVertices, largeIndices);
         Vector3[] newNormals = FilterCenterVector3s(newTemporaryNormals, 2, perQuadSubdivison + 4);
@@ -484,35 +486,36 @@ public partial class TerrainGen : Node3D
 
     private static float SampleNoise(FastNoiseLite noise, Vector3 position, float amplitude)
     {
-        float val = noise.GetNoise3D(position.X*10,position.Y*10,position.Z*10);
+        // Cast to float for compatibility with the rest of the code here
+        float val = (float)noise.GetNoise3D(position.X*10,position.Y*10,position.Z*10);
         return val*amplitude;
     }
 
     private static Vector3[] FilterCenterVector3s(Vector3[] original, int distFromEdge, int meshSubdivision)
-	{
-		List<Vector3> newList = [];
-		int row = 0;
-		int column = 0;
-		for (int i = 0; i < original.Length; i++)
-		{
-			if (column > distFromEdge-1 && column < meshSubdivision+2-distFromEdge && row > distFromEdge-1 && row < meshSubdivision+2-distFromEdge)
-			{
-				newList.Add(original[i]);
-			}
-			row++;
-			if (row>=meshSubdivision+2)
-			{
-				row = 0;
-				column++;
-			}
-		}
-		// transfer
-		Vector3[] mewArray = new Vector3[newList.Count];
-		for (int i = 0; i < newList.Count; i++)
-		{
-			mewArray[i] = newList[i];
-		}
-		newList.Clear();
-		return mewArray;
-	}
+    {
+        List<Vector3> newList = [];
+        int row = 0;
+        int column = 0;
+        for (int i = 0; i < original.Length; i++)
+        {
+            if (column > distFromEdge-1 && column < meshSubdivision+2-distFromEdge && row > distFromEdge-1 && row < meshSubdivision+2-distFromEdge)
+            {
+                newList.Add(original[i]);
+            }
+            row++;
+            if (row>=meshSubdivision+2)
+            {
+                row = 0;
+                column++;
+            }
+        }
+        // transfer
+        Vector3[] mewArray = new Vector3[newList.Count];
+        for (int i = 0; i < newList.Count; i++)
+        {
+            mewArray[i] = newList[i];
+        }
+        newList.Clear();
+        return mewArray;
+    }
 }

@@ -27,7 +27,7 @@ public partial class OrbitTester : Node3D
         CelestialBody rootBody = new CelestialBody{
             mass = 10000000000000,
             cartesianData = new CartesianData{
-                position = new Double3(0,0,0)
+                position = Vector3.Zero
             }
         };
         cBodyList.Add(rootBody);
@@ -45,12 +45,12 @@ public partial class OrbitTester : Node3D
             },
             cartesianData = new CartesianData{
                 parent = rootBody,
-                position = Double3.Zero,
-                velocity = Double3.Zero
+                position = Vector3.Zero,
+                velocity = Vector3.Zero
             }
         };
-        anotherBody.cartesianData.position = new Double3(orbitPos.X, orbitPos.Y, orbitPos.Z);
-        anotherBody.cartesianData.velocity = new Double3(orbitVel.X, orbitVel.Y, orbitVel.Z);
+        anotherBody.cartesianData.position = orbitPos;
+        anotherBody.cartesianData.velocity = orbitVel;
         cBodyList.Add(anotherBody);
         testBodyRenderer.cBody = anotherBody;
         orbitDisplay.cBody = anotherBody;
@@ -66,8 +66,8 @@ public partial class OrbitTester : Node3D
            
         }
 
-        //anotherBody.cartesianData.position = new Double3(orbitPos.X, orbitPos.Y, orbitPos.Z);
-        //anotherBody.cartesianData.velocity = new Double3(orbitVel.X, orbitVel.Y, orbitVel.Z);
+        //anotherBody.cartesianData.position = new Vector3(orbitPos.X, orbitPos.Y, orbitPos.Z);
+        //anotherBody.cartesianData.velocity = new Vector3(orbitVel.X, orbitVel.Y, orbitVel.Z);
     }
 
     public override void _Process(double delta)
@@ -81,8 +81,8 @@ public partial class OrbitTester : Node3D
 
         if (updateCartParams)
         {
-            anotherBody.cartesianData.position = new Double3(orbitPos.X, orbitPos.Y, orbitPos.Z);
-            anotherBody.cartesianData.velocity = new Double3(orbitVel.X, orbitVel.Y, orbitVel.Z);
+            anotherBody.cartesianData.position = orbitPos;
+            anotherBody.cartesianData.velocity = orbitVel;
 
             orbitAccel = Vector3.Zero;
 
@@ -112,7 +112,7 @@ public partial class OrbitTester : Node3D
                 {
                     Orbit orbit = PatchedConics.ECItoKOE(cBody.cartesianData);
 
-                    (Double3 position, _) = PatchedConics.KOEtoECI(orbit);
+                    (Vector3 position, _) = PatchedConics.KOEtoECI(orbit);
                     //GD.Print(position.X + " " + position.Y + " " + position.Z);
                     cBody.orbit = orbit;
                     //cBody.cartesianData.position = position;
@@ -120,28 +120,28 @@ public partial class OrbitTester : Node3D
 
                     //cBody.orbit.trueAnomaly = PatchedConics.TimeToTrueAnomaly(cBody.orbit, time, 0);
 
-                    //cBody.orbit = PatchedConics.AccelerateOrbit(orbit, time, new Double3(0,0,0));
+                    //cBody.orbit = PatchedConics.AccelerateOrbit(orbit, time, Vector3.Zero);
                     
                     //GD.Print(cBody.cartesianData.velocity.Y);
 
-                    //Double3 position = cBody.cartesianData.position;
+                    //Vector3 position = cBody.cartesianData.position;
 
-                    cBody.debugOrb.GlobalPosition = new Vector3((float)position.X,(float)position.Y,(float)position.Z);
+                    cBody.debugOrb.GlobalPosition = position;
                 }else{
-                    orbitPos = anotherBody.cartesianData.position.ToFloat3();
-                    orbitVel = anotherBody.cartesianData.velocity.ToFloat3();
+                    orbitPos = anotherBody.cartesianData.position;
+                    orbitVel = anotherBody.cartesianData.velocity;
 
                     cBody.orbit.trueAnomaly = PatchedConics.TimeToTrueAnomaly(cBody.orbit, ActiveSave.Instance.saveTime, 0);
                     GD.Print(cBody.orbit.period);
 
-                    (Double3 position, Double3 velocity) = PatchedConics.KOEtoECI(cBody.orbit);//Time.GetUnixTimeFromSystem()*timeSpeed, 0);
+                    (Vector3 position, Vector3 velocity) = PatchedConics.KOEtoECI(cBody.orbit);//Time.GetUnixTimeFromSystem()*timeSpeed, 0);
 
                     cBody.cartesianData.position = position;
                     cBody.cartesianData.velocity = velocity;
 
-                    Double3 finalPos = position + cBody.orbit.parent.cartesianData.position;
+                    Vector3 finalPos = position + cBody.orbit.parent.cartesianData.position;
                     
-                    cBody.debugOrb.GlobalPosition = new Vector3((float)finalPos.X,(float)finalPos.Y,(float)finalPos.Z);
+                    cBody.debugOrb.GlobalPosition = finalPos;
                 }
 
                 //cBody.orbit.DumpOrbitParams();

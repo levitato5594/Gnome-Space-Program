@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public partial class BuildingManager : Node
 {
     public static readonly string classTag = "([color=Turquoise]BuildingManager[color=white])";
-	public static BuildingManager Instance { get; private set; }
+    public static BuildingManager Instance { get; private set; }
 
     // Where to instantiate parts
     [Export] public Node3D editorPartContainer;
@@ -41,19 +41,19 @@ public partial class BuildingManager : Node
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
-	{
+    {
         Instance = this;
-		SingletonRegistry.Register(this); // Register self
+        SingletonRegistry.Register(this); // Register self
     }
 
     public override void _Process(double delta)
     {
-		if (draggingPart != null)
-		{
+        if (draggingPart != null)
+        {
             Camera3D camera = ActiveSave.Instance.localCamera;
 
-			Vector2 mousePos = GetViewport().GetMousePosition();
-			Vector3 projectedPosition = camera.ProjectPosition(mousePos, partHoldDistance);
+            Vector2 mousePos = GetViewport().GetMousePosition();
+            Vector3 projectedPosition = camera.ProjectPosition(mousePos, partHoldDistance);
 
             (AttachNode, AttachNode) attachNodeBuffer = (null, null);
 
@@ -80,7 +80,7 @@ public partial class BuildingManager : Node
                                 Vector2 nodeScreenPos0 = localCam.UnprojectPosition(node0Pos);
                                 Vector2 nodeScreenPos1 = localCam.UnprojectPosition(node1Pos);
 
-                                float distance = nodeScreenPos0.DistanceSquaredTo(nodeScreenPos1);
+                                float distance = (float)nodeScreenPos0.DistanceSquaredTo(nodeScreenPos1);
 
                                 if (distance <= partSnapDistance*partSnapDistance)
                                 {

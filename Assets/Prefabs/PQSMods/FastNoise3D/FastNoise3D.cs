@@ -11,7 +11,7 @@ public partial class FastNoise3D : Node
 
     public float SamplePoint(Vector3 position)
     {
-        float height = (noise.GetNoise3D(position.X*10, position.Y*10, position.Z*10) + 1.0f) * 0.5f;
+        float height = (float)(noise.GetNoise3D(position.X*10, position.Y*10, position.Z*10) + 1.0f) * 0.5f;
         return height * deformity + offset;
     }
 

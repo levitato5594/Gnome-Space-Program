@@ -54,12 +54,12 @@ public partial class ColonyManager : Node
         // Grrrrr...
         if (ConfigUtility.TryGetArray("position", data, out Godot.Collections.Array posArr))
         {
-            colony.position = new Double3((double)posArr[0], (double)posArr[1], (double)posArr[2]);
+            colony.position = new Vector3((double)posArr[0], (double)posArr[1], (double)posArr[2]);
         }
         
         if (ConfigUtility.TryGetArray("rotation", data, out Godot.Collections.Array rotArr))
         {
-            colony.rotation = new Double3((double)rotArr[0], (double)rotArr[1], (double)rotArr[2]);
+            colony.rotation = new Vector3((double)rotArr[0], (double)rotArr[1], (double)rotArr[2]);
         }
 
         // Add all buildings
@@ -70,8 +70,8 @@ public partial class ColonyManager : Node
         }
 
         // Yeah.....
-        colony.Position = colony.position.ToFloat3();
-        colony.RotationDegrees = colony.rotation.ToFloat3();
+        colony.Position = colony.position;
+        colony.RotationDegrees = colony.rotation;
 
         // Add to the planet and also add a map icon
         CelestialBody parent = PlanetSystem.Instance.FindCBodyByName((string)data["parent"]);

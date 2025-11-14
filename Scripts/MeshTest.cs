@@ -47,7 +47,8 @@ public partial class MeshTest : MeshInstance3D
 			//{
 				Vector3 vertex = vertices[i]+GlobalPosition;
 
-				float height = noise.GetNoise3D(vertex.X,vertex.Y,vertex.Z)+0.5f;
+				// Cast to float for compatibility with this existing code
+				float height = (float)noise.GetNoise3D(vertex.X,vertex.Y,vertex.Z)+0.5f;
 				vertices[i] = vertices[i]+(height*Vector3.Back/2f);
 
 
@@ -68,7 +69,8 @@ public partial class MeshTest : MeshInstance3D
 		{
 			Vector3 vertex = largeVertices[i]+GlobalPosition;
 
-			float height = noise.GetNoise3D(vertex.X,vertex.Y,vertex.Z)+0.5f;
+			// Cast to float for compatiblity with this existing code
+			float height = (float)noise.GetNoise3D(vertex.X,vertex.Y,vertex.Z)+0.5f;
 			largeVertices[i] = largeVertices[i]+(height*Vector3.Back/2f);
 		}
 

@@ -13,7 +13,7 @@ public partial class RealityTangler : Node
     public static RealityTangler Instance { get; private set; }
 
     [Export] public float originResetThreshold = 100;
-    public Double3 originOffset = Double3.Zero;
+    public Vector3 originOffset = Vector3.Zero;
 
     public override void _Ready()
     {
@@ -27,7 +27,7 @@ public partial class RealityTangler : Node
         if (activeThing != null)
         {
             // We don't need the square root of this anyways
-            float originDistance = activeThing.GlobalPosition.DistanceSquaredTo(Vector3.Zero);
+            double originDistance = activeThing.GlobalPosition.DistanceSquaredTo(Vector3.Zero);
 
             if (originDistance > originResetThreshold * originResetThreshold)
             {
@@ -45,7 +45,7 @@ public partial class RealityTangler : Node
         Vector3 focusedObjectPos = relativeTo.GlobalPosition;
         //focusedObject.GlobalPosition -= focusedObjectPos;
 
-        originOffset -= Double3.ConvertToDouble3(focusedObjectPos);
+        originOffset -= focusedObjectPos;
 
         //GD.Print("burh!!!");
         //GD.Print(originOffset);
@@ -60,7 +60,7 @@ public partial class RealityTangler : Node
             ScaledSpace.Instance.ForceUpdate();
 
             cBody.ProcessOrbitalPosition();
-            cBody.scaledSphere.truePosition = Double3.ConvertToDouble3(cBody.GlobalPosition); //cBody.cartesianData.position.GetPosYUp();
+            cBody.scaledSphere.truePosition = cBody.GlobalPosition; //cBody.cartesianData.position.GetPosYUp();
             cBody.scaledSphere.ForceUpdate();
         }
     }

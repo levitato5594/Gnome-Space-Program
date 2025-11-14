@@ -13,8 +13,8 @@ public partial class Colony : Node3D
     public ScaledObject scaledObject;
 
     public string name;
-    public Double3 position;
-    public Double3 rotation;
+    public Vector3 position;
+    public Vector3 rotation;
 
     public Dictionary<string, UnloadedPart> savedRootParts = []; // Only lists the saved root parts
     public Dictionary<string, UnloadedPart> savedParts = [];

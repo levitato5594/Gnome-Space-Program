@@ -9,7 +9,7 @@ public partial class FloatingOrigin : Node
     [Export] public double distanceThreshold = 1000; // meters
 
     // This WILL get yucky and messy over time don't trust it fully
-    public Double3 offset = Double3.Zero;
+    public Vector3 offset = Vector3.Zero;
 
     public override void _Ready()
     {
@@ -29,7 +29,7 @@ public partial class FloatingOrigin : Node
 
                 if (craftDistance > distanceThreshold)
                 {
-                    offset -= Double3.ConvertToDouble3(currentCraft.GlobalPosition);
+                    offset -= currentCraft.GlobalPosition;
                     currentCraft.Position = Vector3.Zero;
                     foreach (CelestialBody cbody in PlanetSystem.Instance.celestialBodies)
                     {
@@ -38,7 +38,7 @@ public partial class FloatingOrigin : Node
                 }
             //}
         }else{
-            offset = Double3.Zero;
+            offset = Vector3.Zero;
         }
     }
 }

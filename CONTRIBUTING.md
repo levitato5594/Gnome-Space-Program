@@ -6,6 +6,8 @@ However, as is made very clear, this game is open source. By contributing your c
 If you wish, you may credit yourself in the Contributors JSON file in ``GameData/Misc/Contributors.json``.
 
 ### 2. Conventions and "rules" for contributing:
+* You will need to build the Godot editor from source with double precision enabled - see instructions in BuildingGodotEditor.md, and ask on Discord if you need help.
+* Use the version of Godot specified in README.
 * When starting a pull request, you MUST state what you changed/added down to each file.
 * This is more or less just a general "keep your code clean" rule, but please ensure that any major changes you make don't break any other existing system.
 * Following up with the previous rule, make sure anything you add is thoroughly tested.
