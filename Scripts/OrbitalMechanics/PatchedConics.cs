@@ -17,16 +17,25 @@ https://downloads.rene-schwarz.com/download/M002-Cartesian_State_Vectors_to_Kepl
 list of orbital gobbledygook:
 https://www.bogan.ca/orbits/kepler/orbteqtn.html
 */
+
 public partial class PatchedConics : Node
 {
     public static readonly double GravConstant = 6.674e-11;
     public static readonly double EarthGravity = 9.80665;
+    
+    // Functions to get points with Y as up rather than Z
+    // To Be Eliminated
+    private static Vector3 GetPosYUp(Vector3 inputVector)
+    {
+        return new Vector3(inputVector.X,inputVector.Z,inputVector.Y);
+    }
+    
     // Gets body-centered coordinates from orbit parameters
     // Keplerian orbital elements to earth centered whateverthefuck
     // I believe some portions of this might have been AI generated(?)
     // However the code is fully understood so no major downside other than using an llm rather than a search engine.. :(
     // Rest assured anything majorly written by an LLM will be rectified when given the opportunity.
-    public static (Double3, Double3) KOEtoECI(Orbit orbit) //, Dr Freeman? Is it really that time again?
+    public static (Vector3, Vector3) KOEtoECI(Orbit orbit) //, Dr Freeman? Is it really that time again?
     {
         // yeah whatever the fRICK
         double MU = orbit.ComputeMU();//GravConstant * parent.mass;
@@ -44,13 +53,13 @@ public partial class PatchedConics : Node
         double r = p / (1 + e * Math.Cos(truAN));
         double h = Math.Sqrt(MU * p); // Specific angular momentum
 
-        Double3 rPQW = new Double3(
+        Vector3 rPQW = new(
             r * Math.Cos(truAN),
             r * Math.Sin(truAN),
             0
         );
 
-        Double3 vPQW = new Double3(
+        Vector3 vPQW = new(
             -Math.Sqrt(MU / p) * Math.Sin(truAN),
             Math.Sqrt(MU / p) * (e + Math.Cos(truAN)),
             0
@@ -79,13 +88,13 @@ public partial class PatchedConics : Node
         R[2, 2] = cosi;
 
         // Rotate position and velocity vectors
-        Double3 position = new Double3(
+        Vector3 position = new(
             R[0, 0] * rPQW.X + R[0, 1] * rPQW.Y + R[0, 2] * rPQW.Z,
             R[1, 0] * rPQW.X + R[1, 1] * rPQW.Y + R[1, 2] * rPQW.Z,
             R[2, 0] * rPQW.X + R[2, 1] * rPQW.Y + R[2, 2] * rPQW.Z
         );
 
-        Double3 velocity = new Double3(
+        Vector3 velocity = new(
             R[0, 0] * vPQW.X + R[0, 1] * vPQW.Y + R[0, 2] * vPQW.Z,
             R[1, 0] * vPQW.X + R[1, 1] * vPQW.Y + R[1, 2] * vPQW.Z,
             R[2, 0] * vPQW.X + R[2, 1] * vPQW.Y + R[2, 2] * vPQW.Z
@@ -100,24 +109,26 @@ public partial class PatchedConics : Node
     {
         // define mu, vectors, and epsilon
         double mu = GravConstant * data.parent.mass;
-        Double3 rVec = data.position;
-        Double3 vVec = data.velocity;
+        Vector3 rVec = data.position;
+        Vector3 vVec = data.velocity;
         double eps = 1e-8;
 
         // Specific angular momentum and its magnitude
-        Double3 hVec = Double3.Cross(rVec,vVec);
+        Vector3 hVec = rVec.Cross(vVec);
         double h = hVec.Length();
         double p = h * h / mu;
 
         // The line of nodes (??)
-        Double3 nVec = Double3.Cross(new Double3(0,0,1), hVec);
+        // Back is (0, 0, 1)
+        Vector3 nVec = Vector3.Back.Cross(hVec);
+        //Double3 nVec = Double3.Cross(new Double3(0,0,1), hVec);
         double n = nVec.Length();
 
         // Orbit energy and eccentricity
         double r = rVec.Length();
         double v = vVec.Length();
-        Double3 eVec = (v * v / mu - 1.0 / r) * rVec;
-        Double3 v3 = Double3.Dot(rVec, vVec) / mu * vVec;
+        Vector3 eVec = (v * v / mu - 1.0 / r) * rVec;
+        Vector3 v3 = rVec.Dot(vVec) / mu * vVec;
         eVec = eVec - v3;
         double e = eVec.Length();
 
@@ -146,11 +157,11 @@ public partial class PatchedConics : Node
             Omega = Math.Acos(nVec.X / n);
             if (nVec.Y < 0.0)
                 Omega = 2.0 * Math.PI - Omega;
-            omega = Math.Acos(Math.Clamp(Double3.Dot(nVec, eVec) / n / e, -1.0, 1.0));
+            omega = Math.Acos(Math.Clamp(nVec.Dot(eVec) / n / e, -1.0, 1.0));
             if (eVec.Z < 0.0)
                 omega = 2.0 * Math.PI - omega;
-            truAN = Math.Acos(Math.Clamp(Double3.Dot(eVec, rVec) / e / r, -1.0, 1.0));
-            if (Double3.Dot(rVec, vVec) < 0.0)
+            truAN = Math.Acos(Math.Clamp(eVec.Dot(rVec) / e / r, -1.0, 1.0));
+            if (rVec.Dot(vVec) < 0.0)
                 truAN = 2.0 * Math.PI - truAN;
         }else if (e >= 1e-11 && (i < 1e-11 || i > Math.PI - 1e-11))
         {
@@ -169,8 +180,8 @@ public partial class PatchedConics : Node
                     omega = 2.0 * Math.PI - omega;
             }
 
-            truAN = Math.Acos(Math.Clamp(Double3.Dot(eVec, rVec) / e / r, -1.0, 1.0));
-            if (Double3.Dot(rVec, vVec) < 0.0)
+            truAN = Math.Acos(Math.Clamp(eVec.Dot(rVec) / e / r, -1.0, 1.0));
+            if (rVec.Dot(vVec) < 0.0)
                 truAN = 2.0 * Math.PI - truAN;   
         }else if (e < 1e-11 && i >= 1e-11)
         {
@@ -179,7 +190,7 @@ public partial class PatchedConics : Node
             if (nVec.Y < 0.0)
                 Omega = 2.0 * Math.PI - Omega;
             omega = 0.0;
-            truAN = Math.Acos(Math.Clamp(Double3.Dot(nVec, rVec) / n / r, -1.0, 1.0));
+            truAN = Math.Acos(Math.Clamp(nVec.Dot(rVec) / n / r, -1.0, 1.0));
             if (rVec.Z < 0.0)
                 truAN = 2.0 * Math.PI - truAN;
         }else if (e < 1e-11 && i < 1e-11)
@@ -215,10 +226,10 @@ public partial class PatchedConics : Node
     }
 
     // Gets orbital elements at a point and then updates the cartesian parameters to match
-    public static Orbit AccelerateOrbit(Orbit orbit, double time, Double3 accel)
+    public static Orbit AccelerateOrbit(Orbit orbit, double time, Vector3 accel)
     {
         orbit.trueAnomaly = TimeToTrueAnomaly(orbit, time, 0);
-        (Double3 position, Double3 velocity) = KOEtoECI(orbit);
+        (Vector3 position, Vector3 velocity) = KOEtoECI(orbit);
         velocity += accel;
         CartesianData newCart = new()
         {
@@ -297,7 +308,7 @@ public partial class PatchedConics : Node
     }
 
     // Checks what SOI a location is currently in and returns the corresponding cBody
-    public static (CelestialBody, Double3) GetSOI(CartesianData location)
+    public static (CelestialBody, Vector3) GetSOI(CartesianData location)
     {
         if (PlanetSystem.Instance != null)
         {
@@ -306,34 +317,39 @@ public partial class PatchedConics : Node
 
             if (location.parent != null)
             {
-                if (location.position.DistanceTo(Double3.Zero) <= currentPlanetSOI)
+                if (location.position.DistanceTo(Vector3.Zero) <= currentPlanetSOI)
                 {
                     // Search orbiting bodies
                     foreach (CelestialBody cBody in location.parent.childPlanets)
                     {
                         double cBodySOI = cBody.orbit == null ? double.PositiveInfinity : cBody.orbit.sphereOfInfluence;
-                        if (location.position.DistanceTo(cBody.cartesianData.position.GetPosYUp()) < cBodySOI)
+                        // As part of the large world coordinate refactor, this weird inconsistent 
+                        // coordinate system should be removed. For now, a stupid workaround.
+                        // Convert to double3 to use its weird coordinate switching function and back.
+                        // I hate this. -R
+                        // GetPosYUp should be eliminated... soon.
+                        if (location.position.DistanceTo(GetPosYUp(cBody.cartesianData.position)) < cBodySOI)
                         {
-                            // Return child celestial because we are within both its and the parents SOI
-                            return (cBody, location.position - cBody.cartesianData.position.GetPosYUp());
+                            return (cBody, location.position - GetPosYUp(cBody.cartesianData.position));
                         }
                     }
                     // Return current cBody because we are not within any child SOI
                     return (location.parent, location.position);
                 }else{
                     // Return parent body because we are outside the sphere of influence
-                    return (location.parent.orbit.parent, location.position + location.parent.cartesianData.position.GetPosYUp());
+                    return (location.parent.orbit.parent, location.position + GetPosYUp(location.parent.cartesianData.position));
                 }
             }else{
                 // Return root body as last resort fallback
                 // This should NEVER run because the outputted position is ambiguous!
                 GD.Print("Uh oh");
-                return (PlanetSystem.Instance.rootBody, Double3.Zero);
+                return (PlanetSystem.Instance.rootBody, Vector3.Zero);
             }
         }else{
             // No planets exist so we can't return anything
             GD.Print("PlanetSystem Instance has not been set! It literally doesn't exist what are you doing!?!");
-            return (null, null);
+            // Vector3 is not nullable, but NaNs are possible.
+            return (null, new Vector3(double.NaN, double.NaN, double.NaN));
         }
     }
 }
@@ -388,6 +404,6 @@ public class CartesianData
 {
     public CelestialBody parent;
 
-    public Double3 position;
-    public Double3 velocity;
+    public Vector3 position;
+    public Vector3 velocity;
 }

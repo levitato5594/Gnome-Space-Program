@@ -42,24 +42,24 @@ public partial class ScaledSpace : Node3D
                 {
                     // We're using floats here because fuck
                     
-                    Vector3 objPos = scaledObject.truePosition.ToFloat3();
+                    Vector3 objPos = scaledObject.truePosition;
                     Vector3 camDir = objPos.DirectionTo(flightCamera.camNode.GlobalPosition);
 
-                    float magnitude = (objPos - flightCamera.camNode.GlobalPosition).Length();
+                    double magnitude = (objPos - flightCamera.camNode.GlobalPosition).Length();
 
                     scaledObject.GlobalPosition = objPos + camDir * (magnitude/(1+(moveForward/1000f)));// + offsetPosition;
-                    scaledObject.Scale = scaledObject.originalScale.ToFloat3() / scaleFactor;
+                    scaledObject.Scale = scaledObject.originalScale / scaleFactor;
                 }else{
                     Node3D camObject = flightCamera.target;
                     Vector3 focusObjectPos = Vector3.Zero;
                     // Check if the camera is focusing on either a ScaledObject or another thing that isn't implemented yet
                     if (camObject is ScaledObject scaledCamObj)
                     {
-                        focusObjectPos = scaledCamObj.truePosition.ToFloat3();
+                        focusObjectPos = scaledCamObj.truePosition;
                     }
                 
-                    scaledObject.GlobalPosition = scaledObject.truePosition.ToFloat3() / scaleFactor - (focusObjectPos / scaleFactor);
-                    scaledObject.Scale = scaledObject.originalScale.ToFloat3() / scaleFactor;
+                    scaledObject.GlobalPosition = scaledObject.truePosition / scaleFactor - (focusObjectPos / scaleFactor);
+                    scaledObject.Scale = scaledObject.originalScale / scaleFactor;
                 }
             }
         }
