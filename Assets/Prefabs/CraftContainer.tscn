@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bbfeq7evhiyvn"]
-
-[ext_resource type="Script" uid="uid://wjg7hg841pvx" path="res://Scripts/FlightInfo.cs" id="1_pj1m2"]
-
-[node name="CraftContainer" type="Node3D"]
-script = ExtResource("1_pj1m2")

@@ -11,12 +11,12 @@ frequency = 0.0167
 fractal_octaves = 10
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_cpx85"]
-in_3d_space = true
-seamless = true
-seamless_blend_skirt = 1.0
-as_normal_map = true
-color_ramp = SubResource("Gradient_os6y5")
 noise = SubResource("FastNoiseLite_1688f")
+color_ramp = SubResource("Gradient_os6y5")
+seamless = true
+in_3d_space = true
+as_normal_map = true
+seamless_blend_skirt = 1.0
 
 [resource]
 albedo_color = Color(0.231373, 0.345098, 0.52549, 0.894118)

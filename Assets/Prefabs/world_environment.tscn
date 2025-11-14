@@ -11,8 +11,8 @@ fractal_octaves = 3
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_m06uv"]
 width = 2048
 height = 1024
-color_ramp = SubResource("Gradient_7jmkp")
 noise = SubResource("FastNoiseLite_k57b3")
+color_ramp = SubResource("Gradient_7jmkp")
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_i4vn6"]
 panorama = SubResource("NoiseTexture2D_m06uv")

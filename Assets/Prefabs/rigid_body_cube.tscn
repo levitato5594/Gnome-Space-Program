@@ -1,6 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dr8f57ibninqp"]
-
-[ext_resource type="Script" uid="uid://d4a5gc72yy61q" path="res://Scripts/PartModules/Gravity.cs" id="1_0w4q1"]
+[gd_scene load_steps=3 format=3 uid="uid://dr8f57ibninqp"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_f3agq"]
 
@@ -8,7 +6,6 @@
 
 [node name="RigidBodyCube" type="RigidBody3D"]
 gravity_scale = 0.0
-script = ExtResource("1_0w4q1")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_f3agq")
