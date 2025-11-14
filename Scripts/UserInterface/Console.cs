@@ -8,6 +8,11 @@ public partial class Console : RichTextLabel
     bool ctrlHeld = false;
     public override void _EnterTree()
     {
+        // Test code to output a helpful error if building with single precision
+        // If this fails, you are likely using a single-precision build of Godot.
+        // Refer to BuildingGodotEditor.md.
+        Vector2 testVector = new ((double)1, (double)2);
+        
         GuiInput += OnInput;
         VisibilityChanged += () => {if(IsVisibleInTree())Logger.Print("[color=cyan]Welcome to the console! ctrl+scroll changes the font size.[color=white]"); };
         Logger.OnLogged += AddLog;
