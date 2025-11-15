@@ -160,20 +160,17 @@ public partial class BuildingManager : Node
         }
     }
 
-    public void SetVAB(VehicleAssembly module)
+    // Enter VAB build mode 
+    public void EnterVAB(VehicleAssembly module, float maxZoom, float targetZoom)
     {
+        // Assign VAB
         activeThing = module.part.parentThing;
-
         activeVAB = module;
         editorPartContainer.GlobalTransform = module.vab.GlobalTransform;
         floatingPartContainer.GlobalTransform = module.vab.GlobalTransform;
-    }
 
-    // Enter VAB build mode
-    public void EnterBuildMode(Node3D pivot, float maxZoom, float targetZoom, bool verticalMovement)
-    {
         // Reposition cam
-        FlightCamera.Instance.TargetObject(pivot, new Vector3(0.1f, maxZoom, targetZoom), false);
+        FlightCamera.Instance.TargetObject(module.camPivot, new Vector3(0.1f, maxZoom, targetZoom), false);
         editorMode = EditorMode.Static;
 
         // Disable map view while in flight
@@ -185,6 +182,27 @@ public partial class BuildingManager : Node
 
         // Initiate
         OpenBuildUI(true, true);
+    }
+
+    public void ExitBuildMode(bool returnFocus)
+    {
+        OpenBuildUI(false);
+
+        // Close Part Menus
+        PartMenuHandler.Instance.contextMenus.OpenMenu("", [], true);
+
+        // Misc
+        FlightCamera.Instance.canEnterMap = true;
+        editorMode = EditorMode.None;
+
+        // Return focus to the parent craft / colony IF WE WANT TO
+        if (returnFocus)
+        {
+            if (activeThing is Colony colony)
+            {
+                FlightCamera.Instance.TargetObject(colony);
+            }
+        }
     }
 
     // Inputs !!!

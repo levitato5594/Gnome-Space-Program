@@ -44,7 +44,6 @@ public partial class VehicleAssembly : PartModule
 
     public void EnterFacility()
     {
-        BuildingManager.Instance.SetVAB(this);
-        BuildingManager.Instance.EnterBuildMode(camPivot, maxZoom, targetZoom, true);
+        BuildingManager.Instance.EnterVAB(this, maxZoom, targetZoom);
     }
 }

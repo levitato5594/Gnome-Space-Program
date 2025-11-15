@@ -23,7 +23,6 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x8qab"]
 
 [resource]
-Button/font_sizes/font_size = 20
 Button/fonts/font = ExtResource("1_yryix")
 Button/styles/focus = SubResource("StyleBoxEmpty_5fwyf")
 Button/styles/hover = ExtResource("2_dirlc")
@@ -37,7 +36,6 @@ CheckButton/styles/normal = ExtResource("4_27f02")
 CheckButton/styles/pressed = ExtResource("3_hqfxh")
 Label/fonts/font = ExtResource("1_yryix")
 Label/styles/normal = ExtResource("1_mwhhf")
-LineEdit/font_sizes/font_size = 20
 LineEdit/fonts/font = ExtResource("1_yryix")
 LineEdit/styles/focus = ExtResource("6_ahioa")
 LineEdit/styles/normal = ExtResource("7_x8qab")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://b08reqxmoktvk"]
+[gd_scene load_steps=45 format=3 uid="uid://b08reqxmoktvk"]
 
 [ext_resource type="Script" uid="uid://c3i0ynvo54sk1" path="res://Scripts/Utility/ActiveSave.cs" id="1_2c3j4"]
 [ext_resource type="Script" uid="uid://2vlhdf4w605i" path="res://Scripts/PlanetarySystem/PlanetSystem.cs" id="1_pocjb"]
@@ -38,6 +38,8 @@
 [ext_resource type="Script" uid="uid://0n7uvn3scbtd" path="res://Scripts/UserInterface/ButtonHandlers/BuildModeClear.cs" id="35_p24xc"]
 [ext_resource type="Texture2D" uid="uid://xp6y4oqgn2ko" path="res://Assets/Textures/UserInterface/Buttons/clearicon.svg" id="36_7j3xb"]
 [ext_resource type="Script" uid="uid://bxldarynbrqxw" path="res://Scripts/UserInterface/ContextMenus/LaunchsiteMenu.cs" id="37_7j3xb"]
+[ext_resource type="Script" uid="uid://dsqu0fmvb11d6" path="res://Scripts/UserInterface/ButtonHandlers/BuildModeExit.cs" id="38_a66g2"]
+[ext_resource type="Texture2D" uid="uid://3e0eh5stlfej" path="res://Assets/Textures/UserInterface/Buttons/exitIcon.svg" id="38_byrdn"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_h3s5b"]
 material = ExtResource("3_sfn14")
@@ -509,7 +511,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="R" type="Button" parent="UI/BuildUI/Selector/PartSelector/ResizeHandles" node_paths=PackedStringArray("target")]
+[node name="R" type="Button" parent="UI/BuildUI/Selector/PartSelector/ResizeHandles"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -524,8 +526,6 @@ theme_override_styles/normal = ExtResource("23_2c3fv")
 theme_override_styles/pressed = ExtResource("24_vd1dx")
 theme_override_styles/hover = ExtResource("25_hx2xn")
 script = ExtResource("26_287u4")
-target = NodePath("../..")
-direction = Vector2(1, 0)
 
 [node name="PartCategories" type="Panel" parent="UI/BuildUI/Selector"]
 layout_mode = 1
@@ -641,6 +641,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("36_7j3xb")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ExitButton" type="Button" parent="UI/BuildUI/Misc/SideButtons/VBoxContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+script = ExtResource("38_a66g2")
+
+[node name="Icon" type="TextureRect" parent="UI/BuildUI/Misc/SideButtons/VBoxContainer/ExitButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("38_byrdn")
 expand_mode = 1
 stretch_mode = 5
 
