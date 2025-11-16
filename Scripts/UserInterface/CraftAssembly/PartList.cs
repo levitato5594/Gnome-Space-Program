@@ -30,16 +30,7 @@ public partial class PartList : Control
 
     public void LoadPartList()
     {
-        // Clear existing stuff
-		categories.Clear();
-        foreach (Node node in GetChildren())
-		{
-            node.QueueFree();
-        }
-		foreach (Node node in categoryList.GetChildren())
-		{
-            node.QueueFree();
-        }
+        FreePartList();
 
         PartCategoryContainer allCategory = (PartCategoryContainer)categoryPrefab.Instantiate();
         AddChild(allCategory);
