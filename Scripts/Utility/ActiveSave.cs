@@ -23,7 +23,7 @@ public partial class ActiveSave : Node3D
 	public CelestialBody activePlanet;
 
     // Every surface base/colony
-    public List<Colony> colonies;
+    public List<Colony> colonies = [];
 
     // Disable this when in map view
     public bool hideLocal = false;
