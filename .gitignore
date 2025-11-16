@@ -3,3 +3,5 @@
 /android/
 # GDscript vscode extension begone
 .vscode/
+# Custom directory settings
+.directory
