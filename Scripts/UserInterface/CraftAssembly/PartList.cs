@@ -13,6 +13,21 @@ public partial class PartList : Control
 
     public Dictionary<string, PartCategoryContainer> categories = [];
 
+    public void FreePartList()
+    {
+        Logger.Print("Clearing parts list");
+        // Clear stuff
+        categories.Clear();
+        foreach (Node node in GetChildren())
+		{
+            node.QueueFree();
+        }
+		foreach (Node node in categoryList.GetChildren())
+		{
+            node.QueueFree();
+        }
+    }
+
     public void LoadPartList()
     {
         // Clear existing stuff

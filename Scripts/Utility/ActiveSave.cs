@@ -91,7 +91,7 @@ public partial class ActiveSave : Node3D
         // Handle Colonies (blueprints)
 		foreach (KeyValuePair<string, PlanetPack> pack in planetPacks)
 		{
-			colonyManager.ParseColonies(pack.Value.path, true);
+			colonies.AddRange(colonyManager.ParseColonies(pack.Value.path, true));
 		}
     }
 

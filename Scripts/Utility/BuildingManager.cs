@@ -154,9 +154,11 @@ public partial class BuildingManager : Node
     {
         buildUI.Visible = open;
         buildUI.partListContainer.Visible = open && selector;
-        if (open)
+        if (open && selector)
         {
             buildUI.partList.LoadPartList();
+        }else{
+            buildUI.partList.FreePartList();
         }
     }
 
