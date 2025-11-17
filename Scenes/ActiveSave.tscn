@@ -63,6 +63,10 @@ flightCam = NodePath("FlightCamera")
 localCamera = NodePath("RenderLayers/LocalContainer/LocalView/Camera3D")
 localSpace = NodePath("RenderLayers/LocalContainer/LocalView/LocalSpace")
 
+[node name="RealityTangler" type="Node" parent="."]
+process_priority = 100
+script = ExtResource("13_sfn14")
+
 [node name="RenderLayers" type="Control" parent="."]
 z_index = -5
 texture_filter = 1
@@ -193,10 +197,6 @@ script = ExtResource("8_gxrxs")
 iconPrefab = ExtResource("9_gusxr")
 iconParent = NodePath("../UI/MapUI/ColonyIcons")
 
-[node name="RealityTangler" type="Node" parent="."]
-process_priority = 100
-script = ExtResource("13_sfn14")
-
 [node name="BuildingManager" type="Node" parent="." node_paths=PackedStringArray("editorPartContainer", "floatingPartContainer", "buildUI")]
 script = ExtResource("14_uc177")
 editorPartContainer = NodePath("EditorParts")
@@ -245,6 +245,7 @@ update_scale = false
 
 [node name="gizmo" parent="Miscellaneous" instance=ExtResource("17_h3s5b")]
 transform = Transform3D(0.02, 0, 0, 0, 0.02, 0, 0, 0, 0.02, 0, 0, 0)
+visible = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Miscellaneous"]
 environment = SubResource("Environment_h3s5b")

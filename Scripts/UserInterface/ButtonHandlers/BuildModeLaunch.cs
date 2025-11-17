@@ -11,8 +11,8 @@ public partial class BuildModeLaunch : Button
 
     public void Launch()
     {
-        // Get the current list of parts in the editor
+        // Get the current list of parts in the editor (you can move this to the LaunchSite module if you want)
         Dictionary partData = PartManager.CompilePartData(BuildingManager.Instance.partsList);
-        launchsite.SpawnCraft(partData);
+        launchsite.SpawnCraft(partData, true);
     }
 }

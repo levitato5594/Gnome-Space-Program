@@ -28,13 +28,20 @@ public partial class LaunchSite : PartModule
         siteName = (string)configData["siteName"];
     }
 
-    public Craft SpawnCraft(Dictionary partData)
+    public Craft SpawnCraft(Dictionary partData, bool focus = false)
     {
         Craft craft = new();
         ActiveSave.Instance.localSpace.AddChild(craft);
         craft.Instantiate(partData);
 
         craft.GlobalPosition = spawnNode.GlobalPosition;
+
+        // We can not focus on the craft and stay in the editor if we absolutely want to
+        if (focus)
+        {
+            BuildingManager.Instance.ExitBuildMode(false);
+            craft.SnatchFocus();
+        }
 
         return craft;
     }

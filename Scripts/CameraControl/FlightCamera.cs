@@ -51,11 +51,16 @@ public partial class FlightCamera : Node3D
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
+        Update();
+    }
+
+    public void Update()
+    {
         // Decide
         target = inMap ? mapTarget : localTarget;
         zoomLimits = inMap ? mapZoomLimits : localZoomLimits;
 
-        float lerpy = lerpSpeed * (float)delta;
+        float lerpy = lerpSpeed * (float)GetProcessDeltaTime();
 
         rotNode_Y.RotationDegrees = rotNode_Y.RotationDegrees.Lerp(rotTarget_Y, lerpy);
         rotNode_X.RotationDegrees = rotNode_X.RotationDegrees.Lerp(rotTarget_X, lerpy);
@@ -172,6 +177,20 @@ public partial class FlightCamera : Node3D
         Logger.Print($"{classTag} Targeting colony: {colony.Name}");
 
         zoom = 250; //node.Scale.Z * 2f / ScaledSpace.Instance.scaleFactor;
+    }
+
+    // Target CRAFT
+    public void TargetObject(Craft craft)
+    {
+        localTarget = craft;
+        localZoomLimits = (1,10000000,250);
+        //mapTarget = craft.scaledObject;
+        mapZoomLimits = (5,10000000,2);
+        Position = Vector3.Zero;
+
+        Logger.Print($"{classTag} Targeting craft: {craft.Name}");
+
+        zoom = 5; //node.Scale.Z * 2f / ScaledSpace.Instance.scaleFactor;
     }
 
     // Planets shouldn't be targeted locally so we don't target the local object

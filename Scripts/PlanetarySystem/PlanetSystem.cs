@@ -192,6 +192,10 @@ public partial class PlanetSystem : Node3D
             }
 
             if (cBody.focusOnload) focusOnLoadBody = cBody;
+
+            // Assign orbital process to RealityTangler
+            RealityTangler.Instance.OrbitProcess += cBody.ProcessOrbitalPosition;
+            RealityTangler.Instance.OriginReset += cBody.ResetOrigin;
         }
     }
 

@@ -75,6 +75,15 @@ public partial class CelestialBody : Node3D
             originPos -= ActiveSave.Instance.activePlanet.cartesianData.position;
 
         Position = GetPosYUp(originPos);
+
+        scaledSphere.truePosition = GlobalPosition; //cBody.cartesianData.position.GetPosYUp();
+        scaledSphere.ForceUpdate();
+    }
+
+    public void ResetOrigin()
+    {
+        // Just to prevent jitter
+        ProcessOrbitalPosition();
     }
 
     public override string ToString()

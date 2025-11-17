@@ -20,6 +20,7 @@ public partial class ScaledSpace : Node3D
 
     public override void _Ready()
     {
+        RealityTangler.Instance.ScaledProcess += ForceUpdate;
         Instance = this;
     }
 
